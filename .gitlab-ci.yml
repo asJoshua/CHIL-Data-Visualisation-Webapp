@@ -1,0 +1,12 @@
+stages:
+  - lint
+  - test
+
+frontend-lint:
+    stage: lint
+    image: node
+
+    script:
+        - cd frontend/CHIL
+        - npm install
+        - npm run lint
