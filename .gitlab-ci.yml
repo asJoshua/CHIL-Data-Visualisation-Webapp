@@ -3,10 +3,21 @@ stages:
   - test
 
 frontend-lint:
-    stage: lint
-    image: node
+  stage: lint
+  image: node
 
-    script:
-        - cd frontend/CHIL
-        - npm install
-        - npm run lint
+  script:
+      - cd frontend/CHIL
+      - node -v
+      - npm install
+      - npm run lint
+
+backend-lint:
+  stage: lint
+  image: python
+
+  script:
+    - cd backend/CHIL
+    - pip install Poetry
+    - poetry -V
+    - poetry run pylint ./chil
