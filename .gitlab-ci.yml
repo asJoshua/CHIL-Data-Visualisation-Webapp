@@ -22,3 +22,25 @@ backend-lint:
     - poetry -V
     - poetry install
     - poetry run pylint ./chil
+
+
+frontend-test:
+  stage: test
+  image: node
+
+  script:
+    - cd frontend/CHIL
+    - node -v
+    - npm install
+    - npm run test
+
+backend-test:
+  stage: test
+  image: python
+
+  script:
+    - cd backend/CHIL
+    - pip install Poetry
+    - poetry -V
+    - poetry install
+    - poetry run python manage.py test
