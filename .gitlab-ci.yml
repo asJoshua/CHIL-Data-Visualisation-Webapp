@@ -20,4 +20,5 @@ backend-lint:
     - cd backend/CHIL
     - pip install Poetry
     - poetry -V
+    - poetry install
     - poetry run pylint ./chil
