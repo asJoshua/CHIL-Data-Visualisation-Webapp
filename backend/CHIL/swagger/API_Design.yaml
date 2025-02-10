@@ -44,6 +44,7 @@ paths:
             enum: [
                 'cryoegg',
                 'cryowurst',
+                'hydrobean',
               ]
       requestBody:
         content:
@@ -88,6 +89,7 @@ paths:
             enum: [
                 'cryoegg',
                 'cryowurst',
+                'hydrobean',
               ]
       responses:
         200:
@@ -117,6 +119,7 @@ paths:
             enum: [
                 'cryoegg',
                 'cryowurst',
+                'hydrobean',
               ]
         - name: id
           in: path
@@ -154,6 +157,7 @@ paths:
             enum: [
                 'cryoegg',
                 'cryowurst',
+                'hydrobean',
               ]
         - name: id
           in: path
@@ -197,6 +201,7 @@ paths:
             enum: [
                 'cryoegg',
                 'cryowurst',
+                'hydrobean',
               ]
         - name: id
           in: path
