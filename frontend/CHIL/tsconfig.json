@@ -20,6 +20,6 @@
           "@config/*": ["src/config/*"],
           "@marginals/*": ["src/components/marginals/*"],
           "@routes/*": ["src/app/*"],
-        },
+        }
     }
 }
