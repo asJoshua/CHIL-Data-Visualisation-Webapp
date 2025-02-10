@@ -13,6 +13,17 @@ tags:
   - name: data
     description: Everything relating to both raw and processed data
 
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+    EquipmentApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Equipment-API-Key
+
 paths:
   /instrument/{type}:
     post:
@@ -21,6 +32,8 @@ paths:
       summary: Create a new instrument of a specified type
       description: Create a new instrument of a specified type
       operationId: createInstrument
+      security:
+        - BearerAuth: []
       parameters:
         - name: type
           in: path
@@ -129,6 +142,8 @@ paths:
       summary: Update instrument entry
       description: Update instrument entry
       operationId: updateInstrument
+      security:
+        - BearerAuth: []
       parameters:
         - name: type
           in: path
@@ -170,6 +185,8 @@ paths:
       summary: Delete the instrument entry
       description: Delete the instrument entry
       operationId: deleteInstrument
+      security:
+        - BearerAuth: []
       parameters:
         - name: type
           in: path
