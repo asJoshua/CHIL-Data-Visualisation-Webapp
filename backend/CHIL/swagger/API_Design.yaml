@@ -7,7 +7,9 @@ info:
 
 tags:
   - name: instrument
-    description: Everything relating the instruments themselves
+    description: Everything relating the instruments
+  - name: receiver
+    description: Everything relating to the recivers
 
 paths:
   /instrument/{type}/list:
@@ -40,6 +42,22 @@ paths:
         '400':
           description: Type not found
 
+  /receiver/list:
+    get:
+      tags:
+        - receiver
+      summary: Lists all of the recievers
+      description: Lists all of the recievers
+      operationId: getRecievers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/receiver-list'
+
 components:
   schemas:
     instrument-list:
@@ -63,6 +81,7 @@ components:
           example: 1970-00-00 00:00:00
         notes:
           type: string
+          nullable: true
           example: Info about this specific instrument
         pressure_keller_min:
           type: number
@@ -72,3 +91,37 @@ components:
           type: number
           format: double
           example: 100
+    receiver-list:
+      type: object
+      properties:
+        reciever_id:
+          type: integer
+          format: int10
+          example: 10
+        name:
+          type: string
+          example: Portable Reciever
+        type:
+          type: string
+          example: tripod
+          enum: [
+            'tripod',
+            'portable'
+          ]
+        imei_number:
+          type: string
+          nullable: true
+          example: 111111111111111
+        manufacture_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        manufacture_batch:
+          type: string
+          example: JJ_1970
+        commission_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        notes:
+          type: string
+          nullable: true
+          example: Info about this specific receiver
