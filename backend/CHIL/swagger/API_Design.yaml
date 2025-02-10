@@ -14,6 +14,50 @@ tags:
     description: Everything relating to both raw and processed data
 
 paths:
+  /instrument/{type}:
+    post:
+      tags:
+        - instrument
+      summary: Create a new instrument of a specified type
+      description: Create a new instrument of a specified type
+      operationId: createInstrument
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument to list
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+              ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instrument'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument'
+
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument'
+
+        403:
+          description: Forbidden
+
+        404:
+          description: Type not found
+
   /instrument/{type}/list:
     get:
       tags:
