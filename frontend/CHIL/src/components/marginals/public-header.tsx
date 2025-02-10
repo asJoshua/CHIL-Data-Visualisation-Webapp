@@ -15,9 +15,9 @@ const PublicHeader = (): React.JSX.Element => {
 
                 <Box>
                     {publicHeaderConfig.map((item) => (
-                    <Button color='inherit' key={item[0]} onClick={() => {navigate(item[1])}}>
-                        {item[0]}
-                    </Button>
+                        <Button color='inherit' key={item[0]} onClick={() => {navigate(item[1])}}>
+                            {item[0]}
+                        </Button>
                     ))}
 
                     <Button
