@@ -226,6 +226,85 @@ paths:
                 items:
                   $ref: '#/components/schemas/receiver-list'
 
+  /receiver/{id}:
+    get:
+        tags:
+          - receiver
+        summary: Get infomation of a specific receiver by id
+        description: Get infomation of a specific receiver by id
+        operationId: getReceiver
+        parameters:
+          - name: id
+            in: path
+            description: The id of the reciever
+            required: true
+            schema:
+              type: string
+              example: JJ_1970
+        responses:
+          200:
+            description: Success
+            content:
+              application/json:
+                schema:
+                  items:
+                    $ref: '#/components/schemas/receiver'
+          404:
+            description: Id not found
+    put:
+      tags:
+        - receiver
+      summary: Update receiver entry
+      description: Update receiver entry
+      operationId: updateReceiver
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+      requestBody:
+        description: Update an existing receiver in the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/receiver'
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - receiver
+      summary: Delete the receiver entry
+      description: Delete the receiver entry
+      operationId: deleteReceiver
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Id not found
+
 components:
   securitySchemes:
       BearerAuth:
