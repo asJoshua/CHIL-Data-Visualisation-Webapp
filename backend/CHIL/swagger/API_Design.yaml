@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Cardiff University CHIL
+  description: |-
+    This API is used for interacting with Cardiff University's CHIL project.
+  version: 1.0.0
+
+tags:
+  - name: instrument
+    description: Everything relating the instruments themselves
+
+paths:
+  /instrument/{type}/list:
+    get:
+      tags:
+        - instrument
+      summary: Lists all instruments of a specified type
+      description: Lists all instruments of a specified type
+      operationId: getInstruments
+      parameters:
+        - name: type
+          in: path
+          description: 'The type of instrument to list'
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'receiver'
+              ]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/instrument-list'
+        '400':
+          description: Type not found
+
+components:
+  schemas:
+    instrument-list:
+      type: object
+      properties:
+        instrument_id:
+          type: integer
+          format: int10
+          example: 1111111111
+        type:
+          type: string
+          example: cryoegg
+        manufacture_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        manufacture_batch:
+          type: string
+          example: CE1970
+        commission_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        notes:
+          type: string
+          example: Info about this specific instrument
+        pressure_keller_min:
+          type: number
+          format: double
+          example: 0.0
+        pressure_keller_max:
+          type: number
+          format: double
+          example: 100
