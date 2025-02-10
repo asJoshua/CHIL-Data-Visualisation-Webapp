@@ -11,18 +11,11 @@ tags:
   - name: receiver
     description: Everything relating to the recivers
   - name: data
-    description: Everything relating to both raw and processed data
-
-components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-
-    EquipmentApiKeyAuth:
-      type: apiKey
-      in: header
-      name: Equipment-API-Key
+    description: Get raw and processed data from all equipment types
+  - name: campaign
+    description: Everything relating to campaigns (Grouped deployments)
+  - name: ingest
+    description: Used by equipment to add data to the database
 
 paths:
   /instrument/{type}:
@@ -234,6 +227,16 @@ paths:
                   $ref: '#/components/schemas/receiver-list'
 
 components:
+  securitySchemes:
+      BearerAuth:
+        type: http
+        scheme: bearer
+
+      EquipmentApiKeyAuth:
+        type: apiKey
+        in: header
+        name: Equipment-API-Key
+
   schemas:
     instrument:
       type: object
