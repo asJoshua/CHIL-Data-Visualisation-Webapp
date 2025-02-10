@@ -1,4 +1,6 @@
+import React from 'react'
 import type { Preview } from "@storybook/react";
+import { MemoryRouter } from "react-router-dom";
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +11,17 @@ const preview: Preview = {
       },
     },
   },
+
+  tags: ["autodocs"],
+
+  decorators: [
+    (Story) => (
+      <MemoryRouter initialEntries={['/']}>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
 };
+
 
 export default preview;
