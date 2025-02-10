@@ -10,6 +10,8 @@ tags:
     description: Everything relating the instruments
   - name: receiver
     description: Everything relating to the recivers
+  - name: data
+    description: Everything relating to both raw and processed data
 
 paths:
   /instrument/{type}/list:
@@ -18,29 +20,136 @@ paths:
         - instrument
       summary: Lists all instruments of a specified type
       description: Lists all instruments of a specified type
-      operationId: getInstruments
+      operationId: getAllInstruments
       parameters:
         - name: type
           in: path
-          description: 'The type of instrument to list'
+          description: The type of instrument to list
           required: true
           schema:
             type: string
             enum: [
                 'cryoegg',
                 'cryowurst',
-                'receiver'
               ]
       responses:
-        '200':
+        200:
           description: Success
           content:
             application/json:
               schema:
                 items:
                   $ref: '#/components/schemas/instrument-list'
-        '400':
+        400:
           description: Type not found
+
+  /instrument/{type}/{id}:
+    get:
+      tags:
+        - instrument
+      summary: Get infomation of a specific instrument by id
+      description: Get infomation of a specific instrument by id
+      operationId: getInstrument
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/instrument'
+        404:
+          description: Type or Id not found
+    put:
+      tags:
+        - instrument
+      summary: Update instrument entry
+      description: Update instrument entry
+      operationId: updateInstrument
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      requestBody:
+        description: Update an existing instrument in the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instrument'
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Type or Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - instrument
+      summary: Delete the instrument entry
+      description: Delete the instrument entry
+      operationId: deleteInstrument
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Type or Id not found
 
   /receiver/list:
     get:
@@ -50,7 +159,7 @@ paths:
       description: Lists all of the recievers
       operationId: getRecievers
       responses:
-        '200':
+        200:
           description: Success
           content:
             application/json:
@@ -60,7 +169,7 @@ paths:
 
 components:
   schemas:
-    instrument-list:
+    instrument:
       type: object
       properties:
         instrument_id:
@@ -91,7 +200,15 @@ components:
           type: number
           format: double
           example: 100
-    receiver-list:
+
+    instrument-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/instrument'
+
+    receiver:
       type: object
       properties:
         reciever_id:
@@ -125,3 +242,10 @@ components:
           type: string
           nullable: true
           example: Info about this specific receiver
+
+    receiver-list:
+        type: array
+        items:
+          type: object
+          oneOf:
+            - $ref: '#/components/schemas/receiver'
