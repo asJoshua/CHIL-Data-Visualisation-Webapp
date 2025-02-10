@@ -210,6 +210,41 @@ paths:
         404:
           description: Type or Id not found
 
+  /receiver:
+    post:
+      tags:
+        - receiver
+      summary: Create a new receiver
+      description: Create a new receiver
+      operationId: createReceiver
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/receiver'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver'
+
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver'
+
+        403:
+          description: Forbidden
+
+        404:
+          description: Type not found
+
   /receiver/list:
     get:
       tags:
