@@ -432,7 +432,7 @@ paths:
         404:
           description: Id not found
 
-  /receiver/{type}/{id}/deployment:
+  /receiver/{id}/deployment:
     post:
       tags:
         - receiver
@@ -441,6 +441,14 @@ paths:
       operationId: createReceiverDeployment
       security:
         - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
       requestBody:
         content:
             application/json:
@@ -466,6 +474,31 @@ paths:
 
         404:
           description: Type not found
+
+  /receiver/{id}/deployment/list:
+    get:
+      tags:
+        - receiver
+      summary: List all deployments of this receiver
+      description: List all deployments of this receiver
+      operationId: listReceiverDeployments
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment-list'
+        404:
+          description: Type or Id not found
 
   /data/region/raw:
     get:
