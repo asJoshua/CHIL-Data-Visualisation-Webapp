@@ -1,0 +1,39 @@
+[33m88725ea[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mchore/absolute-imports[m[33m)[m chore/added-absoulte-imports
+[33mc6db54d[m added absolute imports
+[33m113f825[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge branch 'feat/public-header' into 'main'
+[33m8d96838[m Merge branch 'chore/setup' into 'main'
+[33md2de202[m[33m ([m[1;31morigin/feat/public-header[m[33m)[m test/Added tests for public header
+[33m22a9580[m chore/added story for public header
+[33m0e52c7c[m chore/ran storybook migration
+[33mda718fd[m feat/Clicking on nav bar links redirects
+[33m0859acd[m feat/created nav bar
+[33md98b155[m feat/setup router
+[33md1d6576[m Merge branch 'chore/ci-setup' into 'chore/setup'
+[33m1513487[m feat/Added automated tests to ci
+[33m6f6b4e8[m Merge branch 'chore/ci-setup' of git.cardiff.ac.uk:c22050719/ltp-chil-data-processing into chore/ci-setup
+[33mac199f1[m fix/added poetry install
+[33mb2eafc7[m feat/Added backend lint
+[33mf77f74d[m feat/Added frontend lint job
+[33mece496e[m fix/pylint fixes
+[33mcd25ed2[m fix/added poetry install
+[33ma8b4635[m feat/Added backend lint
+[33m4a7652c[m feat/Added frontend lint job
+[33mda85d12[m fix/Removing ignored files
+[33mebd0f27[m chore/add
+[33ma1218b8[m chore/Added python tests
+[33m2513e00[m chore/added tests
+[33m3407ea4[m chore/added .pyc to gitignore
+[33m95657a4[m chore/added jest
+[33md7db83a[m fix/Pylint compliance
+[33m16ea4cf[m[33m ([m[1;31morigin/chore/setup[m[33m)[m chore/added .gitignore
+[33mcbf51b7[m chore/added storybook
+[33m38e5cbe[m chore/basic vite setup with react + ts
+[33m78a84d3[m chore/added django folder for all code
+[33mb60c647[m fix/Added DJANGO prefix to env vars
+[33m562d82f[m chore/Django-setup
+[33m8825c56[m chore/Added basic django app
+[33m5f55dca[m[33m ([m[1;31morigin/prod/staging[m[33m, [m[1;31morigin/prod/current[m[33m)[m Merge branch 'chore/issue-template' into 'main'
+[33m49edfd9[m Update mytemplate.md
+[33m668a698[m Update mytemplate.md
+[33m3ff7126[m Adding Issue Template
+[33m3f9830c[m Initial commit

@@ -200,6 +200,14 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  moduleNameMapper: {
+    '^@components/(.*)$': '<rootDir>/src/components/$1',
+    '^@config/(.*)$': '<rootDir>/src/config/$1',
+    '^@marginals/(.*)$': '<rootDir>/src/components/marginals/$1',
+    '^@routes/(.*)$': '<rootDir>/src/app/$1',
+  },
+
 };
 
 export default config;
