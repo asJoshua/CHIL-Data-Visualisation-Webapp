@@ -416,7 +416,7 @@ paths:
         - data
       summary: Get raw data from a specific region
       description: Get raw data from a specific region
-      operationId: getDataByRegion
+      operationId: getRawDataByRegion
       parameters:
         - in: query
           name: region
@@ -465,6 +465,61 @@ paths:
                   - $ref: '#/components/schemas/cryoegg-raw-data'
                   - $ref: '#/components/schemas/cryowurst-raw-data'
                   - $ref: '#/components/schemas/hydrobean-raw-data'
+        400:
+          description: Bad Request
+
+  /data/region/processed:
+    get:
+      tags:
+        - data
+      summary: Get processed data from a specific region
+      description: Get processed data from a specific region
+      operationId: getProcessedDataByRegion
+      parameters:
+        - in: query
+          name: region
+          required: true
+          description: The region for the data to be selected from
+          schema:
+            type: string
+            enum: [
+              canada,
+              greenland,
+            ]
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
                   - $ref: '#/components/schemas/cryoegg-processed-data'
                   - $ref: '#/components/schemas/cryowurst-processed-data'
                   - $ref: '#/components/schemas/hydrobean-processed-data'
