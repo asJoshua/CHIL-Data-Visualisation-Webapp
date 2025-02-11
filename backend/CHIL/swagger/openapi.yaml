@@ -720,6 +720,22 @@ paths:
         400:
           description: Bad Request
 
+  /campaign/list:
+    get:
+      tags:
+        - campaign
+      summary: List all campaigns
+      description: List all campaigns
+      operationId: listCampaigns
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/campaign-list'
+
 components:
   securitySchemes:
       BearerAuth:
@@ -1128,3 +1144,34 @@ components:
         temperature:
           type: number
           format: double
+
+    campaign:
+      type: object
+      properties:
+        campaign_id:
+          type: integer
+          format: int10
+        name:
+          type: string
+        description:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        elevation:
+          type: number
+          format: double
+        start_timestamp:
+          type: string
+        end_timestamp:
+          type: string
+
+    campaign-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/campaign'
