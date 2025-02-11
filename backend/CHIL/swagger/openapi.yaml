@@ -631,6 +631,101 @@ paths:
         404:
           description: Type or Id not found
 
+  /receiver/{id}/deployment/{deployment_id}:
+    get:
+      tags:
+        - receiver
+      summary: Get infomation by specific deployment
+      description: Get infomation by specific deployment
+      operationId: getReceiverDeployment
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver-deployment'
+        404:
+          description: Id or Deployment Id not found
+
+
+    put:
+      tags:
+        - receiver
+      summary: Update entry by specific deployment
+      description: Update entry by specific deployment
+      operationId: updateReceiverDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Id or Deployment Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - receiver
+      summary: Delete entry by specific deployment
+      description: Delete entry by specific deployment
+      operationId: deleteReceiverDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Id or Deployment Id not found
+
   /data/region/raw:
     get:
       tags:
