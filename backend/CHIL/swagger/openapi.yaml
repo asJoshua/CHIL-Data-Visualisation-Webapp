@@ -1036,6 +1036,37 @@ paths:
         400:
           description: Bad Request
 
+  /campaign:
+    post:
+      tags:
+        - campaign
+      summary: Create a new campaign
+      description: Create a new campagin
+      operationId: createCampaign
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/campaign'
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/campaign'
+        403:
+          description: Forbidden
+
+
   /campaign/list:
     get:
       tags:
@@ -1107,7 +1138,7 @@ paths:
       tags:
         - campaign
       summary: Delete the campaign entry
-      description: Delete the campaign entr
+      description: Delete the campaign entry
       operationId: deleteCampaign
       security:
         - BearerAuth: []
@@ -1121,6 +1152,60 @@ paths:
       responses:
         204:
           description: No Content
+        404:
+          description: Id not found
+
+  /campaign/{id}/instrument-deployments:
+    get:
+      tags:
+        - campaign
+      summary: Get all instrument deployment id's in a specific campaign
+      description: Get all instrument deployment id's in a specific campaign
+      operationId: getInstrumentDeploymentsInCampaign
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int10
+        404:
+          description: Id not found
+
+  /campaign/{id}/receiver-deployments:
+    get:
+      tags:
+        - campaign
+      summary: Get all receiver deployment id's in a specific campaign
+      description: Get all receiver deployment id's in a specific campaign
+      operationId: getReceiverDeploymentsInCampaign
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int10
         404:
           description: Id not found
 
