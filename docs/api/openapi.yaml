@@ -1217,7 +1217,7 @@ paths:
       description: Insert data from equipment
       operationId: postLingomo
       security:
-        - Equipment-API-Key: []
+        - EquipmentApiKeyAuth: []
       requestBody:
         content:
           application/json:
