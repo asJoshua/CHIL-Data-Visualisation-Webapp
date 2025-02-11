@@ -410,6 +410,67 @@ paths:
         404:
           description: Type not found
 
+  /data/region/raw:
+    get:
+      tags:
+        - data
+      summary: Get raw data from a specific region
+      description: Get raw data from a specific region
+      operationId: getDataByRegion
+      parameters:
+        - in: query
+          name: region
+          required: true
+          description: The region for the data to be selected from
+          schema:
+            type: string
+            enum: [
+              canada,
+              greenland,
+            ]
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-raw-data'
+                  - $ref: '#/components/schemas/cryowurst-raw-data'
+                  - $ref: '#/components/schemas/hydrobean-raw-data'
+                  - $ref: '#/components/schemas/cryoegg-processed-data'
+                  - $ref: '#/components/schemas/cryowurst-processed-data'
+                  - $ref: '#/components/schemas/hydrobean-processed-data'
+        400:
+          description: Bad Request
+
 components:
   securitySchemes:
       BearerAuth:
@@ -584,3 +645,237 @@ components:
           type: number
           format: double
           example: 2000
+
+    cryoegg-raw-data:
+      type: object
+      properties:
+        cryoegg_raw_id:
+          type: integer
+          format: int10
+        receiver_data_id:
+          type: integer
+          format: int10
+        instrument_id:
+          type: integer
+          format: int10
+        ingest_id:
+          type: integer
+          format: int10
+        conductivity_raw:
+          type: integer
+          format: int11
+        temperature_pt1000_raw:
+          type: integer
+          format: int11
+        pressure_raw:
+          type: integer
+          format: int11
+        temperature_raw:
+          type: integer
+          format: int11
+        battery_voltage:
+          type: integer
+          format: int11
+        sequence_number:
+          type: integer
+          format: int11
+        rssi:
+          type: number
+          format: double
+        packet_version:
+          type: string
+
+    cryowurst-raw-data:
+      type: object
+      properties:
+        cryowurst_raw_id:
+          type: integer
+          format: int10
+        receiver_data_id:
+          type: integer
+          format: int10
+        ingest_id:
+          type: integer
+          format: int10
+        instrument_id:
+          type: integer
+          format: int10
+        temperature_tmp117_raw:
+          type: integer
+          format: int11
+        mag_x_raw:
+          type: integer
+          format: int11
+        mag_y_raw:
+          type: integer
+          format: int11
+        mag_z_raw:
+          type: integer
+          format: int11
+        accel_imu_x_raw:
+          type: integer
+          format: int11
+        accel_imu_y_raw:
+          type: integer
+          format: int11
+        accel_imu_z_raw:
+          type: integer
+          format: int11
+        pitch_raw:
+          type: integer
+          format: int11
+        roll_raw:
+          type: integer
+          format: int11
+        conductivity_raw:
+          type: integer
+          format: int11
+        pressure_raw:
+          type: integer
+          format: int11
+        temperature_keller_raw:
+          type: integer
+          format: int11
+        battery_voltage:
+          type: integer
+          format: int11
+        sequence_number:
+          type: integer
+          format: int11
+        rssi:
+          type: number
+          format: double
+        packet_version:
+          type: string
+
+    hydrobean-raw-data:
+      type: object
+      properties:
+        hydrobean_raw_id:
+          type: integer
+          format: int10
+        receiver_data_id:
+          type: integer
+          format: int10
+        instrument_id:
+          type: integer
+          format: int10
+        ingest_id:
+          type: integer
+          format: int10
+        conductivity_raw:
+          type: integer
+          format: int11
+        pressure_raw:
+          type: integer
+          format: int11
+        temperature_raw:
+          type: integer
+          format: int11
+        battery_voltage:
+          type: integer
+          format: int11
+        sequence_number:
+          type: integer
+          format: int11
+        rssi:
+          type: number
+          format: double
+        packet_version:
+          type: string
+
+    cryoegg-processed-data:
+      type: object
+      properties:
+        cryoegg_data_id:
+          type: integer
+          format: int10
+        cryoegg_raw_id:
+          type: integer
+          format: int10
+        process_id:
+          type: integer
+          format: int10
+        conductivity:
+          type: number
+          format: double
+        temperature_pt1000:
+          type: integer
+          format: int11
+        pressure:
+          type: number
+          format: double
+        temperature:
+          type: number
+          format: double
+
+    cryowurst-processed-data:
+      type: object
+      properties:
+        cryowurst_data_id:
+          type: integer
+          format: int10
+        cryowurst_raw_id:
+          type: integer
+          format: int10
+        process_id:
+          type: integer
+          format: int10
+        temperature_tmp117:
+          type: number
+          format: double
+        mag_x:
+          type: number
+          format: double
+        mag_y:
+          type: number
+          format: double
+        mag_z:
+          type: number
+          format: double
+        accel_imu_x:
+          type: number
+          format: double
+        accel_imu_y:
+          type: number
+          format: double
+        accel_imu_z:
+          type: number
+          format: double
+        pitch:
+          type: number
+          format: double
+        roll:
+          type: number
+          format: double
+        conductivity:
+          type: number
+          format: double
+        pressure:
+          type: number
+          format: double
+        temperature_keller:
+          type: number
+          format: double
+
+    hydrobean-processed-data:
+      type: object
+      properties:
+        hydrobean_data_id:
+          type: integer
+          format: int10
+        hydrobean_raw_id:
+          type: integer
+          format: int10
+        process_id:
+          type: integer
+          format: int10
+        conductivity:
+          type: number
+          format: double
+        pressure:
+          type: number
+          format: double
+        temperature:
+          type: number
+          format: double
