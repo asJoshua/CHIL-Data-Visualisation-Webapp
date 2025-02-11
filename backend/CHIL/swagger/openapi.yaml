@@ -526,6 +526,200 @@ paths:
         400:
           description: Bad Request
 
+  /data/campaign/raw:
+    get:
+      tags:
+        - data
+      summary: Get raw data from a specific campaign
+      description: Get raw data from a specific campaign
+      operationId: getRawDataByCampaign
+      parameters:
+        - in: query
+          name: campaign
+          required: true
+          description: The campaign for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-raw-data'
+                  - $ref: '#/components/schemas/cryowurst-raw-data'
+                  - $ref: '#/components/schemas/hydrobean-raw-data'
+        400:
+          description: Bad Request
+
+  /data/campaign/processed:
+    get:
+      tags:
+        - data
+      summary: Get processed data from a specific campaign
+      description: Get processed data from a specific campaign
+      operationId: getProcessedDataByCampaign
+      parameters:
+        - in: query
+          name: campaign
+          required: true
+          description: The campaign for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-processed-data'
+                  - $ref: '#/components/schemas/cryowurst-processed-data'
+                  - $ref: '#/components/schemas/hydrobean-processed-data'
+        400:
+          description: Bad Request
+
+  /data/instrument/raw:
+    get:
+      tags:
+        - data
+      summary: Get raw data from a specific instrument
+      description: Get raw data from a specific instrument
+      operationId: getRawDataByInstrument
+      parameters:
+        - in: query
+          name: instrument_id
+          required: true
+          description: The specific instrument for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-raw-data'
+                  - $ref: '#/components/schemas/cryowurst-raw-data'
+                  - $ref: '#/components/schemas/hydrobean-raw-data'
+        400:
+          description: Bad Request
+
+  /data/instrument/processed:
+    get:
+      tags:
+        - data
+      summary: Get processed data from a specific instrument
+      description: Get processed data from a specific instrument
+      operationId: getProcessedDataByInstrument
+      parameters:
+        - in: query
+          name: instrument_id
+          required: true
+          description: The specific instrument for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-processed-data'
+                  - $ref: '#/components/schemas/cryowurst-processed-data'
+                  - $ref: '#/components/schemas/hydrobean-processed-data'
+        400:
+          description: Bad Request
+
 components:
   securitySchemes:
       BearerAuth:
