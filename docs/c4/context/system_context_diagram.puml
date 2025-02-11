@@ -1,5 +1,6 @@
-@startuml System Diagram
+@startuml System-Context-Diagram
 !include <c4/C4_Context.puml>
+title System Context Diagram
 
 Person(public_user, "Public User", "An unauthenticated user")
 Person(admin_user, "Admin User", "An authorized and authenticated user")
