@@ -789,7 +789,7 @@ paths:
 
     delete:
       tags:
-        - campagin
+        - campaigin
       summary: Delete the campaign entry
       description: Delete the campaign entr
       operationId: deleteCampaign
@@ -807,7 +807,6 @@ paths:
           description: No Content
         404:
           description: Id not found
-
 
 components:
   securitySchemes:
