@@ -1209,6 +1209,36 @@ paths:
         404:
           description: Id not found
 
+  /ingest/lingomo:
+    post:
+      tags:
+        - ingest
+      summary: Insert data from equipment
+      description: Insert data from equipment
+      operationId: postLingomo
+      security:
+        - Equipment-API-Key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lingomo'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lingomo'
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lingomo'
+        403:
+          description: Forbidden
+
 components:
   securitySchemes:
       BearerAuth:
@@ -1662,3 +1692,30 @@ components:
         type: object
         oneOf:
           - $ref: '#/components/schemas/campaign'
+
+    lingomo:
+      type: object
+      properties:
+        ingest_id:
+          type: integer
+          format: int10
+        lingomo_id:
+          type: string
+        receieved_timestamp:
+          type: string
+        imei:
+          type: string
+        serial:
+          type: string
+        momsn:
+          type: integer
+          format: int10
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        accuracy:
+          type: number
+          format: double
