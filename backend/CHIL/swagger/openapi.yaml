@@ -736,6 +736,57 @@ paths:
                 items:
                   $ref: '#/components/schemas/campaign-list'
 
+  /campaign/{id}:
+    get:
+      tags:
+        - campaign
+      summary: Get infomation relating to a specific campaign
+      description: Get infomation relating to a specific campaign
+      operationId: getCampaign
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/campaign'
+
+        404:
+          description: Id not found
+
+    put:
+      tags:
+        - campaign
+      summary: Update campagin entry
+      description: Update campagin entry
+      operationId: updateCampaign
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Id not found
+        409:
+          description: Conflict
+
 components:
   securitySchemes:
       BearerAuth:
