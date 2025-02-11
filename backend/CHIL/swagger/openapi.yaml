@@ -789,7 +789,7 @@ paths:
 
     delete:
       tags:
-        - campaigin
+        - campaign
       summary: Delete the campaign entry
       description: Delete the campaign entr
       operationId: deleteCampaign
