@@ -543,14 +543,14 @@ paths:
             format: int10
         - in: query
           name: start_time
-          required: true
+          required: false
           description: The time from which the data should be selected
           schema:
             type: string
             example: 1970-00-00 00:00:00
         - in: query
           name: end_time
-          required: true
+          required: false
           description: The time to which the data should be selected
           schema:
             type: string
@@ -598,14 +598,14 @@ paths:
             format: int10
         - in: query
           name: start_time
-          required: true
+          required: false
           description: The time from which the data should be selected
           schema:
             type: string
             example: 1970-00-00 00:00:00
         - in: query
           name: end_time
-          required: true
+          required: false
           description: The time to which the data should be selected
           schema:
             type: string
