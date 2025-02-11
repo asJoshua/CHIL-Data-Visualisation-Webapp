@@ -302,6 +302,137 @@ paths:
         404:
           description: Type or Id not found
 
+  /instrument/{type}/{id}/deployment/{deployment_id}:
+    get:
+      tags:
+        - instrument
+      summary: Get infomation by specific deployment
+      description: Get infomation by specific deployment
+      operationId: getInstrumentDeployment
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment'
+        404:
+          description: Type or Id or Deployment Id not found
+
+
+    put:
+      tags:
+        - instrument
+      summary: Update entry by specific deployment
+      description: Update entry by specific deployment
+      operationId: updateInstrumentDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Type or Id or Deployment Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - instrument
+      summary: Delete entry by specific deployment
+      description: Delete entry by specific deployment
+      operationId: deleteInstrumentDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Type or Id or Deployment Id not found
+
   /receiver:
     post:
       tags:
