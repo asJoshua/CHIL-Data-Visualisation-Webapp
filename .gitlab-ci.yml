@@ -48,9 +48,10 @@ backend-test:
 
 pages:
   stage: deploy
-  image: node
+  image: node:lts
 
   script:
+    - mkdir public
     - npm install @redocly/cli
     - npx redocly build-docs docs/api/openapi.yaml
 
