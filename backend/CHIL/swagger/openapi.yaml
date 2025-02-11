@@ -219,6 +219,26 @@ paths:
       operationId: createInstrumentDeployment
       security:
         - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
       requestBody:
         content:
             application/json:
@@ -244,6 +264,43 @@ paths:
 
         404:
           description: Type not found
+
+  /instrument/{type}/{id}/deployment/list:
+    get:
+      tags:
+        - instrument
+      summary: List all deployments of this instrument
+      description: List all deployments of this instrument
+      operationId: listInstrumentDeployments
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment-list'
+        404:
+          description: Type or Id not found
 
   /receiver:
     post:
@@ -883,6 +940,13 @@ components:
           type: string
           example: 1970-00-00 00:00:00
 
+    instrument-deployment-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/instrument-deployment'
+
     receiver:
       type: object
       properties:
@@ -982,6 +1046,13 @@ components:
           type: number
           format: double
           example: 2000
+
+    receiver-deployment-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/receiver-deployment'
 
     cryoegg-raw-data:
       type: object
