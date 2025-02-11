@@ -11,9 +11,8 @@ SystemDb(mariadb, "MariaDB", "Stores all of the data collected from the instrume
 
 Rel(public_user, website, "Uses")
 Rel(admin_user, website, "Uses")
-Rel(website, api, "Makes Requests")
+BiRel(website, api, "HTTP Requests")
 Rel(equipment, api, "Sends data to")
 BiRel(api, mariadb, "Reads / Writes")
-
 
 @enduml
