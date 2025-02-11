@@ -787,6 +787,28 @@ paths:
         409:
           description: Conflict
 
+    delete:
+      tags:
+        - campagin
+      summary: Delete the campaign entry
+      description: Delete the campaign entr
+      operationId: deleteCampaign
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Id not found
+
+
 components:
   securitySchemes:
       BearerAuth:
