@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { PublicHeader } from './public-header'
+import { PublicHeader } from '@marginals/public-header'
 
 const meta: Meta<typeof PublicHeader> = {
     component: PublicHeader,
