@@ -13,8 +13,15 @@ export const createAppRouter = () => {
                 {
                     path: paths.public.home.path,
                     lazy: async () => {
-                        const { HomeRoot } = await import('./routes/public/home.tsx');
+                        const { HomeRoot } = await import('@routes/routes/public/home.tsx');
                         return { Component: HomeRoot };
+                    }
+                },
+                {
+                    path: paths.public.login.path,
+                    lazy: async () => {
+                        const { LoginRoot } = await import('@routes/routes/public/login.tsx');
+                        return { Component: LoginRoot };
                     }
                 },
             ]
