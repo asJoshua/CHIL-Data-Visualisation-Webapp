@@ -1,9 +1,9 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useMemo } from 'react';
 
 import { paths } from '@config/paths.ts';
 
-export const createAppRouter = () => {
+const createAppRouter = () => {
 
     return createBrowserRouter([
         {

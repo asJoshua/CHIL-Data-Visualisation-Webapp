@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react'
 import { PublicHeader } from '@marginals/public-header'
+import { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof PublicHeader> = {
     component: PublicHeader,
@@ -10,6 +10,6 @@ type Story = StoryObj<typeof PublicHeader>;
 
 export const defaultPublicHeader: Story = {
     args: {
-        
+
     }
 }
