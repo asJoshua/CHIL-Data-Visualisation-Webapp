@@ -68,9 +68,11 @@ export default tseslint.config(
             // e.g src/features and src/app can import from these shared modules but not the other way around
             {
               target: [
-                  './src/components',
-                  './src/config',
-                  './src/assets',
+                './src/assets',
+                './src/components',
+                './src/config',
+                './src/utils',
+                './src/stories',
               ],
               from: ['./src/features', './src/app'],
             },

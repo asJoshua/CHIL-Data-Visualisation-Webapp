@@ -1,18 +1,25 @@
-import { cva, VariantProps } from "class-variance-authority";
-import { Button as MuiButton } from '@mui/material';
+import {
+    Button as MuiButton,
+    ButtonProps as MuiButtonProps
+} from '@mui/material';
 
 import { cn } from '@/utils/cn';
 
-const buttonVariants = cva(
+export type ButtonProps = MuiButtonProps
 
-)
-
-const Button = ({ className, children, ...props }: muiButton) => {
+const Button = ({
+    className,
+    children,
+    ...props
+}: ButtonProps) => {
     return (
         <MuiButton
-            className={cn}
+            className={cn(className)}
+            {...props}
         >
             {children}
         </MuiButton>
-    )
-}
+    );
+};
+
+export { Button };
