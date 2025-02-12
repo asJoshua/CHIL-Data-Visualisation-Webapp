@@ -16,10 +16,7 @@
         "esModuleInterop": true,
         "baseUrl": "./",
         "paths": {
-          "@components/*": ["src/components/*"],
-          "@config/*": ["src/config/*"],
-          "@marginals/*": ["src/components/marginals/*"],
-          "@routes/*": ["src/app/*"],
+          "@/*": ["src/*"],
         }
     }
 }

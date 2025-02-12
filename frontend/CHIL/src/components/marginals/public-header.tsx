@@ -1,5 +1,5 @@
 import React from 'react'
-import { publicHeaderConfig } from '@config/headerLinks';
+import { publicHeaderConfig } from '@/config/headerLinks';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import { LogoDev } from '@mui/icons-material';

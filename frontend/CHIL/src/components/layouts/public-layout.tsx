@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { PublicHeader } from '@marginals/public-header';
+import { PublicHeader } from '@/components/marginals/public-header';
 
 const PublicLayout = ({ children }: PropsWithChildren): React.JSX.Element => {
     return (
