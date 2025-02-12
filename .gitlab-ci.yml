@@ -1,6 +1,7 @@
 stages:
   - lint
   - test
+  - deploy
 
 frontend-lint:
   stage: lint
@@ -44,3 +45,19 @@ backend-test:
     - poetry -V
     - poetry install
     - poetry run python manage.py test
+
+pages:
+  stage: deploy
+  image: node:lts
+
+  script:
+    - mkdir public
+    - npm install @redocly/cli
+    - npx redocly build-docs -o public/index.html docs/api/openapi.yaml
+
+  artifacts:
+    paths:
+      - public
+
+  only:
+    - master
