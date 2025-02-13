@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button/button';
 const LoginForm = () => {
     return (
         <Box
-            className='flex flex-col gap-y-4 flex-wrap justify-center items-stretch'
+            className='flex flex-col gap-y-4 flex-wrap justify-center'
             sx={{
                 width: '20vw',
                 height: '50vh',
