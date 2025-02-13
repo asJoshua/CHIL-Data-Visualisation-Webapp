@@ -4,7 +4,7 @@ import { LoginForm } from '@/features/login-form/login-form';
 
 const LoginRoot = (): React.JSX.Element => {
     return (
-        <PublicLayout>
+        <PublicLayout className='flex justify-center py-auto'>
             <LoginForm />
         </PublicLayout>
     )
