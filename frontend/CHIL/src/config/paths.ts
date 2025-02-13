@@ -12,6 +12,10 @@ const paths = {
             path: 'login',
             getHref: () => '/login'
         },
+        deployments: {
+            path: 'deployments',
+            getHref: () => '/deployments'
+        },
     }
 }
 
