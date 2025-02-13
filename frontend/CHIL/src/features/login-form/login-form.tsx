@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button/button';
 const LoginForm = () => {
     return (
         <div className='flex flex-col flex-wrap items-center justify-center'>
-            <h1>LOGIN</h1>
+            <h1 >LOGIN</h1>
             <TextField
                 variant='outlined'
                 label='Username'
