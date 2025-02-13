@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button/button';
 
 const LoginForm = () => {
     return (
-        <div className='flex flex-col flex-wrap items-center justify-center'>
-            <h1 >LOGIN</h1>
+        <div className='flex flex-col gap-y-4 flex-wrap justify-center items-stretch'>
+            <h1 className='text-3xl font-bold text-center'>LOGIN</h1>
             <TextField
                 variant='outlined'
                 label='Username'
