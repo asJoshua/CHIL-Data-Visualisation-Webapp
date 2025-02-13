@@ -1,4 +1,4 @@
-import { use, useState } from 'react';
+import { useState } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
@@ -20,8 +20,46 @@ const LoginForm = () => {
     };
 
     const handleLogin = () => {
-        console.log("Username: ", username);
-        console.log("Password: ", password);
+        let shouldError = false;
+        let usernameErrorMessage = "";
+        let passwordErrorMessage = "";
+
+        // Basic input validation
+        if (username === "") {
+            shouldError = true;
+            usernameErrorMessage = "Must not be blank";
+        }
+
+        if (password === "") {
+            shouldError = true;
+            passwordErrorMessage = "Must not be blank";
+        }
+
+        // If inputs are blank, don't make the API request
+        if (shouldError === true){
+            setError(shouldError);
+            setUsernameErrorMessage(usernameErrorMessage);
+            setPasswordErrorMessage(passwordErrorMessage);
+            return false;
+        } 
+
+        // Change to a promise and api request
+        const success = false;
+
+        if (success){
+            // Set tokens to local storage
+            // Redirect to correct auth page
+            setError(false);
+            setUsernameErrorMessage("");
+            setPasswordErrorMessage("");
+            return true;
+        } else {
+            // Username or Password wrong
+            setError(true);
+            setUsernameErrorMessage("Username or Password incorrect");
+            setPasswordErrorMessage("Username or Password incorrect");
+            return false;
+        }
     };
 
     return (
