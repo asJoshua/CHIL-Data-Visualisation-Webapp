@@ -14,9 +14,9 @@ type Story = StoryObj<typeof Button>;
 
 export const defaultButton: Story = {
     args: {
-        variant: "contained",
+        variant: "outlined",
         size: "small",
-        color: "primary",
+        color: "secondary",
         children: [<p>Button</p>],
     }
 }
