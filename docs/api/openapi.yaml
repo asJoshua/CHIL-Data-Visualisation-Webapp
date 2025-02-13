@@ -1,0 +1,1721 @@
+openapi: 3.0.3
+info:
+  title: Cardiff University CHIL
+  description: |-
+    This API is used for interacting with Cardiff University's CHIL project.
+  version: 1.0.0
+
+tags:
+  - name: instrument
+    description: Everything relating the instruments
+  - name: receiver
+    description: Everything relating to the recivers
+  - name: data
+    description: Get raw and processed data from all equipment types
+  - name: campaign
+    description: Everything relating to campaigns (Grouped deployments)
+  - name: ingest
+    description: Used by equipment to add data to the database
+
+paths:
+  /instrument/{type}:
+    post:
+      tags:
+        - instrument
+      summary: Create a new instrument of a specified type
+      description: Create a new instrument of a specified type
+      operationId: createInstrument
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument to list
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instrument'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument'
+
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument'
+
+        403:
+          description: Forbidden
+
+        404:
+          description: Type not found
+
+  /instrument/{type}/list:
+    get:
+      tags:
+        - instrument
+      summary: Lists all instruments of a specified type
+      description: Lists all instruments of a specified type
+      operationId: getAllInstruments
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument to list
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/instrument-list'
+        400:
+          description: Type not found
+
+  /instrument/{type}/{id}:
+    get:
+      tags:
+        - instrument
+      summary: Get infomation of a specific instrument by id
+      description: Get infomation of a specific instrument by id
+      operationId: getInstrument
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/instrument'
+        404:
+          description: Type or Id not found
+    put:
+      tags:
+        - instrument
+      summary: Update instrument entry
+      description: Update instrument entry
+      operationId: updateInstrument
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      requestBody:
+        description: Update an existing instrument in the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instrument'
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Type or Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - instrument
+      summary: Delete the instrument entry
+      description: Delete the instrument entry
+      operationId: deleteInstrument
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Type or Id not found
+
+  /instrument/{type}/{id}/deployment:
+    post:
+      tags:
+        - instrument
+      summary: Create a new deployment for this instrument
+      description: Create a new deployment for this instrument
+      operationId: createInstrumentDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      requestBody:
+        content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/instrument-deployment'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment'
+
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment'
+
+        403:
+          description: Forbidden
+
+        404:
+          description: Type not found
+
+  /instrument/{type}/{id}/deployment/list:
+    get:
+      tags:
+        - instrument
+      summary: List all deployments of this instrument
+      description: List all deployments of this instrument
+      operationId: listInstrumentDeployments
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment-list'
+        404:
+          description: Type or Id not found
+
+  /instrument/{type}/{id}/deployment/{deployment_id}:
+    get:
+      tags:
+        - instrument
+      summary: Get infomation by specific deployment
+      description: Get infomation by specific deployment
+      operationId: getInstrumentDeployment
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment'
+        404:
+          description: Type or Id or Deployment Id not found
+
+
+    put:
+      tags:
+        - instrument
+      summary: Update entry by specific deployment
+      description: Update entry by specific deployment
+      operationId: updateInstrumentDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Type or Id or Deployment Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - instrument
+      summary: Delete entry by specific deployment
+      description: Delete entry by specific deployment
+      operationId: deleteInstrumentDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: The type of instrument
+          required: true
+          schema:
+            type: string
+            enum: [
+                'cryoegg',
+                'cryowurst',
+                'hydrobean',
+              ]
+        - name: id
+          in: path
+          description: The id of the instrument
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111111111
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Type or Id or Deployment Id not found
+
+  /receiver:
+    post:
+      tags:
+        - receiver
+      summary: Create a new receiver
+      description: Create a new receiver
+      operationId: createReceiver
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/receiver'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver'
+
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver'
+
+        403:
+          description: Forbidden
+
+        404:
+          description: Type not found
+
+  /receiver/list:
+    get:
+      tags:
+        - receiver
+      summary: Lists all of the recievers
+      description: Lists all of the recievers
+      operationId: getRecievers
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/receiver-list'
+
+  /receiver/{id}:
+    get:
+        tags:
+          - receiver
+        summary: Get infomation of a specific receiver by id
+        description: Get infomation of a specific receiver by id
+        operationId: getReceiver
+        parameters:
+          - name: id
+            in: path
+            description: The id of the reciever
+            required: true
+            schema:
+              type: string
+              example: JJ_1970
+        responses:
+          200:
+            description: Success
+            content:
+              application/json:
+                schema:
+                  items:
+                    $ref: '#/components/schemas/receiver'
+          404:
+            description: Id not found
+    put:
+      tags:
+        - receiver
+      summary: Update receiver entry
+      description: Update receiver entry
+      operationId: updateReceiver
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+      requestBody:
+        description: Update an existing receiver in the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/receiver'
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - receiver
+      summary: Delete the receiver entry
+      description: Delete the receiver entry
+      operationId: deleteReceiver
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Id not found
+
+  /receiver/{id}/deployment:
+    post:
+      tags:
+        - receiver
+      summary: Create a new deployment for this receiver
+      description: Create a new deployment for this receiver
+      operationId: createReceiverDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+      requestBody:
+        content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/receiver-deployment'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver-deployment'
+
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver-deployment'
+
+        403:
+          description: Forbidden
+
+        404:
+          description: Type not found
+
+  /receiver/{id}/deployment/list:
+    get:
+      tags:
+        - receiver
+      summary: List all deployments of this receiver
+      description: List all deployments of this receiver
+      operationId: listReceiverDeployments
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-deployment-list'
+        404:
+          description: Type or Id not found
+
+  /receiver/{id}/deployment/{deployment_id}:
+    get:
+      tags:
+        - receiver
+      summary: Get infomation by specific deployment
+      description: Get infomation by specific deployment
+      operationId: getReceiverDeployment
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/receiver-deployment'
+        404:
+          description: Id or Deployment Id not found
+
+
+    put:
+      tags:
+        - receiver
+      summary: Update entry by specific deployment
+      description: Update entry by specific deployment
+      operationId: updateReceiverDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Id or Deployment Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - receiver
+      summary: Delete entry by specific deployment
+      description: Delete entry by specific deployment
+      operationId: deleteReceiverDeployment
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id of the receiver
+          required: true
+          schema:
+            type: string
+            example: JJ_1970
+        - name: deployment_id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Id or Deployment Id not found
+
+  /data/region/raw:
+    get:
+      tags:
+        - data
+      summary: Get raw data from a specific region
+      description: Get raw data from a specific region
+      operationId: getRawDataByRegion
+      parameters:
+        - in: query
+          name: region
+          required: true
+          description: The region for the data to be selected from
+          schema:
+            type: string
+            enum: [
+              canada,
+              greenland,
+            ]
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-raw-data'
+                  - $ref: '#/components/schemas/cryowurst-raw-data'
+                  - $ref: '#/components/schemas/hydrobean-raw-data'
+        400:
+          description: Bad Request
+
+  /data/region/processed:
+    get:
+      tags:
+        - data
+      summary: Get processed data from a specific region
+      description: Get processed data from a specific region
+      operationId: getProcessedDataByRegion
+      parameters:
+        - in: query
+          name: region
+          required: true
+          description: The region for the data to be selected from
+          schema:
+            type: string
+            enum: [
+              canada,
+              greenland,
+            ]
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-processed-data'
+                  - $ref: '#/components/schemas/cryowurst-processed-data'
+                  - $ref: '#/components/schemas/hydrobean-processed-data'
+        400:
+          description: Bad Request
+
+  /data/campaign/raw:
+    get:
+      tags:
+        - data
+      summary: Get raw data from a specific campaign
+      description: Get raw data from a specific campaign
+      operationId: getRawDataByCampaign
+      parameters:
+        - in: query
+          name: campaign
+          required: true
+          description: The campaign for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: false
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: false
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-raw-data'
+                  - $ref: '#/components/schemas/cryowurst-raw-data'
+                  - $ref: '#/components/schemas/hydrobean-raw-data'
+        400:
+          description: Bad Request
+
+  /data/campaign/processed:
+    get:
+      tags:
+        - data
+      summary: Get processed data from a specific campaign
+      description: Get processed data from a specific campaign
+      operationId: getProcessedDataByCampaign
+      parameters:
+        - in: query
+          name: campaign
+          required: true
+          description: The campaign for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: false
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: false
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: instrument_type
+          required: false
+          description: |
+            The instrument type of which the data should be selected,
+            if empty then data from all instrument types will be returned
+          schema:
+            type: string
+            enum: [
+              cryoegg,
+              cryowurst,
+              hydrobean,
+            ]
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-processed-data'
+                  - $ref: '#/components/schemas/cryowurst-processed-data'
+                  - $ref: '#/components/schemas/hydrobean-processed-data'
+        400:
+          description: Bad Request
+
+  /data/instrument/raw:
+    get:
+      tags:
+        - data
+      summary: Get raw data from a specific instrument
+      description: Get raw data from a specific instrument
+      operationId: getRawDataByInstrument
+      parameters:
+        - in: query
+          name: instrument_id
+          required: true
+          description: The specific instrument for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-raw-data'
+                  - $ref: '#/components/schemas/cryowurst-raw-data'
+                  - $ref: '#/components/schemas/hydrobean-raw-data'
+        400:
+          description: Bad Request
+
+  /data/instrument/processed:
+    get:
+      tags:
+        - data
+      summary: Get processed data from a specific instrument
+      description: Get processed data from a specific instrument
+      operationId: getProcessedDataByInstrument
+      parameters:
+        - in: query
+          name: instrument_id
+          required: true
+          description: The specific instrument for the data to be selected from
+          schema:
+            type: integer
+            format: int10
+        - in: query
+          name: start_time
+          required: true
+          description: The time from which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+        - in: query
+          name: end_time
+          required: true
+          description: The time to which the data should be selected
+          schema:
+            type: string
+            example: 1970-00-00 00:00:00
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/cryoegg-processed-data'
+                  - $ref: '#/components/schemas/cryowurst-processed-data'
+                  - $ref: '#/components/schemas/hydrobean-processed-data'
+        400:
+          description: Bad Request
+
+  /campaign:
+    post:
+      tags:
+        - campaign
+      summary: Create a new campaign
+      description: Create a new campagin
+      operationId: createCampaign
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/campaign'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/campaign'
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/campaign'
+        403:
+          description: Forbidden
+
+
+  /campaign/list:
+    get:
+      tags:
+        - campaign
+      summary: List all campaigns
+      description: List all campaigns
+      operationId: listCampaigns
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/campaign-list'
+
+  /campaign/{id}:
+    get:
+      tags:
+        - campaign
+      summary: Get infomation relating to a specific campaign
+      description: Get infomation relating to a specific campaign
+      operationId: getCampaign
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/campaign'
+
+        404:
+          description: Id not found
+
+    put:
+      tags:
+        - campaign
+      summary: Update campagin entry
+      description: Update campagin entry
+      operationId: updateCampaign
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        404:
+          description: Id not found
+        409:
+          description: Conflict
+
+    delete:
+      tags:
+        - campaign
+      summary: Delete the campaign entry
+      description: Delete the campaign entry
+      operationId: deleteCampaign
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        204:
+          description: No Content
+        404:
+          description: Id not found
+
+  /campaign/{id}/instrument-deployments:
+    get:
+      tags:
+        - campaign
+      summary: Get all instrument deployment id's in a specific campaign
+      description: Get all instrument deployment id's in a specific campaign
+      operationId: getInstrumentDeploymentsInCampaign
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int10
+        404:
+          description: Id not found
+
+  /campaign/{id}/receiver-deployments:
+    get:
+      tags:
+        - campaign
+      summary: Get all receiver deployment id's in a specific campaign
+      description: Get all receiver deployment id's in a specific campaign
+      operationId: getReceiverDeploymentsInCampaign
+      parameters:
+        - in: path
+          name: Id
+          required: true
+          schema:
+            type: integer
+            format: int10
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int10
+        404:
+          description: Id not found
+
+  /ingest/lingomo:
+    post:
+      tags:
+        - ingest
+      summary: Insert data from equipment
+      description: Insert data from equipment
+      operationId: postLingomo
+      security:
+        - EquipmentApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lingomo'
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lingomo'
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lingomo'
+        403:
+          description: Forbidden
+
+components:
+  securitySchemes:
+      BearerAuth:
+        type: http
+        scheme: bearer
+
+      EquipmentApiKeyAuth:
+        type: apiKey
+        in: header
+        name: Equipment-API-Key
+
+  schemas:
+    instrument:
+      type: object
+      properties:
+        instrument_id:
+          type: integer
+          format: int10
+          example: 1111111111
+        type:
+          type: string
+          example: cryoegg
+        manufacture_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        manufacture_batch:
+          type: string
+          example: CE1970
+        commission_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        notes:
+          type: string
+          nullable: true
+          example: Info about this specific instrument
+        pressure_keller_min:
+          type: number
+          format: double
+          example: 0.0
+        pressure_keller_max:
+          type: number
+          format: double
+          example: 100
+
+    instrument-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/instrument'
+
+    instrument-deployment:
+      type: object
+      properties:
+        deployment_id:
+          type: integer
+          format: int10
+        description:
+          type: string
+          example: Info about this specific deployment
+        campaign_id:
+          type: integer
+          format: int10
+          example: 1
+        instrument_id:
+          type: integer
+          format: int10
+          example: 1111111111
+        start_timestamp:
+          type: string
+          example: 1970-00-00 00:00:00
+        end_timestamp:
+          type: string
+          example: 1970-00-00 00:00:00
+
+    instrument-deployment-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/instrument-deployment'
+
+    receiver:
+      type: object
+      properties:
+        reciever_id:
+          type: integer
+          format: int10
+          example: 10
+        name:
+          type: string
+          example: Portable Reciever
+        type:
+          type: string
+          example: tripod
+          enum: [
+            'tripod',
+            'portable'
+          ]
+        imei_number:
+          type: string
+          nullable: true
+          example: 111111111111111
+        manufacture_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        manufacture_batch:
+          type: string
+          example: JJ_1970
+        commission_date:
+          type: string
+          example: 1970-00-00 00:00:00
+        notes:
+          type: string
+          nullable: true
+          example: Info about this specific receiver
+
+    receiver-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/receiver'
+
+    receiver-deployment:
+      type: object
+      properties:
+        deployment_id:
+          type: integer
+          format: int10
+          example: 1
+        description:
+          type: string
+          example: Info about this specific deployment
+        campaign_id:
+          type: integer
+          format: int10
+          example: 1
+        reciever_id:
+          type: integer
+          format: int10
+          example: 10
+        firmware_version:
+          type: string
+          example: 1.0cryowurst
+        antenna_type:
+          type: string
+          example: yargi
+        start_timestamp:
+          type: string
+          example: 1970-00-00 00:00:00
+        end_timestamp:
+          type: string
+          example: 1970-00-00 00:00:00
+        service_timestamp:
+          type: string
+          example: 1970-00-00 00:00:00
+        original_latitude:
+          type: number
+          format: double
+          example: 11.11111
+        original_longitude:
+          type: number
+          format: double
+          example: -11.11111
+        original_elevation:
+          type: number
+          format: double
+          example: 2000
+        latest_latitude:
+          type: number
+          format: double
+          example: 11.11111
+        latest_longitude:
+          type: number
+          format: double
+          example: -11.11111
+        latest_elevation:
+          type: number
+          format: double
+          example: 2000
+
+    receiver-deployment-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/receiver-deployment'
+
+    cryoegg-raw-data:
+      type: object
+      properties:
+        cryoegg_raw_id:
+          type: integer
+          format: int10
+        receiver_data_id:
+          type: integer
+          format: int10
+        instrument_id:
+          type: integer
+          format: int10
+        ingest_id:
+          type: integer
+          format: int10
+        conductivity_raw:
+          type: integer
+          format: int11
+        temperature_pt1000_raw:
+          type: integer
+          format: int11
+        pressure_raw:
+          type: integer
+          format: int11
+        temperature_raw:
+          type: integer
+          format: int11
+        battery_voltage:
+          type: integer
+          format: int11
+        sequence_number:
+          type: integer
+          format: int11
+        rssi:
+          type: number
+          format: double
+        packet_version:
+          type: string
+
+    cryowurst-raw-data:
+      type: object
+      properties:
+        cryowurst_raw_id:
+          type: integer
+          format: int10
+        receiver_data_id:
+          type: integer
+          format: int10
+        ingest_id:
+          type: integer
+          format: int10
+        instrument_id:
+          type: integer
+          format: int10
+        temperature_tmp117_raw:
+          type: integer
+          format: int11
+        mag_x_raw:
+          type: integer
+          format: int11
+        mag_y_raw:
+          type: integer
+          format: int11
+        mag_z_raw:
+          type: integer
+          format: int11
+        accel_imu_x_raw:
+          type: integer
+          format: int11
+        accel_imu_y_raw:
+          type: integer
+          format: int11
+        accel_imu_z_raw:
+          type: integer
+          format: int11
+        pitch_raw:
+          type: integer
+          format: int11
+        roll_raw:
+          type: integer
+          format: int11
+        conductivity_raw:
+          type: integer
+          format: int11
+        pressure_raw:
+          type: integer
+          format: int11
+        temperature_keller_raw:
+          type: integer
+          format: int11
+        battery_voltage:
+          type: integer
+          format: int11
+        sequence_number:
+          type: integer
+          format: int11
+        rssi:
+          type: number
+          format: double
+        packet_version:
+          type: string
+
+    hydrobean-raw-data:
+      type: object
+      properties:
+        hydrobean_raw_id:
+          type: integer
+          format: int10
+        receiver_data_id:
+          type: integer
+          format: int10
+        instrument_id:
+          type: integer
+          format: int10
+        ingest_id:
+          type: integer
+          format: int10
+        conductivity_raw:
+          type: integer
+          format: int11
+        pressure_raw:
+          type: integer
+          format: int11
+        temperature_raw:
+          type: integer
+          format: int11
+        battery_voltage:
+          type: integer
+          format: int11
+        sequence_number:
+          type: integer
+          format: int11
+        rssi:
+          type: number
+          format: double
+        packet_version:
+          type: string
+
+    cryoegg-processed-data:
+      type: object
+      properties:
+        cryoegg_data_id:
+          type: integer
+          format: int10
+        cryoegg_raw_id:
+          type: integer
+          format: int10
+        process_id:
+          type: integer
+          format: int10
+        conductivity:
+          type: number
+          format: double
+        temperature_pt1000:
+          type: integer
+          format: int11
+        pressure:
+          type: number
+          format: double
+        temperature:
+          type: number
+          format: double
+
+    cryowurst-processed-data:
+      type: object
+      properties:
+        cryowurst_data_id:
+          type: integer
+          format: int10
+        cryowurst_raw_id:
+          type: integer
+          format: int10
+        process_id:
+          type: integer
+          format: int10
+        temperature_tmp117:
+          type: number
+          format: double
+        mag_x:
+          type: number
+          format: double
+        mag_y:
+          type: number
+          format: double
+        mag_z:
+          type: number
+          format: double
+        accel_imu_x:
+          type: number
+          format: double
+        accel_imu_y:
+          type: number
+          format: double
+        accel_imu_z:
+          type: number
+          format: double
+        pitch:
+          type: number
+          format: double
+        roll:
+          type: number
+          format: double
+        conductivity:
+          type: number
+          format: double
+        pressure:
+          type: number
+          format: double
+        temperature_keller:
+          type: number
+          format: double
+
+    hydrobean-processed-data:
+      type: object
+      properties:
+        hydrobean_data_id:
+          type: integer
+          format: int10
+        hydrobean_raw_id:
+          type: integer
+          format: int10
+        process_id:
+          type: integer
+          format: int10
+        conductivity:
+          type: number
+          format: double
+        pressure:
+          type: number
+          format: double
+        temperature:
+          type: number
+          format: double
+
+    campaign:
+      type: object
+      properties:
+        campaign_id:
+          type: integer
+          format: int10
+        name:
+          type: string
+        description:
+          type: string
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        elevation:
+          type: number
+          format: double
+        start_timestamp:
+          type: string
+        end_timestamp:
+          type: string
+
+    campaign-list:
+      type: array
+      items:
+        type: object
+        oneOf:
+          - $ref: '#/components/schemas/campaign'
+
+    lingomo:
+      type: object
+      properties:
+        ingest_id:
+          type: integer
+          format: int10
+        lingomo_id:
+          type: string
+        receieved_timestamp:
+          type: string
+        imei:
+          type: string
+        serial:
+          type: string
+        momsn:
+          type: integer
+          format: int10
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        accuracy:
+          type: number
+          format: double

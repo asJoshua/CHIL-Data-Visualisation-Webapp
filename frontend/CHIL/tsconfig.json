@@ -1,0 +1,22 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+        "module": "NodeNext",
+        "target": "ES6",
+        "jsx": "react-jsx",
+        "allowJs": true,
+        "strict": true,
+        "composite": true,
+        "emitDeclarationOnly": true,
+        "allowImportingTsExtensions": true,
+        "esModuleInterop": true,
+        "baseUrl": "./",
+        "paths": {
+          "@/*": ["src/*"],
+        }
+    }
+}
