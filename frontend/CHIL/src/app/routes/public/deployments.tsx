@@ -14,15 +14,6 @@ const rows = [
     { name: "Deployment 1", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
     { name: "Deployment 2", description: "Another description", "start date": "2023-05-01", "end date": "2023-11-30", "campaign id": "5678" },
     { name: "Deployment 3", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
-    { name: "Deployment 1", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
-    { name: "Deployment 2", description: "Another description", "start date": "2023-05-01", "end date": "2023-11-30", "campaign id": "5678" },
-    { name: "Deployment 3", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
-    { name: "Deployment 1", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
-    { name: "Deployment 2", description: "Another description", "start date": "2023-05-01", "end date": "2023-11-30", "campaign id": "5678" },
-    { name: "Deployment 3", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
-    { name: "Deployment 1", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
-    { name: "Deployment 2", description: "Another description", "start date": "2023-05-01", "end date": "2023-11-30", "campaign id": "5678" },
-    { name: "Deployment 3", description: "Test description", "start date": "2023-01-01", "end date": "2023-12-31", "campaign id": "1234" },
 ];
 
 const DeploymentsRoot = (): React.JSX.Element => {
