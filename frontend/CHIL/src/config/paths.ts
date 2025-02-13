@@ -7,7 +7,11 @@ const paths = {
         home: {
             path: 'home',
             getHref: () => '/home'
-        }
+        },
+        login: {
+            path: 'login',
+            getHref: () => '/login'
+        },
     }
 }
 

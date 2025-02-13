@@ -1,9 +1,9 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useMemo } from 'react';
 
-import { paths } from '@config/paths.ts';
+import { paths } from '@/config/paths.ts';
 
-export const createAppRouter = () => {
+const createAppRouter = () => {
 
     return createBrowserRouter([
         {
@@ -13,8 +13,15 @@ export const createAppRouter = () => {
                 {
                     path: paths.public.home.path,
                     lazy: async () => {
-                        const { HomeRoot } = await import('./routes/public/home.tsx');
+                        const { HomeRoot } = await import('@/app/routes/public/home.tsx');
                         return { Component: HomeRoot };
+                    }
+                },
+                {
+                    path: paths.public.login.path,
+                    lazy: async () => {
+                        const { LoginRoot } = await import('@/app/routes/public/login.tsx');
+                        return { Component: LoginRoot };
                     }
                 },
             ]

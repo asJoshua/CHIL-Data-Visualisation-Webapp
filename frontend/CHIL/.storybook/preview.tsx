@@ -1,6 +1,8 @@
 import React from 'react'
 import type { Preview } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
+import '@/index.css'
+import 'tailwindcss/tailwind.css'
 
 const preview: Preview = {
   parameters: {
