@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { PublicHeader } from '@/components/marginals/public-header';
+import { Footer } from '@/components/marginals/footer';
 
 export type LayoutProps = PropsWithChildren & {
     className?: string
@@ -15,6 +16,7 @@ const PublicLayout = ({
             <div className={className}>
                 {children}
             </div>
+            <Footer />
         </>
     );
 }

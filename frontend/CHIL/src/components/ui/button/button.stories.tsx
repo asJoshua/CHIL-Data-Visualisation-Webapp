@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button/button'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Button> = {
+    title: "Components/Button",
     component: Button,
 
     parameters: {
@@ -17,6 +18,7 @@ export const defaultButton: Story = {
         variant: "outlined",
         size: "small",
         color: "secondary",
+        fontWeight: "100",
         children: [<p>Button</p>],
     }
 }
