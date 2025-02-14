@@ -19,9 +19,11 @@ interface Column {
 interface TableProps {
   columns: Column[];
   rows?: any[];
+  onRowClick?: (id: string) => void;
+//   ? means props are optional
 }
 
-const DataTable: React.FC<TableProps> = ({ columns, rows = [] }) => {
+const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -62,7 +64,12 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [] }) => {
               rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableRow 
+                  hover 
+                  role="checkbox" 
+                  tabIndex={-1} 
+                  key={index}
+                  onClick={() => onRowClick?.(row["campaign id"])}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (

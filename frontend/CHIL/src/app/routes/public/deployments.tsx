@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PublicLayout } from '@/components/layouts/public-layout';
+import { TextField } from '@/components/ui/text-field/text-field'
 import DataTable from '@/components/ui/table/table';
 
 const columns = [
@@ -17,14 +19,33 @@ const rows = [
 ];
 
 const DeploymentsRoot = (): React.JSX.Element => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate();
+
+    const filteredRows = rows.filter(row => 
+        Object.values(row).some(value =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    );
+
+    const handleRowClick = (id: string) => {
+        navigate(`deployments/${id}`);
+    }
+
     return (
         <PublicLayout>
             <div className="flex justify-center items-center min-h-screen px-24 pt-28 pb-28">
                 <div className="flex flex-col items-start w-full max-w-full">
                     <h1 className="ml-0 text-2xl font-bold">Deployments</h1>
                     <h3 className="mb-2">All deployments of our instruments</h3>
+                    <TextField 
+                        className="mb-4 w-full max-w-sm"
+                        placeholder="Search Deployments..."
+                        value={searchQuery}
+                        onChange={(e: any) => setSearchQuery(e.target.value)}
+                        />
                     <div className="overflow-auto w-full max-h-[70vh]">
-                        <DataTable columns={columns} rows={rows} />
+                        <DataTable columns={columns} rows={filteredRows} onRowClick={handleRowClick} />
                     </div>                
                 </div>
             </div>

@@ -15,9 +15,9 @@ type Story = StoryObj<typeof DataTable>;
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "left" },
     { id: "descrption", label: "Description", minWidth: 170, align: "left"},
-    { id: "start date", label: "Start Date", minWidth: 170, align: "left" },
-    { id: "end date", label: "End Date", minWidth: 170, align: "left" },
-    { id: "campaign id", label: "Campaign ID", minWidth: 100, align: "left" },
+    { id: "start date", label: "Start Date", minWidth: 170, align: "rigth" },
+    { id: "end date", label: "End Date", minWidth: 170, align: "right" },
+    { id: "campaign id", label: "Campaign ID", minWidth: 100, align: "right" },
 ];
 
 export const DefaultTable: Story = {
