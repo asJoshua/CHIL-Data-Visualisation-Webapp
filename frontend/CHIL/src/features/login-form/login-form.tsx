@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export type LoginFormProps = {
@@ -18,6 +19,8 @@ const LoginForm = ({
 
     const [usernameInput, setUsernameInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
+
+    const navigate = useNavigate();
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsernameInput(e.target.value);
@@ -60,19 +63,21 @@ const LoginForm = ({
         axios({
             method: 'post',
             url: tokenURI,
+            withCredentials: true,
             data: {
                 username: usernameInput,
                 password: passwordInput,
             }
         })
             .then((response) => {
-                // Set tokens to local storage
+                // Set JWT to local storage (Refresh token should be stored in HTTP only cookie)
                 // Redirect to correct auth page
                 setUsernameError(true);
                 setPasswordError(false);
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
-                console.log(response.data);
+                localStorage.setItem('token', response.data.access);
+                // navigate('/home');
                 return true;
             })
             .catch((error) => {

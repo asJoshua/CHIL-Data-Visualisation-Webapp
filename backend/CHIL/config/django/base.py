@@ -116,6 +116,8 @@ CORS_ALLOWED_ORIGINS = [
     # Should be defined in environment specific files e.g. ./local.py
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
