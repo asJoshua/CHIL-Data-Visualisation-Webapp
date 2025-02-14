@@ -2,21 +2,30 @@ import { useState } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
+import axios from 'axios';
 
-const LoginForm = () => {
+export type LoginFormProps = {
+    tokenURI: string,
+    refreshTokenURI: string,
+}
+
+const LoginForm = ({
+    tokenURI,
+    refreshTokenURI
+}: LoginFormProps) => {
     const [ showError, setError ] = useState(false)
     const [ usernameErrorMessage, setUsernameErrorMessage ] = useState("")
     const [ passwordErrorMessage, setPasswordErrorMessage ] = useState("")
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [usernameInput, setUsernameInput] = useState('');
+    const [passwordInput, setPasswordInput] = useState('');
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value);
+        setUsernameInput(e.target.value);
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
+        setPasswordInput(e.target.value);
     };
 
     const handleLogin = () => {
@@ -25,12 +34,12 @@ const LoginForm = () => {
         let passwordErrorMessage = "";
 
         // Basic input validation
-        if (username === "") {
+        if (usernameInput === "") {
             shouldError = true;
             usernameErrorMessage = "Must not be blank";
         }
 
-        if (password === "") {
+        if (passwordInput === "") {
             shouldError = true;
             passwordErrorMessage = "Must not be blank";
         }
@@ -41,25 +50,40 @@ const LoginForm = () => {
             setUsernameErrorMessage(usernameErrorMessage);
             setPasswordErrorMessage(passwordErrorMessage);
             return false;
-        } 
+        }
 
         // Change to a promise and api request
-        const success = false;
+        axios({
+            method: 'post',
+            url: 'chil/auth/token/',
+            data: {
+                username: usernameInput,
+                password: passwordInput,
+            }
+        })
+            .then((response) => {
+                // Set tokens to local storage
+                // Redirect to correct auth page
+                setError(false);
+                setUsernameErrorMessage("");
+                setPasswordErrorMessage("");
+                console.log(response.data);
+                return true;
+            })
+            .catch((error) => {
+                if (error.response) {
+                    // Username or Password wrong
+                    setError(true);
+                    setUsernameErrorMessage("Username or Password incorrect");
+                    setPasswordErrorMessage("Username or Password incorrect");
+                    return false;
+                } else {
+                    console.error(error.message);
+                }
+                console.warn(error.config);
+            })
 
-        if (success){
-            // Set tokens to local storage
-            // Redirect to correct auth page
-            setError(false);
-            setUsernameErrorMessage("");
-            setPasswordErrorMessage("");
-            return true;
-        } else {
-            // Username or Password wrong
-            setError(true);
-            setUsernameErrorMessage("Username or Password incorrect");
-            setPasswordErrorMessage("Username or Password incorrect");
-            return false;
-        }
+
     };
 
     return (
