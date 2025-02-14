@@ -5,7 +5,7 @@ import { LoginForm } from '@/features/login-form/login-form';
 const LoginRoot = (): React.JSX.Element => {
     return (
         <PublicLayout className='flex justify-center items-center h-screen'>
-            <LoginForm />
+            <LoginForm tokenURI='chil/auth/token/' />
         </PublicLayout>
     )
 }

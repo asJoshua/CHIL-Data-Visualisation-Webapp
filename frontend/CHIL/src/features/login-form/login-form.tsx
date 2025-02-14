@@ -6,14 +6,13 @@ import axios from 'axios';
 
 export type LoginFormProps = {
     tokenURI: string,
-    refreshTokenURI: string,
 }
 
 const LoginForm = ({
     tokenURI,
-    refreshTokenURI
 }: LoginFormProps) => {
-    const [ showError, setError ] = useState(false)
+    const [ showUsernameError, setUsernameError ] = useState(false)
+    const [ showPasswordError, setPasswordError ] = useState(false)
     const [ usernameErrorMessage, setUsernameErrorMessage ] = useState("")
     const [ passwordErrorMessage, setPasswordErrorMessage ] = useState("")
 
@@ -36,17 +35,22 @@ const LoginForm = ({
         // Basic input validation
         if (usernameInput === "") {
             shouldError = true;
+            setUsernameError(true);
             usernameErrorMessage = "Must not be blank";
+        } else {
+            setUsernameError(false);
         }
 
         if (passwordInput === "") {
             shouldError = true;
+            setPasswordError(true)
             passwordErrorMessage = "Must not be blank";
+        } else {
+            setPasswordError(false);
         }
 
         // If inputs are blank, don't make the API request
         if (shouldError === true){
-            setError(shouldError);
             setUsernameErrorMessage(usernameErrorMessage);
             setPasswordErrorMessage(passwordErrorMessage);
             return false;
@@ -55,7 +59,7 @@ const LoginForm = ({
         // Change to a promise and api request
         axios({
             method: 'post',
-            url: 'chil/auth/token/',
+            url: tokenURI,
             data: {
                 username: usernameInput,
                 password: passwordInput,
@@ -64,7 +68,8 @@ const LoginForm = ({
             .then((response) => {
                 // Set tokens to local storage
                 // Redirect to correct auth page
-                setError(false);
+                setUsernameError(true);
+                setPasswordError(false);
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
                 console.log(response.data);
@@ -73,14 +78,15 @@ const LoginForm = ({
             .catch((error) => {
                 if (error.response) {
                     // Username or Password wrong
-                    setError(true);
+                    setUsernameError(true);
+                    setPasswordError(true);
                     setUsernameErrorMessage("Username or Password incorrect");
                     setPasswordErrorMessage("Username or Password incorrect");
                     return false;
                 } else {
                     console.error(error.message);
                 }
-                console.warn(error.config);
+                console.log(error.config);
             })
 
 
@@ -95,16 +101,16 @@ const LoginForm = ({
                 <TextField
                     variant='outlined'
                     label='Username'
-                    error={showError}
-                    helperText={showError ? usernameErrorMessage : "" }
+                    error={showUsernameError}
+                    helperText={showUsernameError ? usernameErrorMessage : "" }
                     onChange={handleUsernameChange}
                     />
                 <TextField
                     variant='outlined'
                     label='Password'
                     type='password'
-                    error={showError}
-                    helperText={showError ? passwordErrorMessage : "" }
+                    error={showPasswordError}
+                    helperText={showPasswordError ? passwordErrorMessage : "" }
                     onChange={handlePasswordChange}
                     />
                 <Button
