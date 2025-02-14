@@ -1,5 +1,5 @@
 """
-The URLS for the auth feature
+The URLS for the issuing JWT access and refresh tokens
 """
 
 from django.urls import include, path
