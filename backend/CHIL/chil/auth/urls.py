@@ -2,7 +2,7 @@
 The URLS for the issuing JWT access and refresh tokens
 """
 
-from django.urls import include, path
+from django.urls import path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
