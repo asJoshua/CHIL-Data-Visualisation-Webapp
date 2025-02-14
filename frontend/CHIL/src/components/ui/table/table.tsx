@@ -66,6 +66,7 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
                 .map((row, index) => (
                   <TableRow 
                   hover 
+                  sx={{cursor: "pointer"}}
                   role="checkbox" 
                   tabIndex={-1} 
                   key={index}
