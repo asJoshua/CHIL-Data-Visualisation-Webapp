@@ -72,7 +72,7 @@ const LoginForm = ({
             .then((response) => {
                 // Set JWT to local storage (Refresh token should be stored in HTTP only cookie)
                 // Redirect to correct auth page
-                setUsernameError(true);
+                setUsernameError(false);
                 setPasswordError(false);
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
