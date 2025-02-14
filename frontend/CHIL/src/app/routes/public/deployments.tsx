@@ -5,11 +5,11 @@ import { TextField } from '@/components/ui/text-field/text-field'
 import DataTable from '@/components/ui/table/table';
 
 const columns = [
+    { id: "campaign id", label: "Campaign ID", minWidth: 100, align: "left" },
     { id: "name", label: "Name", minWidth: 170, align: "left" },
-    { id: "description", label: "Description", minWidth: 100, align: "left" },
-    { id: "start date", label: "Start Date", minWidth: 170, align: "right" },
-    { id: "end date", label: "End Date", minWidth: 170, align: "right" },
-    { id: "campaign id", label: "Campaign ID", minWidth: 170, align: "right" },
+    { id: "description", label: "Description", minWidth: 170, align: "left" },
+    { id: "start date", label: "Start Date", minWidth: 170, align: "left" },
+    { id: "end date", label: "End Date", minWidth: 170, align: "left" },
 ];
 
 const rows = [
