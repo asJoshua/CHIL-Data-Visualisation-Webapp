@@ -18,7 +18,6 @@ export const defaultButton: Story = {
         variant: "outlined",
         size: "small",
         color: "secondary",
-        fontWeight: "100",
         children: [<p>Button</p>],
     }
 }

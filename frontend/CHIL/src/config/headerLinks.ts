@@ -1,7 +1,7 @@
 const publicHeaderConfig = [
     ['Home', '/home'],
     ['Regions', '/regions'],
-    ['Deploymenys', '/deployments'],
+    ['Deployments', '/deployments'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/about'],
     ['Contact Us', '/contact'],
