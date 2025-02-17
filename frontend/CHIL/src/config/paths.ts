@@ -12,7 +12,19 @@ const paths = {
             path: 'login',
             getHref: () => '/login'
         },
-    }
+    },
+    collaborator: {
+        root: {
+            path: '/collaborator',
+            getHref: () => '/collaborator',
+        },
+    },
+    admin: {
+        root: {
+            path: '/admin',
+            getHref: () => '/admin',
+        },
+    },
 }
 
 export { paths };

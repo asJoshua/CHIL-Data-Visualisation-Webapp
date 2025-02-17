@@ -4,7 +4,7 @@ Views for the AUTH endpoints
 
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 
-from ..serializers import CookieTokenRefreshSerializer
+from ..serializers import CookiePairObtainPairSerializer, CookieTokenRefreshSerializer
 
 class CookieTokenObtainPairView(TokenObtainPairView):
     """
@@ -27,6 +27,8 @@ class CookieTokenObtainPairView(TokenObtainPairView):
             del response.data['refresh']
 
         return super().finalize_response(request, response, *args, **kwargs)
+
+    serializer_class = CookiePairObtainPairSerializer
 
 
 class CookieTokenRefreshView(TokenRefreshView):

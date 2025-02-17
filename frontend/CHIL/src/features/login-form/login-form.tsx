@@ -3,6 +3,7 @@ import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 export type LoginFormProps = {

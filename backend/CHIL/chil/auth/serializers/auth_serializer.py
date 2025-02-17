@@ -1,8 +1,19 @@
 """
 """
-from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.exceptions import InvalidToken
+from django.core.serializers import serialize
 
+
+class CookiePairObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Add user groups to the JWT
+    """
+    def get_token(self, user):
+        token = super().get_token(user)
+        token['groups'] = list(user.groups.values_list('name',flat = True).all())
+
+        return token
 
 class CookieTokenRefreshSerializer(TokenRefreshSerializer):
     """
@@ -13,7 +24,7 @@ class CookieTokenRefreshSerializer(TokenRefreshSerializer):
     """
     refresh = None
     def validate(self, attrs):
-        attrs['refresh'] =  self.context['request'].COOKIES.get('refresh_token')
+        attrs['refresh'] = self.context['request'].COOKIES.get('refresh_token')
         if attrs['refresh']:
             return super().validate(attrs)
         else:
