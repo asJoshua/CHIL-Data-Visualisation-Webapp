@@ -15,7 +15,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
     """
     def finalize_response(self, request, response, *args, **kwargs):
         if response.data.get('refresh'):
-            cookie_max_age = 3600 * 24 * 14 # 14 days
+            cookie_max_age = 3600 * 24 * 1 # 1 day
             response.set_cookie(
                 'refresh_token',
                 response.data['refresh'],
@@ -40,7 +40,7 @@ class CookieTokenRefreshView(TokenRefreshView):
     """
     def finalize_response(self, request, response, *args, **kwargs):
         if response.data.get('refresh'):
-            cookie_max_age = 3600 * 24 * 14 # 14 days
+            cookie_max_age = 3600 * 24 * 1 # 1 day
             response.set_cookie(
                 'refresh_token',
                 response.data['refresh'],
