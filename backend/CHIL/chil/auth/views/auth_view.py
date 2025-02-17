@@ -2,6 +2,11 @@
 Views for the AUTH endpoints
 """
 
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 
 from ..serializers import CookiePairObtainPairSerializer, CookieTokenRefreshSerializer
@@ -54,3 +59,20 @@ class CookieTokenRefreshView(TokenRefreshView):
         return super().finalize_response(request, response, *args, **kwargs)
 
     serializer_class = CookieTokenRefreshSerializer
+
+
+class LogoutView(APIView):
+    """
+    Handles logout requests
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        """Handles logout post requests"""
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
