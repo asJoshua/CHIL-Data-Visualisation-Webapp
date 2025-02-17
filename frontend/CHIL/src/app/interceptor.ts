@@ -19,7 +19,7 @@ axios.interceptors.response.use(resp => resp, async error => {
 			}
 			})
 			.catch((error) => {
-				console.log(error.config);
+				console.error(error.config);
 			})
     }
     refresh = false;
