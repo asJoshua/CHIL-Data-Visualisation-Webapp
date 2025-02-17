@@ -1,14 +1,9 @@
 import axios from 'axios';
 
-export type LogoutProps = {
-    logoutURI: string,
-}
 
 let logoutDebounce = false
 
-export const logout = ({
-    logoutURI
-}: LogoutProps): boolean => {
+export const logout = (logoutURI: string): boolean => {
 
     if (!logoutDebounce) {
         logoutDebounce = true;

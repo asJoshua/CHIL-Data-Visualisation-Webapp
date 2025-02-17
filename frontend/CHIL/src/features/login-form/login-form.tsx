@@ -2,28 +2,13 @@ import { useState } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import { CustomJWTPayload } from "@/components/auth/protectedRoute"
 
 export type LoginFormProps = {
     tokenURI: string,
-}
-
-const NavigateToAuthHomePage = (): React.JSX.Element | boolean => {
-    const token = localStorage.getItem('token') || '';
-    const groups = jwtDecode<CustomJWTPayload>(token)["groups"];
-
-    switch(groups[0]){
-        case("admin"):
-            return <Navigate to="/admin/test" />
-        case("collaborator"):
-            return <Navigate to="/collaborator/test" />
-        default:
-            console.warn("Group not found: ", groups[0])
-            return false;
-    }
 }
 
 const LoginForm = ({
@@ -37,6 +22,7 @@ const LoginForm = ({
     const [usernameInput, setUsernameInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
 
+    const navigate = useNavigate();
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsernameInput(e.target.value);
@@ -93,8 +79,27 @@ const LoginForm = ({
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
                 localStorage.setItem('token', response.data.access);
-                NavigateToAuthHomePage();
-                return true;
+                const token = localStorage.getItem('token') || false;
+                if (token === false){
+                    console.log("Not logged in!")
+                    return false;
+                }
+
+                const groups = jwtDecode<CustomJWTPayload>(token)["groups"];
+
+                switch(groups[0]){
+                    case("admin"):
+                        console.log("admin")
+                        navigate("/admin/test");
+                        break;
+                    case("collaborator"):
+                        console.log("collaborator")
+                        navigate("/collaborator/test");
+                        break;
+                    default:
+                        console.warn("Group not found: ", groups[0])
+                        break;
+                }
             })
             .catch((error) => {
                 if (error.response) {
@@ -109,7 +114,6 @@ const LoginForm = ({
                 }
                 console.log(error.config);
             })
-
 
     };
 
@@ -147,4 +151,4 @@ const LoginForm = ({
     );
 };
 
-export { LoginForm, NavigateToAuthHomePage };
+export { LoginForm };

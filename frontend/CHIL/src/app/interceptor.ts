@@ -10,7 +10,7 @@ axios.interceptors.response.use(resp => resp, async error => {
 
         axios({
 			method: 'post',
-			url: 'chil/auth/token/refresh',
+			url: 'chil/auth/token/refresh/',
 			withCredentials: true,
         })
 			.then(response => {

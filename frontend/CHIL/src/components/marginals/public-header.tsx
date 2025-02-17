@@ -3,6 +3,7 @@ import { publicHeaderConfig } from '@/config/headerLinks';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import { LogoDev } from '@mui/icons-material';
+import { logout } from '../auth/logout';
 
 const PublicHeader = (): React.JSX.Element => {
 
@@ -27,6 +28,15 @@ const PublicHeader = (): React.JSX.Element => {
                         onClick={() => {navigate('/login')}}
                     >
                         Login
+                    </Button>
+
+                    <Button
+                        color='inherit'
+                        variant='outlined'
+                        sx={{ml: 2}}
+                        onClick={() => {logout('chil/auth/logout/')}}
+                    >
+                        Logout
                     </Button>
                 </Box>
 
