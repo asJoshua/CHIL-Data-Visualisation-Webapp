@@ -18,12 +18,20 @@ const paths = {
             path: '/collaborator',
             getHref: () => '/collaborator',
         },
+        test: {
+            path: 'test',
+            getHref: () => '/test',
+        }
     },
     admin: {
         root: {
             path: '/admin',
             getHref: () => '/admin',
         },
+        test: {
+            path: 'test',
+            getHref: () => '/test',
+        }
     },
 }
 

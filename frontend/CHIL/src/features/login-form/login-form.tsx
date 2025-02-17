@@ -3,8 +3,9 @@ import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
+import { CustomJWTPayload } from "@/components/auth/protectedRoute"
 
 export type LoginFormProps = {
     tokenURI: string,
@@ -78,7 +79,20 @@ const LoginForm = ({
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
                 localStorage.setItem('token', response.data.access);
-                // navigate('/home');
+                const groups = jwtDecode<CustomJWTPayload>(response.data.access)["groups"];
+
+                switch(groups[0]){
+                    case("admin"):
+                        navigate('/admin/test');
+                        break;
+                    case("collaborator"):
+                        navigate('/collaborator/test');
+                        break;
+                    default:
+                        console.warn("Group not found: ", groups[0])
+                        break
+                }
+
                 return true;
             })
             .catch((error) => {

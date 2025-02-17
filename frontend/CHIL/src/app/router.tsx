@@ -31,7 +31,13 @@ const createAppRouter = () => {
             path: paths.collaborator.root.path,
             element: <ProtectedRoute allowedGroups={['collaborator']}/>,
             children: [
-
+                {
+                    path: paths.collaborator.test.path,
+                    lazy: async () => {
+                        const { TestRoot } = await import('@/app/routes/collaborator/test.tsx');
+                        return { Component: TestRoot };
+                    }
+                },
             ]
         },
         {
@@ -39,7 +45,13 @@ const createAppRouter = () => {
             path: paths.admin.root.path,
             element: <ProtectedRoute allowedGroups={['admin']}/>,
             children: [
-
+                {
+                    path: paths.admin.test.path,
+                    lazy: async () => {
+                        const { TestRoot } = await import('@/app/routes/admin/test.tsx');
+                        return { Component: TestRoot };
+                    }
+                },
             ]
         },
     ]);
