@@ -1,5 +1,7 @@
 import { Box } from "../../components/ui/box/box";
 import background from "../../assets/BgICe.jpg";
+import { theme } from "../../theme/theme"
+import { Typography } from "@mui/material";
 
 const HeroTitle = () => {
   return (
@@ -14,24 +16,24 @@ const HeroTitle = () => {
         justifyContent: "center",
         textAlign: "center",
         backgroundImage: `url(${background})`,
-        backgroundSize: "cover", 
-        backgroundPosition: "center",
+        backgroundSize: "100%",
+        backgroundPosition: "center -70px", 
         backgroundRepeat: "no-repeat",
       }}
     >
       <Box
-        sx={{
-          backgroundColor: "rgba(255, 255, 255, 0.7)", 
-          padding: "20px",
-          borderRadius: "8px",
-        }}
+       sx={{
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
+        padding: '20px',
+        borderRadius: '8px',
+       }}
       >
-        <h1 style={{ fontSize: "72px", color: "#00243E", fontWeight: "600" }}>
+        <Typography variant="h1">
           CHIL RESEARCH
-        </h1>
-        <h2 style={{ fontSize: "32px", color: "#526980", fontWeight: "400" }}>
+        </Typography >
+        <Typography variant="h2" style={{ color: theme.palette.text.primary, fontWeight: "400" }}>
           Cryospheric and Hydrological Instrumentation Laboratory
-        </h2>
+        </Typography>
       </Box>
     </Box>
   );

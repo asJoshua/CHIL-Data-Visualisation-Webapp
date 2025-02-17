@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar } from '@mui/material';
 import { Button } from '../ui/button/button'
 import { LogoDev } from '@mui/icons-material';
+import { theme } from '../../theme/theme'
 
 const PublicHeader = (): React.JSX.Element => {
 
@@ -11,18 +12,18 @@ const PublicHeader = (): React.JSX.Element => {
 
     return (
         <AppBar position="sticky">
-            <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
+            <Toolbar sx={{display: 'flex', justifyContent: 'space-between', backgroundColor:theme.palette.primary.main}}>
                 <LogoDev/>
 
                 <Box>
                     {publicHeaderConfig.map((item) => (
-                        <Button color='inherit' sx={{fontWeight: 300}} key={item[0]} onClick={() => {navigate(item[1])}}>
+                        <Button sx={{color: theme.palette.text.primary, fontWeight: 300}} key={item[0]} onClick={() => {navigate(item[1])}}>
                             {item[0]}
                         </Button>
                     ))}
 
                     <Button 
-                        sx={{ml: 2, fontWeight: 300,backgroundColor: '#F71735', color: '#FFF'}}
+                        sx={{ml: 2, fontWeight: 300,backgroundColor: theme.palette.primary.light, color: theme.palette.text.primary}}
                         onClick={() => {navigate('/login')}}
                     >
                         Login

@@ -7,7 +7,7 @@ const meta: Meta<typeof PublicHeader> = {
   title: "Components/PublicHeader",
   component: PublicHeader,
   parameters: {
-    layout: "fullscreen", // PublicHeader should take full width
+    layout: "fullscreen", 
   },
   decorators: [
     (Story: () => ReactNode) => (

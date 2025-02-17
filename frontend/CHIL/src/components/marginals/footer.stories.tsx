@@ -4,6 +4,9 @@ import { Footer } from './footer';
 
 const meta = {
   component: Footer,
+  parameters: {
+    layout: "fullscreen", 
+  },
 } satisfies Meta<typeof Footer>;
 
 export default meta;
