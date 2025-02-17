@@ -16,9 +16,17 @@ interface Column {
   format?: (value: number) => string;
 }
 
+interface Row{
+  campaignId: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+}
+
 interface TableProps {
   columns: Column[];
-  rows?: any[];
+  rows?: Row[];      
   onRowClick?: (id: string) => void;
 //   ? means props are optional
 }
@@ -70,9 +78,9 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
                   role="checkbox" 
                   tabIndex={-1} 
                   key={index}
-                  onClick={() => onRowClick?.(row["campaign id"])}>
+                  onClick={() => onRowClick?.(row["campaignId"])}>
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      const value = row[column.id as keyof Row];
                       return (
                         <TableCell key={column.id} align={"left"}>
                           {column.format && typeof value === "number"
