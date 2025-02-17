@@ -2,13 +2,28 @@ import { useState } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import { CustomJWTPayload } from "@/components/auth/protectedRoute"
 
 export type LoginFormProps = {
     tokenURI: string,
+}
+
+const NavigateToAuthHomePage = (): React.JSX.Element | boolean => {
+    const token = localStorage.getItem('token') || '';
+    const groups = jwtDecode<CustomJWTPayload>(token)["groups"];
+
+    switch(groups[0]){
+        case("admin"):
+            return <Navigate to="/admin/test" />
+        case("collaborator"):
+            return <Navigate to="/collaborator/test" />
+        default:
+            console.warn("Group not found: ", groups[0])
+            return false;
+    }
 }
 
 const LoginForm = ({
@@ -22,7 +37,6 @@ const LoginForm = ({
     const [usernameInput, setUsernameInput] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
 
-    const navigate = useNavigate();
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsernameInput(e.target.value);
@@ -79,20 +93,7 @@ const LoginForm = ({
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
                 localStorage.setItem('token', response.data.access);
-                const groups = jwtDecode<CustomJWTPayload>(response.data.access)["groups"];
-
-                switch(groups[0]){
-                    case("admin"):
-                        navigate('/admin/test');
-                        break;
-                    case("collaborator"):
-                        navigate('/collaborator/test');
-                        break;
-                    default:
-                        console.warn("Group not found: ", groups[0])
-                        break
-                }
-
+                NavigateToAuthHomePage();
                 return true;
             })
             .catch((error) => {
@@ -146,4 +147,4 @@ const LoginForm = ({
     );
 };
 
-export { LoginForm };
+export { LoginForm, NavigateToAuthHomePage };
