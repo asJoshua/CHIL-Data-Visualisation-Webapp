@@ -34,7 +34,9 @@ const PublicHeader = (): React.JSX.Element => {
                         color='inherit'
                         variant='outlined'
                         sx={{ml: 2}}
-                        onClick={() => {logout('chil/auth/logout/')}}
+                        onClick={() => {
+                            logout('chil/auth/logout/')
+                        }}
                     >
                         Logout
                     </Button>
