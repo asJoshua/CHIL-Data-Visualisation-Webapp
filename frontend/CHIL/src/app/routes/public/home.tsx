@@ -1,10 +1,11 @@
 import React from "react";
 import { PublicLayout } from "../../../components/layouts/public-layout";
 import { HeroTitle } from "../../../features/hero-title/hero-title";
+import { Box } from "../../../components/ui/box/box"
 import { DirectionStack } from "../../../components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../../theme/theme";
-import { Typography } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 import imagePlaceholder from "../../../assets/BgICe.jpg"; // Sample image
 
 // Define content for the stack
@@ -28,15 +29,17 @@ const HomeRoot = (): React.JSX.Element => {
     <ThemeProvider theme={theme}>
       <PublicLayout>
         <HeroTitle />
-        <section style={{ margin: "100px 0px 0px 230px" }}>
-          <Typography variant="h2" color="primary">
-            Deployments
-          </Typography>
-          <Typography variant="h3" color="secondary">
-            All instances where our instruments are implemented.
-          </Typography>
-        </section>
-        <DirectionStack items={stackItems} />
+        <Container>
+          <Box sx={{margin: '80px 0px 0px 50px'}}>
+            <Typography variant="h2" color="primary">
+              Deployments
+            </Typography>
+            <Typography variant="h3" color="secondary">
+              All instances where our instruments are implemented.
+            </Typography>
+          </Box>
+          <DirectionStack items={stackItems} />
+        </Container>
       </PublicLayout>
     </ThemeProvider>
   );

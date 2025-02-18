@@ -4,6 +4,7 @@ import { Box } from "../../ui/box/box";
 import { styled } from "@mui/material/styles";
 import { theme } from "../../../theme/theme";
 import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 // Define props for scalability
 interface CardData {
@@ -28,14 +29,27 @@ const Card = styled(Paper)({
   padding: theme.spacing(1),
   textAlign: "center",
   boxShadow: "4px 4px 4px rgba(0, 36, 62, 1)",
+  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+  cursor: "pointer", 
+
+  "&:hover": {
+    transform: "scale(1.05)", 
+    boxShadow: "6px 6px 10px rgba(0, 36, 62, 0.5)", 
+  },
 });
 
 export default function DirectionStack({ items }: DirectionStackProps) {
+  const navigate = useNavigate(); 
+
+  const handleNavigate = () => {
+    navigate("/deployments");
+  };
+
   return (
     <Box sx={{ display: "flex", justifyContent: "center", padding: "50px" }}>
       <Stack direction="row" spacing={6}>
         {items.map((item, index) => (
-          <Card key={index}>
+          <Card key={index} onClick={handleNavigate}>
             <img
               src={item.imageSrc}
               alt={`Card ${index + 1}`}
