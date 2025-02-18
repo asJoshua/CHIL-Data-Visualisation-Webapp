@@ -79,13 +79,8 @@ const LoginForm = ({
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
                 localStorage.setItem('token', response.data.access);
-                const token = localStorage.getItem('token') || false;
-                if (token === false){
-                    console.log("Not logged in!")
-                    return false;
-                }
 
-                const groups = jwtDecode<CustomJWTPayload>(token)["groups"];
+                const groups = jwtDecode<CustomJWTPayload>(response.data.access)["groups"];
 
                 switch(groups[0]){
                     case("admin"):
