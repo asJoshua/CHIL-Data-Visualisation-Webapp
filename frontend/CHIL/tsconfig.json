@@ -4,6 +4,17 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+  "typedocOptions": {
+    "entryPoints": ["./src"],
+    "out": "docs",
+    "entryPointStrategy": "expand",
+    "exclude": [
+    "**/*.stories.tsx", 
+    "**/*.stories.ts",  
+    "**/__tests__/**/*", 
+    "**/*.test.*"      
+  ],
+  },
   "compilerOptions": {
         "module": "NodeNext",
         "target": "ES6",
