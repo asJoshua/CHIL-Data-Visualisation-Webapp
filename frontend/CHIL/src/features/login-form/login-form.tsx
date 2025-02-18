@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import { CustomJWTPayload } from "@/components/auth/protectedRoute"
+import { useAuth } from '@/components/auth/authenticationProvider';
 
 export type LoginFormProps = {
     tokenURI: string,
@@ -31,6 +32,8 @@ const LoginForm = ({
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPasswordInput(e.target.value);
     };
+
+    const { setToken } = useAuth();
 
     const handleLogin = () => {
         let shouldError = false;
@@ -78,7 +81,7 @@ const LoginForm = ({
                 setPasswordError(false);
                 setUsernameErrorMessage("");
                 setPasswordErrorMessage("");
-                localStorage.setItem('token', response.data.access);
+                setToken(response.data.access);
 
                 const groups = jwtDecode<CustomJWTPayload>(response.data.access)["groups"];
 
