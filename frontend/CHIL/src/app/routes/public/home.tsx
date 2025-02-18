@@ -5,7 +5,7 @@ import { Box } from "../../../components/ui/box/box"
 import { DirectionStack } from "../../../components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../../theme/theme";
-import { Typography, Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import imagePlaceholder from "../../../assets/BgICe.jpg"; // Sample image
 
 // Define content for the stack
