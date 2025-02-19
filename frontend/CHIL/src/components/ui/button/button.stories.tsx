@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button/button'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Button> = {
+    title: "Components/Button",
     component: Button,
 
     parameters: {
