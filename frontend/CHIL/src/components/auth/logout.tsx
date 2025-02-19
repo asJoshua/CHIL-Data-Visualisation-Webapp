@@ -24,13 +24,13 @@ const logout = (
             url: logoutURI,
             withCredentials: true,
         })
-        .then(() => {
-            setToken(null);
-            navigate(logoutURI);
-        })
         .catch((error) => {
             console.error(error.config);
             return false
+        })
+        .finally(() => {
+            setToken(null);
+            navigate(logoutURI);
         })
         logoutDebounce = false;
         return true;

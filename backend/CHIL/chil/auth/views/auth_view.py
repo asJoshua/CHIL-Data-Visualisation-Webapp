@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 
 from ..serializers import CookiePairObtainPairSerializer, CookieTokenRefreshSerializer
@@ -15,7 +15,8 @@ class CookieTokenObtainPairView(TokenObtainPairView):
     """
     Inherits from TokenObtainPairView from rest_framework_simplejwt and sets the refresh token to a
     HTTP only header to help prevent XSRF attacks.
-    Code from: https://github.com/jazzband/djangorestframework-simplejwt/issues/71#issuecomment-762927394
+    Code from:
+        https://github.com/jazzband/djangorestframework-simplejwt/issues/71#issuecomment-762927394
     Accessed: 14 Jan 2025
     """
     def finalize_response(self, request, response, *args, **kwargs):
@@ -40,7 +41,8 @@ class CookieTokenRefreshView(TokenRefreshView):
     """
     Inherits from TokenRefreshView from rest_framework_simplejwt and sets the refresh token to a
     HTTP only header to help prevent XSRF attacks.
-    Code from: https://github.com/jazzband/djangorestframework-simplejwt/issues/71#issuecomment-762927394
+    Code from:
+        https://github.com/jazzband/djangorestframework-simplejwt/issues/71#issuecomment-762927394
     Accessed: 14 Jan 2025
     """
     def finalize_response(self, request, response, *args, **kwargs):
@@ -74,5 +76,5 @@ class LogoutView(APIView):
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception:
+        except TokenError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
