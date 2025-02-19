@@ -1,5 +1,5 @@
 import { Box } from "@/components/ui/box/box";
-import background from "@/assets/images/BgICe.jpg";
+import imagePlacholder from "@/assets/images/BgICe.jpg";
 import { theme } from "@/theme/theme"
 import { Typography } from "@mui/material";
 
@@ -15,7 +15,7 @@ const HeroTitle = () => {
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        backgroundImage: `url(${background})`,
+        backgroundImage: `url(${imagePlacholder})`,
         backgroundSize: "100%",
         backgroundPosition: "center -70px", 
         backgroundRepeat: "no-repeat",

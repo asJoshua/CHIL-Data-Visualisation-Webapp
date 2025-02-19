@@ -6,7 +6,7 @@ import { DirectionStack } from "@/components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/theme/theme";
 import { Container, Typography } from "@mui/material";
-import imagePlaceholder from "@/assets/images/BgICe.jpg"; // Sample image
+import imagePlaceholder from "@/assets/images/BgICe.jpg"; 
 
 // Define content for the stack
 const stackItems = [
