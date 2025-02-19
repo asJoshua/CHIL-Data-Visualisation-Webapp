@@ -2,7 +2,7 @@ import React from 'react'
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { DeploymentsPage } from '../../src/features/deployments'
+import  DataTable from "../../../src/components/ui/table/table";
 import '@testing-library/jest-dom/jest-globals';
 import '@testing-library/jest-dom';
 
@@ -21,44 +21,68 @@ const mockRows = [
     { name: "Deployment 10", description: "Description for Deployment 10", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1010" },
     { name: "Deployment 11", description: "Description for Deployment 11", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1011" },
     { name: "Deployment 12", description: "Description for Deployment 12", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1012" },
-  ];  
+  ]; 
+  
+const mockColumns = [
+    { id: "campaignId", label: "Campaign ID", minWidth: 100, align: "left" },
+    { id: "name", label: "Name", minWidth: 170, align: "left" },
+    { id: "description", label: "Description", minWidth: 170, align: "left" },
+    { id: "startDate", label: "Start Date", minWidth: 170, align: "left" },
+    { id: "endDate", label: "End Date", minWidth: 170, align: "left" },
+];
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockNavigate,
 }));
 
-describe('Deployments Page', () => {
+describe('Table Component', () => {
     beforeEach(() => {
         mockNavigate.mockClear();
         global.alert = jest.fn();
     });
 
-    it('renders the deployments page correctly', () => {
-        render(
-            <MemoryRouter>
-                <DeploymentsPage />
-            </MemoryRouter>
+    it("calls handleChangeRowsPerPage and updates rows per page state", () => {
+        const { rerender } = render(
+          <DataTable 
+            columns={mockColumns} 
+            rows={mockRows}
+            onRowClick={() => {}}
+          />
         );
+      
+        const rowsPerPageSelect = screen.getByRole('combobox', { name: /Rows per page/i });
+      
+        // check dropdown is there
+        expect(rowsPerPageSelect).toBeInTheDocument();
+      
+        // check the initial state of rows per page
+        expect(screen.getByText("Deployment 1")).toBeInTheDocument();
+        expect(screen.queryByText("Deployment 11")).not.toBeInTheDocument();
+      
+        fireEvent.mouseDown(rowsPerPageSelect);
+      
+        const option5 = screen.getByRole('option', { name: '5' });
+        fireEvent.click(option5);
+      
+        expect(screen.queryByText("Deployment 6")).not.toBeInTheDocument();
+        expect(screen.getByText("Deployment 5")).toBeInTheDocument();
+      });
 
-        // Check table component and search bar are present
-        expect(screen.getByText("Deployments")).toBeInTheDocument();
-        expect(screen.getByLabelText("Search Deployments...")).toBeInTheDocument();
-    });
-
-    it("shows 'No data available' when there are no rows", () => {
+      it("calls handleChangePage when the pagination is changed", () => {
         render(
-            <MemoryRouter>
-                <DeploymentsPage />
-            </MemoryRouter>
+          <DataTable
+            columns={mockColumns}
+            rows={mockRows}
+            onRowClick={() => {}}
+          />
         );
-
-        // Simulate searching for something that doesn't exist
-        fireEvent.change(screen.getByLabelText("Search Deployments..."), {
-            target: { value: "NonExistentDeployment" },
-        });
-
-        // Expect "No data available" to be shown
-        expect(screen.getByText("No data available")).toBeInTheDocument();
-    });
+      
+        const nextButton = screen.getByRole("button", { name: /next page/i });
+        fireEvent.click(nextButton);
+        
+        expect(screen.getByText("Deployment 11")).toBeInTheDocument();
+      });
+      
+      
 })
