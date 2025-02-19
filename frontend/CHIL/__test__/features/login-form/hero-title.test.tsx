@@ -1,7 +1,7 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { HeroTitle } from '../../../src/features/hero-title/hero-title';
 import '@testing-library/jest-dom/jest-globals';
 import '@testing-library/jest-dom';
