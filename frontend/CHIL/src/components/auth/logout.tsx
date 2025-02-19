@@ -1,14 +1,21 @@
 import axios from 'axios';
-import { useAuth } from './authenticationProvider';
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom';
 
 let logoutDebounce = false
 
-// TODO: turn into component so we can call the hooks!!!
-export const logout = (logoutURI: string): boolean => {
+export type logoutArgs = {
+    logoutURI: string,
+    setToken: (string | null),
+    navigate: (NavigateFunction),
+}
 
-    const { setToken } = useAuth();
-    const navigate = useNavigate();
+// TODO: turn into component so we can call the hooks!!!
+const logout = (
+    logoutURI: string,
+    setToken: (token: string | null) => void,
+    navigate: NavigateFunction,
+): boolean => {
+
 
     if (!logoutDebounce) {
         logoutDebounce = true;
@@ -18,8 +25,8 @@ export const logout = (logoutURI: string): boolean => {
             withCredentials: true,
         })
         .then(() => {
-            setToken();
-            navigate(loginURI);
+            setToken(null);
+            navigate(logoutURI);
         })
         .catch((error) => {
             console.error(error.config);
@@ -31,3 +38,5 @@ export const logout = (logoutURI: string): boolean => {
 
     return false
 }
+
+export { logout }

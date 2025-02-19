@@ -87,11 +87,9 @@ const LoginForm = ({
 
                 switch(groups[0]){
                     case("admin"):
-                        console.log("admin")
                         navigate("/admin/test");
                         break;
                     case("collaborator"):
-                        console.log("collaborator")
                         navigate("/collaborator/test");
                         break;
                     default:

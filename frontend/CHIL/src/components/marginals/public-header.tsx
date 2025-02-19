@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import { LogoDev } from '@mui/icons-material';
 import { logout } from '../auth/logout';
+import { useAuth } from '../auth/authenticationProvider';
 
 const PublicHeader = (): React.JSX.Element => {
 
     const navigate = useNavigate();
+    const { setToken } = useAuth();
 
     return (
         <AppBar position="absolute">
@@ -35,7 +37,7 @@ const PublicHeader = (): React.JSX.Element => {
                         variant='outlined'
                         sx={{ml: 2}}
                         onClick={() => {
-                            logout('chil/auth/logout/')
+                            logout('chil/auth/logout/', setToken, navigate)
                         }}
                     >
                         Logout
