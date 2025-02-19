@@ -7,6 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "@/theme/theme";
 
 interface Column {
   id: string;
@@ -54,7 +56,12 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
                 <TableCell
                   key={column.id}
                   align={"left"}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ minWidth: column.minWidth}}
+                  sx={{
+                    backgroundColor: "primary.main",
+                    border: "1px solid",
+                    borderColor: "white"
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -64,7 +71,13 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
           <TableBody>
             {rows.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={columns.length} align="center">
+                <TableCell 
+                  colSpan={columns.length} 
+                  align="center"
+                  sx={{
+                    backgroundColor: "default.main",
+                    color: "secondary.main",
+                  }}>
                   No data available
                 </TableCell>
               </TableRow>
@@ -73,8 +86,10 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => (
                   <TableRow 
-                  hover 
-                  sx={{cursor: "pointer"}}
+                  hover
+                  sx={{
+                    cursor: "pointer",              
+                  }}
                   role="checkbox" 
                   tabIndex={-1} 
                   key={index}
@@ -82,7 +97,15 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
                     {columns.map((column) => {
                       const value = row[column.id as keyof Row];
                       return (
-                        <TableCell key={column.id} align={"left"}>
+                        <TableCell 
+                          key={column.id} 
+                          align={"left"}
+                          sx={{ 
+                            backgroundColor: "default.main", 
+                            color: "secondary.main", 
+                            borderBottom: "1.25px Solid", 
+                            borderColor: "primary.light" 
+                            }}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}
@@ -103,6 +126,29 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        slotProps={{
+          select: {
+          MenuProps: {
+            PaperProps: {
+              sx: {
+                color: "secondary.main"
+              }
+            },
+            MenuListProps: {
+              sx: {
+                padding: "0px",
+              }
+            }
+          },
+        }
+      }}
+        sx={{
+          "& .MuiSvgIcon-root": {
+            color: "secondary.main",
+          },
+          backgroundColor: "default.main",
+          color: "secondary.main",
+        }}
       />
     </Paper>
   );

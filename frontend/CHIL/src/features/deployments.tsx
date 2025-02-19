@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField } from '@/components/ui/text-field/text-field'
+import { TextField } from '@/components/ui/text-field/text-field';
 import DataTable from '@/components/ui/table/table';
+import CustomThemeProvider from "@/theme/ThemeProvider";
+import { Container, Typography } from "@mui/material";
+
 
 const columns = [
     { id: "campaignId", label: "Campaign ID", minWidth: 100, align: "left" },
@@ -27,26 +30,40 @@ const DeploymentsPage = (): React.JSX.Element => {
         )
     );
 
+// to set the page to the top when it loads, was being funky
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const handleRowClick = (id: string) => {
         navigate(`deployments/${id}`);
     }
 
     return (
-            <div className="flex justify-center items-center min-h-screen px-24 pt-28 pb-28">
-                <div className="flex flex-col items-start w-full max-w-full">
-                    <h1 className="ml-0 text-2xl font-bold">Deployments</h1>
-                    <h3 className="mb-2">All deployments of our instruments</h3>
-                    <TextField 
-                        className="mb-4 w-full max-w-sm"
-                        placeholder="Search Deployments..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                    <div className="overflow-auto w-full max-h-[70vh]">
-                        <DataTable columns={columns} rows={filteredRows} onRowClick={handleRowClick} />
-                    </div>                
-                </div>
-            </div>
+        <CustomThemeProvider>
+                <Container className="flex justify-center items-center min-h-screen px-24 pb-20">
+                    <Container className="flex flex-col items-start w-full max-w-full">
+                        <Typography variant="h2" color="primary.main">Deployments</Typography>
+                        <Typography variant="h4" color="secondary.main">All deployments of our instruments</Typography>
+                        <div style={{paddingTop: "5px", paddingBottom: "5px"}}>
+                            <TextField 
+                                className="w-full max-w-sm"
+                                label="Search Deployments..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                sx={{
+                                    "& .MuiInputBase-input": {
+                                    color: "secondary.main",
+                                    },
+                                }}
+                            />
+                        </div>
+                        <div className="overflow-auto w-full max-h-[70vh]">
+                            <DataTable columns={columns} rows={filteredRows} onRowClick={handleRowClick} />
+                        </div>                
+                    </Container>
+                </Container>
+        </CustomThemeProvider>
     );
 }
 

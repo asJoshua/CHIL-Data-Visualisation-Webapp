@@ -1,19 +1,21 @@
-import { Box } from '@/components/ui/box/box'
-import { Meta, StoryObj } from '@storybook/react'
+import { Box } from "@/components/ui/box/box";
+import { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof Box> = {
-    component: Box,
+  title: "Components/Box", 
+  component: Box,
 
-    parameters: {
-        layout: 'centered',
-    },
+  parameters: {
+    layout: "centered",
+  },
 };
 
 export default meta;
+
 type Story = StoryObj<typeof Box>;
 
 export const defaultBox: Story = {
-    args: {
-        
-    }
-}
+  args: {
+    children: "This is a Box!", 
+  },
+};
