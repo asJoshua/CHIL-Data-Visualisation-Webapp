@@ -1,6 +1,6 @@
 import { DirectionStack } from "@/components/ui/stack/stack";
 import { Meta, StoryObj } from "@storybook/react";
-import imagePlaceholder from "../../../assets/BgICe.jpg";
+import imagePlaceholder from "@/assets/images/BgICe.jpg";
 
 const meta: Meta<typeof DirectionStack> = {
   title: "Components/DirectionStack",

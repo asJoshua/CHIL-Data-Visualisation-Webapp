@@ -1,12 +1,12 @@
 import React from "react";
-import { PublicLayout } from "../../../components/layouts/public-layout";
-import { HeroTitle } from "../../../features/hero-title/hero-title";
-import { Box } from "../../../components/ui/box/box"
-import { DirectionStack } from "../../../components/ui/stack/stack";
+import { PublicLayout } from "@/components/layouts/public-layout";
+import { HeroTitle } from "@/features/hero-title/hero-title";
+import { Box } from "@/components/ui/box/box"
+import { DirectionStack } from "@/components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "../../../theme/theme";
+import { theme } from "@/theme/theme";
 import { Container, Typography } from "@mui/material";
-import imagePlaceholder from "../../../assets/BgICe.jpg"; // Sample image
+import imagePlaceholder from "@/assets/images/BgICe.jpg"; // Sample image
 
 // Define content for the stack
 const stackItems = [

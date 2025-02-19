@@ -1,6 +1,6 @@
-import { Box } from "../../components/ui/box/box";
-import background from "../../assets/BgICe.jpg";
-import { theme } from "../../theme/theme"
+import { Box } from "@/components/ui/box/box";
+import background from "@/assets/images/BgICe.jpg";
+import { theme } from "@/theme/theme"
 import { Typography } from "@mui/material";
 
 const HeroTitle = () => {

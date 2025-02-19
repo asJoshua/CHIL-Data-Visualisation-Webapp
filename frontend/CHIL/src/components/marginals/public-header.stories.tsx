@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { PublicHeader } from "./public-header";
-import CustomThemeProvider from "../../theme/ThemeProvider";
+import CustomThemeProvider from "@/theme/ThemeProvider";
 import { ReactNode } from "react";
 
 const meta: Meta<typeof PublicHeader> = {

@@ -1,10 +1,10 @@
 import React from 'react'
-import { publicHeaderConfig } from '../../config/headerLinks';
+import { publicHeaderConfig } from '@/config/headerLinks';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar } from '@mui/material';
-import { Button } from '../ui/button/button'
+import { Button } from '@/components/ui/button/button'
 import { LogoDev } from '@mui/icons-material';
-import { theme } from '../../theme/theme'
+import { theme } from '@/theme/theme'
 
 const PublicHeader = (): React.JSX.Element => {
 

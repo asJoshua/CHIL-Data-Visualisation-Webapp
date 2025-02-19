@@ -1,8 +1,8 @@
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import { Box } from "../../ui/box/box";
+import { Box } from "@/components/ui/box/box";
 import { styled } from "@mui/material/styles";
-import { theme } from "../../../theme/theme";
+import { theme } from "@/theme/theme";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
