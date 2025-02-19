@@ -1,0 +1,20 @@
+@startuml System-Context-Diagram
+!include <c4/C4_Context.puml>
+title System Context Diagram
+
+Person(public_user, "Public User", "An unauthenticated user")
+Person(collaborator_user, "Collaborator User", "An authorized and authenticated user")
+Person(admin_user, "Admin User", "An authorized and authenticated user")
+System_Ext(equipment, "Equipment", "Deployed equipment gathering data")
+System(website, "Website", "The website that humans can interact with e.g. view graphs and login")
+System(api, "API", "The API that the website uses to get data, can also be accessed by authorized 3rd parties.")
+SystemDb(mariadb, "MariaDB", "Stores all of the data collected from the instruments")
+
+Rel(public_user, website, "Uses")
+Rel(collaborator_user, website, "Uses")
+Rel(admin_user, website, "Uses")
+Rel(website, api, "Requests")
+Rel(equipment, api, "Sends data to")
+Rel(api, mariadb, "Reads / Writes")
+
+@enduml
