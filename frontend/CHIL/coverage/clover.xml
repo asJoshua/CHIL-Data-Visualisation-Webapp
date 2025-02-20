@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1739992101737" clover="3.2.0">
-  <project timestamp="1739992101737" name="All files">
+<coverage generated="1740049841879" clover="3.2.0">
+  <project timestamp="1740049841879" name="All files">
     <metrics statements="158" coveredstatements="147" conditionals="9" coveredconditionals="6" methods="4" coveredmethods="3" elements="171" coveredelements="156" complexity="0" loc="158" ncloc="158" packages="1" files="1" classes="1"/>
     <file name="table.tsx" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\components\ui\table\table.tsx">
       <metrics statements="158" coveredstatements="147" conditionals="9" coveredconditionals="6" methods="4" coveredmethods="3"/>

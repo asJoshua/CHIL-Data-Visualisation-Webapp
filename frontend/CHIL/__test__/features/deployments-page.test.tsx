@@ -8,21 +8,6 @@ import '@testing-library/jest-dom';
 
 const mockNavigate = jest.fn();
 
-const mockRows = [
-    { name: "Deployment 1", description: "Description for Deployment 1", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1001" },
-    { name: "Deployment 2", description: "Description for Deployment 2", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1002" },
-    { name: "Deployment 3", description: "Description for Deployment 3", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1003" },
-    { name: "Deployment 4", description: "Description for Deployment 4", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1004" },
-    { name: "Deployment 5", description: "Description for Deployment 5", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1005" },
-    { name: "Deployment 6", description: "Description for Deployment 6", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1006" },
-    { name: "Deployment 7", description: "Description for Deployment 7", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1007" },
-    { name: "Deployment 8", description: "Description for Deployment 8", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1008" },
-    { name: "Deployment 9", description: "Description for Deployment 9", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1009" },
-    { name: "Deployment 10", description: "Description for Deployment 10", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1010" },
-    { name: "Deployment 11", description: "Description for Deployment 11", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1011" },
-    { name: "Deployment 12", description: "Description for Deployment 12", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1012" },
-  ];  
-
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockNavigate,

@@ -1,5 +1,4 @@
 import React from 'react'
-import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import  DataTable from "../../../src/components/ui/table/table";
@@ -43,13 +42,13 @@ describe('Table Component', () => {
     });
 
     it("calls handleChangeRowsPerPage and updates rows per page state", () => {
-        const { rerender } = render(
-          <DataTable 
+          render(<DataTable 
             columns={mockColumns} 
             rows={mockRows}
             onRowClick={() => {}}
-          />
-        );
+          />);
+
+          console.log(screen.debug());
       
         const rowsPerPageSelect = screen.getByRole('combobox', { name: /Rows per page/i });
       
@@ -57,7 +56,7 @@ describe('Table Component', () => {
         expect(rowsPerPageSelect).toBeInTheDocument();
       
         // check the initial state of rows per page
-        expect(screen.getByText("Deployment 1")).toBeInTheDocument();
+        expect(screen.getByText(mockRows[0].name)).toBeInTheDocument();
         expect(screen.queryByText("Deployment 11")).not.toBeInTheDocument();
       
         fireEvent.mouseDown(rowsPerPageSelect);
@@ -66,7 +65,7 @@ describe('Table Component', () => {
         fireEvent.click(option5);
       
         expect(screen.queryByText("Deployment 6")).not.toBeInTheDocument();
-        expect(screen.getByText("Deployment 5")).toBeInTheDocument();
+        expect(screen.getByText(mockRows[4].name)).toBeInTheDocument();
       });
 
       it("calls handleChangePage when the pagination is changed", () => {
@@ -81,7 +80,7 @@ describe('Table Component', () => {
         const nextButton = screen.getByRole("button", { name: /next page/i });
         fireEvent.click(nextButton);
         
-        expect(screen.getByText("Deployment 11")).toBeInTheDocument();
+        expect(screen.getByText(mockRows[10].name)).toBeInTheDocument();
       });
       
       
