@@ -22,7 +22,7 @@ describe('Login Form', () => {
     it('renders the login form correctly', () => {
         render(
             <MemoryRouter>
-                <LoginForm />
+                <LoginForm tokenURI='chil/auth/token/' />
             </MemoryRouter>
         );
 
@@ -37,7 +37,7 @@ describe('Login Form', () => {
     it('shows error message when inputs are blank', () => {
         render(
             <MemoryRouter>
-                <LoginForm />
+                <LoginForm tokenURI='chil/auth/token/' />
             </MemoryRouter>
         );
 
@@ -51,7 +51,7 @@ describe('Login Form', () => {
     it('shows error message when credentials are incorrect', () => {
         render(
             <MemoryRouter>
-                <LoginForm />
+                <LoginForm tokenURI='chil/auth/token/' />
             </MemoryRouter>
         );
 
