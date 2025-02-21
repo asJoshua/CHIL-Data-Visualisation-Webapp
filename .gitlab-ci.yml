@@ -43,6 +43,7 @@ backend-test:
 
   script:
     - cd backend/CHIL
+    - mariadb
     - pip install Poetry
     - poetry -V
     - poetry install
