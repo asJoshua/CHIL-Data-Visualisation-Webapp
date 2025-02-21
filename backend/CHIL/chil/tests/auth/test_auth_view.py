@@ -24,6 +24,10 @@ class CookieTokenObtainPairViewTestCase(TestCase):
         }
 
     def test_provides_both_tokens_on_correct_credentials(self):
+        """
+            Ensure that both a token and refresh token are sent when given
+            correct credentials
+        """
         # Get the actual URL from the name as defined in urls.py
         url = reverse('token_obtain_pair')
 

@@ -34,7 +34,7 @@ const createAppRouter = () => {
                 {
                     path: paths.collaborator.test.path,
                     lazy: async () => {
-                        const { TestRoot } = await import('@/app/routes/collaborator/test.tsx');
+                        const { TestRoot } = await import('@/app/routes/collaborator/temp');
                         return { Component: TestRoot };
                     }
                 },
@@ -48,7 +48,7 @@ const createAppRouter = () => {
                 {
                     path: paths.admin.test.path,
                     lazy: async () => {
-                        const { TestRoot } = await import('@/app/routes/admin/test.tsx');
+                        const { TestRoot } = await import('@/app/routes/admin/temp');
                         return { Component: TestRoot };
                     }
                 },
