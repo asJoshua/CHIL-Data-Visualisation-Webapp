@@ -38,6 +38,8 @@ frontend-test:
 backend-test:
   stage: test
   image: python
+  ports:
+    - 3306
 
   script:
     - cd backend/CHIL
