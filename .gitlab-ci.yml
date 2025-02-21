@@ -38,12 +38,10 @@ frontend-test:
 backend-test:
   stage: test
   image: python
-  services:
-    - mariadb
 
   script:
     - cd backend/CHIL
-    - mariadb
+    - sudo apt-get install -y mysql-server mysql-client libmysqlclient-dev
     - pip install Poetry
     - poetry -V
     - poetry install
