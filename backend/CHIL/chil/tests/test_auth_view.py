@@ -36,4 +36,8 @@ class CookieTokenObtainPairViewTestCase(TestCase):
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
         self.assertEqual(len(response.data['access']), 244, 'Token exists in body')
-        self.assertIs(len(response.client.cookies['refresh_token'].value), 245, 'Refresh Token exists in header')
+        self.assertIs(
+            len(response.client.cookies['refresh_token'].value),
+            245,
+            'Refresh Token exists in header'
+            )
