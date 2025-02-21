@@ -38,14 +38,14 @@ frontend-test:
 backend-test:
   stage: test
   image: python
+  services:
+    - mariadb
 
   script:
     - cd backend/CHIL
     - pip install Poetry
     - poetry -V
     - poetry install
-    - sudo systemctl start mariadb
-    - sudo systemctl status mariadb
     - poetry run python manage.py test chil/tests --settings=config.django.test
 
 pages:
