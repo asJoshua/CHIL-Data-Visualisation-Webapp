@@ -2,7 +2,6 @@
     Test the auth view
 """
 
-import string
 from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
@@ -16,7 +15,7 @@ class CookieTokenObtainPairViewTestCase(TestCase):
 
     def setUp(self):
         """Setup for the auth tests"""
-        self.username = 'Admin'
+        self.username = 'Adminsds'
         self.password = '12345'
         self.data = {
             'username': self.username,
@@ -36,5 +35,5 @@ class CookieTokenObtainPairViewTestCase(TestCase):
 
         response = self.client.post(url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
-        self.assertIs(response.data['token'], string, 'Token exists in body')
-        self.assertIs(response.headers['refresh_token'], string, 'Refresh Token exists in header')
+        self.assertEqual(len(response.data['access']), 244, 'Token exists in body')
+        self.assertIs(len(response.client.cookies['refresh_token'].value), 245, 'Refresh Token exists in header')
