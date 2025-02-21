@@ -6,5 +6,5 @@ before being got by the top level URL file in config/urls
 from django.urls import include, path
 
 urlpatterns = [
-    path('auth/', include('chil.auth.urls'))
+    path('auth/', include('chil.all_urls.auth'))
 ]

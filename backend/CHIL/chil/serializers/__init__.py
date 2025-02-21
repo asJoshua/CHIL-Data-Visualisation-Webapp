@@ -1,5 +1,5 @@
 """
-Creates the serializers package for the auth endpoints
+Creates the serializers package
 """
 
 from .auth_serializer import (

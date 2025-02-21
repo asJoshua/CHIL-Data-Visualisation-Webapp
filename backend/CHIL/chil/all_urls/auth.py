@@ -3,7 +3,7 @@ The URLS for the issuing JWT access and refresh tokens
 """
 
 from django.urls import path
-from .views import (
+from ..views import (
     CookieTokenObtainPairView,
     CookieTokenRefreshView,
     LogoutView,

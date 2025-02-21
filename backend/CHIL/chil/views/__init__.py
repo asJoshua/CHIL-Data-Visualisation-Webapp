@@ -1,5 +1,5 @@
 """
-Creates the views package for the auth endpoints
+Creates the views package
 """
 
 from .auth_view import (
