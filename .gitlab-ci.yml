@@ -44,7 +44,7 @@ backend-test:
     - pip install Poetry
     - poetry -V
     - poetry install
-    - poetry run python manage.py test
+    - poetry run python manage.py test chil/tests --settings=config.django.test
 
 pages:
   stage: deploy
