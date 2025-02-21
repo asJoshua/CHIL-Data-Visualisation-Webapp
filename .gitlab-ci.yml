@@ -44,8 +44,8 @@ backend-test:
     - pip install Poetry
     - poetry -V
     - poetry install
-    - systemctl start mariadb
-    - systemctl status mariadb
+    - sudo systemctl start mariadb
+    - sudo systemctl status mariadb
     - poetry run python manage.py test chil/tests --settings=config.django.test
 
 pages:
