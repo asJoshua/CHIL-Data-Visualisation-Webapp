@@ -16,6 +16,10 @@ const paths = {
             path: 'login',
             getHref: () => '/login'
         },
+        newsletter: {
+            path: 'newsletter',
+            getHref: () => '/newsletter'
+        },
     },
     collaborator: {
         root: {
