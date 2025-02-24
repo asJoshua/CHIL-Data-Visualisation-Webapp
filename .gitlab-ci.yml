@@ -47,7 +47,9 @@ backend-test:
     MARIADB_ROOT_PASSWORD: $DB_PASSWORD
 
   before_script:
-    - apt-get update && apt-get install -y mariadb-client
+    - apt-get update
+    - apt-get install -y mariadb-client
+    - apt-get install -y mysql-server
     - mariadb --version
     - mariadb -u root -p
     - "$MARIADB_ROOT_PASSWORD"
