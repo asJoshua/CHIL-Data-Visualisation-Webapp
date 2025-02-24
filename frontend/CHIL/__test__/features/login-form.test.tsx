@@ -2,8 +2,8 @@ import React from 'react'
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { LoginForm } from '../../../src/features/login-form/login-form'
-import { AuthProvider } from '../../../src/components/auth/authenticationProvider'
+import { LoginForm } from '../../src/features/login-form/login-form'
+import { AuthProvider } from '../../src/components/auth/authenticationProvider'
 import '@testing-library/jest-dom/jest-globals';
 import '@testing-library/jest-dom';
 
