@@ -49,7 +49,8 @@ backend-test:
   before_script:
     - apt-get update && apt-get install -y mariadb-client
     - mariadb --version
-    - mariadb -u=root -p="$MARIADB_ROOT_PASSWORD"
+    - mariadb -u root -p
+    - "$MARIADB_ROOT_PASSWORD"
 
   script:
     - cd backend/CHIL
