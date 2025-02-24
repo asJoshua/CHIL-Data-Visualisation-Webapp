@@ -47,7 +47,7 @@ backend-test:
     MARIADB_ROOT_PASSWORD: $DB_PASSWORD
 
   before_script:
-    - apt-get update && apt-get install -y git curl libmcrypt-dev default-mariadb-client
+    - apt-get update && apt-get install -y mariadb-client
     - mariadb --version
 
   script:
