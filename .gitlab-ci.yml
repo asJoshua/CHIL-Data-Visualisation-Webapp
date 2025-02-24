@@ -51,7 +51,7 @@ backend-test:
     - apt-get install -y mariadb-client
     - apt-get install -y mariadb-server
     - mariadb --version
-    - mariadb -u root -p --host=mariadb
+    - mariadb -u root -p --host=localhost
     - "$MARIADB_ROOT_PASSWORD"
 
   script:
