@@ -15,7 +15,7 @@ class CookieTokenObtainPairViewTestCase(TestCase):
 
     def setUp(self):
         """Setup for the auth tests"""
-        self.username = 'Adminsds'
+        self.username = 'TestAdminAccount123'
         self.password = '12345'
         self.data = {
             'username': self.username,
@@ -41,3 +41,16 @@ class CookieTokenObtainPairViewTestCase(TestCase):
             245,
             'Refresh Token exists in header'
             )
+
+    def test_provides_401_on_incorrect_credentials(self):
+        """
+            Ensure that a 401 is given with incorrect details
+        """
+        # Get the actual URL from the name as defined in urls.py
+        url = reverse('token_obtain_pair')
+
+        user = User.objects.create_superuser(username='WrongDetails', password='123')
+        self.assertEqual(user.is_active, 1, 'Active User')
+
+        response = self.client.post(url, self.data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED, response.content)
