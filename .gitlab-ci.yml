@@ -51,8 +51,7 @@ backend-test:
     - apt-get install -y mariadb-client
     - apt-get install -y mariadb-server
     - mariadb --version
-    - mariadb -u root -p --host=mysql
-    - "$MARIADB_ROOT_PASSWORD"
+    - mariadb --user=root -p="" --host=mariadb
 
   script:
     - cd backend/CHIL
