@@ -39,7 +39,7 @@ backend-test:
   stage: test
   image: python
   services:
-    - name: mariadb
+    - name: mariadb:latest
 
   variables:
     # Configure mysql environment variables (https://hub.docker.com/_/mysql/)
@@ -47,6 +47,7 @@ backend-test:
     MARIADB_ROOT_PASSWORD: $DB_PASSWORD
 
   before_script:
+    - apt-get update && apt-get install -y git curl libmcrypt-dev default-mariadb-client
     - mariadb --version
 
   script:
