@@ -49,6 +49,7 @@ backend-test:
   before_script:
     - apt-get update && apt-get install -y mariadb-client
     - mariadb --version
+    - mysql --u=root --p="$MARIADB_ROOT_PASSWORD"
 
   script:
     - cd backend/CHIL
@@ -56,6 +57,10 @@ backend-test:
     - poetry -V
     - poetry install
     - poetry run python manage.py test chil/tests --settings=config.django.test
+    - CREATE DATABASE '$MARIADB_DATABASE';
+    - USE '$MARIADB_DATABASE';
+    - SOURCE ./backend/CHIL/schema/init-schema.sql;
+    - SOURCE ./backend/CHIL/schema/init-metadata.sql;
 
 pages:
   stage: deploy
