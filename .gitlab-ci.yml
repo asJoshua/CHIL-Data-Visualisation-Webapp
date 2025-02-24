@@ -52,6 +52,10 @@ backend-test:
     - apt-get install -y mariadb-server
     - mariadb --version
     - mariadb --user=root --password="$MARIADB_ROOT_PASSWORD" --host=mariadb
+    - CREATE DATABASE "$DB_NAME";
+    - USE "$DB_NAME";
+    - SOURCE init-schema.sql;
+    - SOURCE init-metadata.sql;
 
   script:
     - cd backend/CHIL
