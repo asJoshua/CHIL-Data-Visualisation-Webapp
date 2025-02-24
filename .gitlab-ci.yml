@@ -39,7 +39,8 @@ backend-test:
   stage: test
   image: python
   services:
-    - mariadb
+    - name: mariadb
+      alias: mariadb
 
   variables:
     # Configure mysql environment variables (https://hub.docker.com/_/mysql/)
@@ -48,6 +49,7 @@ backend-test:
 
   script:
     - cd backend/CHIL
+    - mariadb -V
     - pip install Poetry
     - poetry -V
     - poetry install
