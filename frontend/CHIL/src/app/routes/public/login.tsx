@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { CustomJWTPayload } from '@/components/auth/protectedRoute';
 import { theme } from "@/theme/theme";
-import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from "@mui/material/styles";
 
 const LoginRoot = (): React.JSX.Element => {
 
