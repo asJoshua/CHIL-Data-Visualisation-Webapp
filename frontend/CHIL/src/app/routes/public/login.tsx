@@ -4,6 +4,8 @@ import { LoginForm } from '@/features/login-form/login-form';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { CustomJWTPayload } from '@/components/auth/protectedRoute';
+import { theme } from "@/theme/theme";
+import { ThemeProvider } from '@emotion/react';
 
 const LoginRoot = (): React.JSX.Element => {
 
@@ -31,9 +33,11 @@ const LoginRoot = (): React.JSX.Element => {
     });
 
     return (
-        <PublicLayout className='flex justify-center items-center h-screen'>
+        <ThemeProvider theme={theme}>
+            <PublicLayout className='flex justify-center items-center h-screen'>
             <LoginForm tokenURI='chil/auth/token/' />
         </PublicLayout>
+        </ThemeProvider>
     )
 }
 

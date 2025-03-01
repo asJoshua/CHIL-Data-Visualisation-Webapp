@@ -55,4 +55,16 @@ export const theme = createTheme({
       fontSize: "1rem", // 16px
     },
   },
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+          root: {
+            color: '#000',
+          }, 
+          input: {
+            color: '#000'
+          }    
+      }
+    }
+  }
 });
