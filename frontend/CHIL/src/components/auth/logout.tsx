@@ -30,7 +30,7 @@ const logout = (
         })
         .finally(() => {
             setToken(null);
-            navigate(logoutURI);
+            navigate('/login');
         })
         logoutDebounce = false;
         return true;
