@@ -12,7 +12,7 @@ const PublicHeader = (): React.JSX.Element => {
 
     return (
         <AppBar position="sticky">
-            <Toolbar sx={{display: 'flex', justifyContent: 'space-between', backgroundColor:theme.palette.primary.main}}>
+            <Toolbar sx={{display: 'flex', justifyContent: 'space-between', backgroundColor: theme.palette.primary.main}}>
                 <LogoDev/>
 
                 <Box>

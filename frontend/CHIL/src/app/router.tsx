@@ -24,6 +24,13 @@ const createAppRouter = () => {
                         return { Component: LoginRoot };
                     }
                 },
+                {
+                    path: paths.public.deployments.path,
+                    lazy: async () => {
+                        const { DeploymentsRoot } = await import('@/app/routes/public/deployments.tsx');
+                        return { Component: DeploymentsRoot };
+                    }
+                },
             ]
         },
         {
