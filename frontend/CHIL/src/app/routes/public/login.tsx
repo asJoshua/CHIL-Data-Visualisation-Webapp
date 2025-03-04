@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { PublicLayout } from '@/components/layouts/public-layout';
 import { LoginForm } from '@/features/login-form/login-form';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { CustomJWTPayload } from '@/components/auth/protectedRoute';
+import { VariableLayout } from '@/components/layouts/variable-layout';
 
 const LoginRoot = (): React.JSX.Element => {
 
@@ -31,9 +31,9 @@ const LoginRoot = (): React.JSX.Element => {
     });
 
     return (
-        <PublicLayout className='flex justify-center items-center h-screen'>
+        <VariableLayout className='flex justify-center items-center h-screen'>
             <LoginForm tokenURI='chil/auth/token/' />
-        </PublicLayout>
+        </VariableLayout>
     )
 }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { DeploymentsPage } from '@/features/deployments';
-import { PublicLayout } from '@/components/layouts/public-layout';
+import { VariableLayout } from "@/components/layouts/variable-layout";
 
 const DeploymentsRoot = (): React.JSX.Element => {
     return (
-        <PublicLayout>
+        <VariableLayout>
             <DeploymentsPage/>
-        </PublicLayout>
+        </VariableLayout>
     );
 }
 

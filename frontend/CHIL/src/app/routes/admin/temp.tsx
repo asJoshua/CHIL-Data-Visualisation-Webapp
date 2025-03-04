@@ -1,11 +1,11 @@
 import React from 'react';
-import { PublicLayout } from '@/components/layouts/public-layout';
+import { VariableLayout } from '@/components/layouts/variable-layout';
 
 const TestRoot = (): React.JSX.Element => {
     return (
-        <PublicLayout>
+        <VariableLayout>
             Admin login success!
-        </PublicLayout>
+        </VariableLayout>
     )
 }
 

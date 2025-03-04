@@ -1,12 +1,12 @@
 import React from "react";
-import { PublicLayout } from "@/components/layouts/public-layout";
+import { VariableLayout } from "@/components/layouts/variable-layout";
 import { HeroTitle } from "@/features/hero-title/hero-title";
 import { Box } from "@/components/ui/box/box"
 import { DirectionStack } from "@/components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/theme/theme";
 import { Container, Typography } from "@mui/material";
-import imagePlaceholder from "@/assets/images/BgICe.jpg"; 
+import imagePlaceholder from "@/assets/images/BgICe.jpg";
 
 // Define content for the stack
 const stackItems = [
@@ -27,7 +27,7 @@ const stackItems = [
 const HomeRoot = (): React.JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <PublicLayout>
+      <VariableLayout>
         <HeroTitle />
         <Container>
           <Box sx={{margin: '80px 0px 0px 50px'}}>
@@ -40,7 +40,7 @@ const HomeRoot = (): React.JSX.Element => {
           </Box>
           <DirectionStack items={stackItems} />
         </Container>
-      </PublicLayout>
+      </VariableLayout>
     </ThemeProvider>
   );
 };

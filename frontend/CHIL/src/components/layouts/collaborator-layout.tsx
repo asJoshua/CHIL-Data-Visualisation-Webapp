@@ -1,17 +1,17 @@
 import React, { PropsWithChildren } from 'react';
-import { PublicHeader } from '@/components/marginals/public-header';
 import { Footer } from '@/components/marginals/footer';
+import { CollaboratorHeader } from '../marginals/collaborator-header';
 export type LayoutProps = PropsWithChildren & {
     className?: string
 }
 
-const PublicLayout = ({
+const CollaboratorLayout = ({
     className,
     children
 }: LayoutProps): React.JSX.Element => {
     return (
         <>
-            <PublicHeader />
+            <CollaboratorHeader />
                 <div className={className}>
                     {children}
                 </div>
@@ -20,4 +20,4 @@ const PublicLayout = ({
     );
 }
 
-export { PublicLayout }
+export { CollaboratorLayout }
