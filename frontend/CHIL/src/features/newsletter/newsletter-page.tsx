@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
@@ -22,7 +22,7 @@ const Newsletter = () => {
         return regex.test(email);
     }
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
     
         if (!validateEmail(email)) {
@@ -34,7 +34,12 @@ const Newsletter = () => {
     
             try {
                 const response = await axios.post('http://localhost:8000/chil/newsletter/signup/', {
-                    email: email,
+                    email: email, 
+                }, {
+                    headers: {
+                        // Fix to the authorization, wouldn't let me send requests, ensures no token attached
+                        Authorization: ''
+                    }
                 });
 
                 if (response.status == 200) {
@@ -46,6 +51,7 @@ const Newsletter = () => {
                     setEmailErrorMessage("Something went wrong, please try again.");
                 }
             } catch (error) {
+                console.error("Error occurred:", error);
                 setShowSuccess(false);
                 setError(true);
                 setEmailErrorMessage("There was an error sending the request.");
@@ -62,8 +68,6 @@ const Newsletter = () => {
                     width: "50vw", 
                     height: "50vh", 
                     textAlign: "center",
-                    // border: "2px Solid",
-                    // borderColor: "black", 
                     marginRight: 2
                     }}>
                     <Typography variant="h3" color='secondary.main' sx={{display: "flex", fontWeight: "bold",}}>
