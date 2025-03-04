@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { LoginForm } from '../../src/features/login-form/login-form'
+import { AuthProvider } from '../../src/components/auth/authenticationProvider'
 import '@testing-library/jest-dom/jest-globals';
 import '@testing-library/jest-dom';
 
@@ -22,7 +23,9 @@ describe('Login Form', () => {
     it('renders the login form correctly', () => {
         render(
             <MemoryRouter>
-                <LoginForm />
+                <AuthProvider>
+                    <LoginForm tokenURI='chil/auth/token/' />
+                </AuthProvider>
             </MemoryRouter>
         );
 
@@ -37,7 +40,9 @@ describe('Login Form', () => {
     it('shows error message when inputs are blank', () => {
         render(
             <MemoryRouter>
-                <LoginForm />
+                <AuthProvider>
+                    <LoginForm tokenURI='chil/auth/token/' />
+                </AuthProvider>
             </MemoryRouter>
         );
 
@@ -51,7 +56,9 @@ describe('Login Form', () => {
     it('shows error message when credentials are incorrect', () => {
         render(
             <MemoryRouter>
-                <LoginForm />
+                <AuthProvider>
+                    <LoginForm tokenURI='chil/auth/token/' />
+                </AuthProvider>
             </MemoryRouter>
         );
 
