@@ -1,13 +1,16 @@
-import { StrictMode } from "react";
+import { StrictMode } from "react";;
 import { createRoot } from "react-dom/client";
 import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "./theme/theme.ts";
-import { App } from "./app/app.tsx";
+import { theme } from "./theme/theme.ts";;
+import { App } from "./app/app.tsx";;
+import axios from 'axios';
 import "./index.css";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+
+axios.defaults.baseURL = import.meta.env.VITE_REACT_APP_BASE_URL;
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

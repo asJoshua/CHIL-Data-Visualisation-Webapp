@@ -15,41 +15,41 @@
         }
     </style>
 </head>
-    
+
 <body>
 <div class='wrapper'>
     <div class='pad1'>
         <h1><a href="../../index.html">All files</a> / <a href="index.html">components/marginals</a> public-header.tsx</h1>
         <div class='clearfix'>
-            
+
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">98.07% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/38</span>
+                <span class='fraction'>51/52</span>
             </div>
-        
-            
+
+
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
                 <span class='fraction'>4/4</span>
             </div>
-        
-            
+
+
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>3/4</span>
             </div>
-        
-            
+
+
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">98.07% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/38</span>
+                <span class='fraction'>51/52</span>
             </div>
-        
-            
+
+
         </div>
         <p class="quiet">
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
@@ -119,6 +119,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
@@ -148,6 +149,7 @@ import { theme } from '@/theme/theme'
 const PublicHeader = (): React.JSX.Element =&gt; {
 &nbsp;
     const navigate = useNavigate();
+    const { setToken } = useAuth();
 &nbsp;
     return (
         &lt;AppBar position="sticky"&gt;
@@ -161,11 +163,18 @@ const PublicHeader = (): React.JSX.Element =&gt; {
                         &lt;/Button&gt;
                     ))}
 &nbsp;
-                    &lt;Button 
+                    &lt;Button
                         sx={{ml: 2, fontWeight: 300,backgroundColor: theme.palette.primary.light, color: theme.palette.text.primary}}
                         onClick={() =&gt; {navigate('/login')}}
                     &gt;
                         Login
+                    &lt;/Button&gt;
+&nbsp;
+                    &lt;Button
+                        sx={{ml: 2, fontWeight: 300,backgroundColor: theme.palette.primary.light, color: theme.palette.text.primary}}
+                        onClick={() =&gt; {navigate('/login')}}
+                    &gt;
+                        Logout
                     &lt;/Button&gt;
                 &lt;/Box&gt;
 &nbsp;
@@ -193,4 +202,3 @@ export { PublicHeader }</pre></td></tr></table></pre>
         <script src="../../block-navigation.js"></script>
     </body>
 </html>
-    

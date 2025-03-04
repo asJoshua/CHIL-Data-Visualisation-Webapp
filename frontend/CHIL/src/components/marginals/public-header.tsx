@@ -22,12 +22,13 @@ const PublicHeader = (): React.JSX.Element => {
                         </Button>
                     ))}
 
-                    <Button 
+                    <Button
                         sx={{ml: 2, fontWeight: 300,backgroundColor: theme.palette.primary.light, color: theme.palette.text.primary}}
                         onClick={() => {navigate('/login')}}
                     >
                         Login
                     </Button>
+
                 </Box>
 
             </Toolbar>
