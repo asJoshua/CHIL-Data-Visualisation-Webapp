@@ -3,7 +3,8 @@ import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
 import { Container, Typography } from '@mui/material';
-import imageSrc from "@/assets/images/BgICe.jpg"
+import imageSrc from "@/assets/images/BgICe.jpg";
+import axios from 'axios';
 
 const Newsletter = () => {
     const [email, setEmail] = useState('');
@@ -21,17 +22,35 @@ const Newsletter = () => {
         return regex.test(email);
     }
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-
+    
         if (!validateEmail(email)) {
             setError(true);
             setEmailErrorMessage("Please enter a valid email address");
         } else {
             setError(false);
             setEmailErrorMessage("");
-            setShowSuccess(true);
-            setShowSuccessMessage("Thank you for subscribing! You will be notified of any major changes.");
+    
+            try {
+                const response = await axios.post('http://localhost:8000/chil/newsletter/signup/', {
+                    email: email,
+                });
+
+                if (response.status == 200) {
+                    setShowSuccess(true);
+                    setShowSuccessMessage("Thank you for subscribing! You will be notified of any major changes.");
+                } else {
+                    setShowSuccess(false);
+                    setError(true);
+                    setEmailErrorMessage("Something went wrong, please try again.");
+                }
+            } catch (error) {
+                setShowSuccess(false);
+                setError(true);
+                setEmailErrorMessage("There was an error sending the request.");
+            }
+    
             setEmail("");
         }
     };
