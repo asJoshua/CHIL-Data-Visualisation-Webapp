@@ -4,7 +4,7 @@ BEGIN;
 -- Create newsletter table
 ------------------------------------------------------------------------------
 
-CREATE TABLE newsletterSubscribers (
+CREATE TABLE newsletter_subscribers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

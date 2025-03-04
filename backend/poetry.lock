@@ -191,6 +191,7 @@ files = [
 django = ">=4.2"
 
 [[package]]
+<<<<<<< HEAD
 name = "djangorestframework-simplejwt"
 version = "5.4.0"
 description = "A minimal JSON Web Token authentication plugin for Django REST Framework"
@@ -215,6 +216,8 @@ python-jose = ["python-jose (==3.3.0)"]
 test = ["cryptography", "freezegun", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "tox"]
 
 [[package]]
+=======
+>>>>>>> bfdfba0 (feat/email sends)
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
