@@ -23,12 +23,13 @@ const AboutUsRoot = (): React.JSX.Element => {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    px: '400px',
-                    py: '100px',
+                    px: { xs: 2, sm: 4, md: 8, lg: 12 },  
+                    py: { xs: 4, sm: 8, md: 12 },
                     backgroundColor: '#00000099',
                     backgroundImage: `url(${pageTitle})`,
                     backgroundSize: 'cover',
-                    backgroundPosition: '50% 50%',
+                    backgroundPosition: 'center',
+                    width: '100%',
                 }}
             >
                 <Box
@@ -61,6 +62,7 @@ const AboutUsRoot = (): React.JSX.Element => {
                             height: '3px',
                             backgroundColor: 'variable-collection-primary',
                             my: 2,
+                            mx: 'auto'
                         }}
                     />
                     <Typography
@@ -71,6 +73,7 @@ const AboutUsRoot = (): React.JSX.Element => {
                             color: 'variable-collection-light',
                             fontSize: '2rem',
                             textAlign: 'center',
+                            px: { xs: 2, sm: 4 },
                         }}
                     >
                         Cras non metus sollicitudin, aliquam ipsum a, semper tortor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
@@ -83,13 +86,13 @@ const AboutUsRoot = (): React.JSX.Element => {
                 alignItems="center"
                 justifyContent="center"
                 gap={3}
-                px={50}
-                py={12.5}
+                px={{ xs: 2, sm: 4, md: 8 }}
+                py={{ xs: 4, sm: 6, md: 8 }}
                 bgcolor="rgba(207, 223, 227, 1)"
                 width="100%"
             >
-                <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                <Grid container spacing={3} justifyContent="center">
+                    <Grid item xs={12} sm={6} md={3} >
                         <Paper
                             elevation={3}
                             sx={{
