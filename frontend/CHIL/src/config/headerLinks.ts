@@ -1,10 +1,28 @@
 const publicHeaderConfig = [
     ['Home', '/home'],
     ['Regions', '/regions'],
-    ['Data', '/data'],
+    ['Deployments', '/deployments'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/about'],
     ['Contact Us', '/contact'],
 ]
 
-export { publicHeaderConfig }
+const adminHeaderConfig = [
+    ['Home', '/home'],
+    ['Regions', '/regions'],
+    ['Deployments', '/deployments'],
+    ['Newsletter', '/newsletter'],
+    ['About Us', '/about'],
+    ['Contact Us', '/contact'],
+]
+
+const collaboratorHeaderConfig = [
+    ['Home', '/home'],
+    ['Regions', '/regions'],
+    ['Deployments', '/deployments'],
+    ['Newsletter', '/newsletter'],
+    ['About Us', '/about'],
+    ['Contact Us', '/contact'],
+]
+
+export { publicHeaderConfig, adminHeaderConfig, collaboratorHeaderConfig }

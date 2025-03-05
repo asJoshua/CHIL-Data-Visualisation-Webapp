@@ -38,13 +38,29 @@ frontend-test:
 backend-test:
   stage: test
   image: python
+  services:
+    - name: mariadb:latest
+
+  variables:
+    # Configure mysql environment variables (https://hub.docker.com/_/mysql/)
+    MARIADB_DATABASE: $DB_NAME
+    MARIADB_ROOT_PASSWORD: $DB_PASSWORD
+
+  before_script:
+    - apt-get update
+    - apt-get install -y mariadb-client
+    - apt-get install -y mariadb-server
+    - mariadb --version
+    # - mariadb --user=root --password="$MARIADB_ROOT_PASSWORD" --host=mariadb --execute "CREATE DATABASE "$DB_NAME";"
+    - mariadb --user=root --password="$MARIADB_ROOT_PASSWORD" --host=mariadb --execute "USE "$DB_NAME"; SOURCE backend/CHIL/schema/init-schema.sql;"
+    - mariadb --user=root --password="$MARIADB_ROOT_PASSWORD" --host=mariadb --execute "USE "$DB_NAME"; SOURCE backend/CHIL/schema/init-metadata.sql;"
 
   script:
     - cd backend/CHIL
     - pip install Poetry
     - poetry -V
     - poetry install
-    - poetry run python manage.py test
+    - poetry run python manage.py test chil/tests --settings=config.django.test
 
 pages:
   stage: deploy

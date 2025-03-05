@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { PublicHeader } from '@/components/marginals/public-header';
-
+import { Footer } from '@/components/marginals/footer';
 export type LayoutProps = PropsWithChildren & {
     className?: string
 }
@@ -12,9 +12,10 @@ const PublicLayout = ({
     return (
         <>
             <PublicHeader />
-            <div className={className}>
-                {children}
-            </div>
+                <div className={className}>
+                    {children}
+                </div>
+            <Footer />
         </>
     );
 }
