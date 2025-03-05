@@ -38,7 +38,7 @@ const DeploymentsPage = (): React.JSX.Element => {
     }, []);
 
     const handleRowClick = (id: string) => {
-        navigate(`deployments/${id}`);
+        navigate(`/deployments/${id}`);
     }
 
     return (
