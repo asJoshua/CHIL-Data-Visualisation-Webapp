@@ -33,7 +33,7 @@ class NewsletterSignup(APIView):
             Subscribers.objects.using('newsletterdb').create(email=email)# pylint: disable=no-member
 
             send_mail(
-                # the message is not indented because it looks funny when receiving emails on mobile phones.
+# the message is not indented because it looks funny when receiving emails on mobile phones.
                 subject='Welcome to the CHIL Newsletter!',
                 message=f'''
 Hi there!,
