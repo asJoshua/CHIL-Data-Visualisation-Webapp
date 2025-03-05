@@ -19,7 +19,6 @@
     "@fontsource/roboto": "^5.1.1",
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.3",
-    "@storybook/addon-mdx-gfm": "^8.5.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
