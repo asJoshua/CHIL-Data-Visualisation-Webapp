@@ -22,13 +22,11 @@ class InstrumentView(APIView):
         """List all instruments of a specified type"""
         print("List all")
 
-    def getInstrument():
+    def get():
         """Get infomation of a specific instrument by id"""
 
-    def updateInstrument():
+    def update():
         """Update instrument entry"""
 
-    def deleteByInstrument():
+    def delete():
         """Delete a specific instrument"""
-
-    def 
