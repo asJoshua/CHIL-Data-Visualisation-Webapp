@@ -37,7 +37,10 @@ class Instrument(models.Model):
 
     def clean(self):
         if self.manufacture_date > self.commission_date:
-            raise ValidationError("Commission date cannot be before manufacture date")
+            raise ValidationError("commission_date cannot be before manufacture_date")
+
+        if self.pressure_keller_max < self.pressure_keller_min:
+            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
 
     def __str__(self):
         return str(self.instrument_id)
