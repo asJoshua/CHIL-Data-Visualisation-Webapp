@@ -10,6 +10,9 @@ class InstrumentType(models.Model):
     Represents instrument types
     """
 
+    class Meta:
+        db_table = "instrument_type_table"
+
     instrument_type_id = models.BigAutoField(primary_key=True)
     instrument_name = models.CharField(max_length=255)
 
@@ -17,6 +20,9 @@ class Instrument(models.Model):
     """
     Represents an instrument.
     """
+
+    class Meta:
+        db_table = "instrument_table"
 
     instrument_id = models.BigAutoField(primary_key=True)
     type = models.ForeignKey(InstrumentType, on_delete=models.CASCADE)

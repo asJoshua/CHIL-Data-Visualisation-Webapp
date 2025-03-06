@@ -7,7 +7,7 @@ from ..models import (
     InstrumentType,
     Instrument
 )
-class InstrumentTypeSerializer(serializers.Serializer):
+class InstrumentTypeSerializer(serializers.ModelSerializer):
     """
     Serializer for Instrument Type
     """
@@ -20,7 +20,7 @@ class InstrumentTypeSerializer(serializers.Serializer):
         ]
 
 
-class InstrumentSerializer(serializers.Serializer):
+class InstrumentSerializer(serializers.ModelSerializer):
     """
     Serializer for Instrument
     """

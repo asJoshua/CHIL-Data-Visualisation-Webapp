@@ -20,7 +20,7 @@ tags:
     description: Used by equipment to add data to the database
 
 paths:
-  /instrument/{type}:
+  /instrument:
     post:
       tags:
         - instrument
@@ -29,18 +29,6 @@ paths:
       operationId: createInstrument
       security:
         - BearerAuth: []
-      parameters:
-        - name: type
-          in: path
-          description: The type of instrument to list
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
       requestBody:
         content:
           application/json:
@@ -67,7 +55,7 @@ paths:
         404:
           description: Type not found
 
-  /instrument/{type}/list:
+  /instrument/list:
     get:
       tags:
         - instrument
@@ -97,7 +85,7 @@ paths:
         400:
           description: Type not found
 
-  /instrument/{type}/{id}:
+  /instrument/{id}:
     get:
       tags:
         - instrument
@@ -105,17 +93,6 @@ paths:
       description: Get infomation of a specific instrument by id
       operationId: getInstrument
       parameters:
-        - name: type
-          in: path
-          description: The type of instrument
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
         - name: id
           in: path
           description: The id of the instrument

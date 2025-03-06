@@ -3,9 +3,11 @@ Creates the serializers package
 """
 
 from .instrument_api_service import (
-    InstrumentService
+    instrument_type_create,
+    instrument_create
 )
 
 __all__ = [
-    'InstrumentService',
+    'instrument_type_create',
+    'instrument_create',
 ]

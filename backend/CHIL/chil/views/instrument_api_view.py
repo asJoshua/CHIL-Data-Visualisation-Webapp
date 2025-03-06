@@ -5,28 +5,41 @@ Views for the Instrument API endpoints endpoints
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
-from ..serializers import
+from ..serializers import (
+    InstrumentTypeSerializer,
+    InstrumentSerializer
+)
 
-class InstrumentView(APIView):
+from ..services import (
+    instrument_type_create,
+    instrument_create
+)
+
+class InstrumentTypeCreateView(APIView):
+    """
+    Create a new instrument type endpoint
     """
 
+    def post(self, request):
+        """Create a new instrument type"""
+        serializer = InstrumentTypeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        instrument_type_create(**serializer.validated_data)
+
+        return Response(status=status.HTTP_201_CREATED)
+
+class InstrumentCreateView(APIView):
+    """
+    Create instrument endpoint
     """
 
-    def create():
+    def post(self, request):
         """Create a new instrument of a specifed type"""
-        print("Create")
+        serializer = InstrumentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-    def listAll():
-        """List all instruments of a specified type"""
-        print("List all")
+        instrument_create(**serializer.validated_data)
 
-    def get():
-        """Get infomation of a specific instrument by id"""
-
-    def update():
-        """Update instrument entry"""
-
-    def delete():
-        """Delete a specific instrument"""
+        return Response(status=status.HTTP_201_CREATED)
