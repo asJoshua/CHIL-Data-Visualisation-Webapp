@@ -1,0 +1,46 @@
+@startuml Website-Container-Diagram
+!include <c4/C4_Context.puml>
+!include <c4/C4_Container.puml>
+title Website Container Diagram with API Integration
+
+Person_Ext(public_user, "Public User", "An unauthenticated user")
+Person_Ext(collaborator_user, "Collaborator User", "An authorized and authenticated user")
+Person_Ext(admin_user, "Admin User", "An authorized and authenticated user")
+
+System_Boundary(spa, "SPA", "The React SPA") {
+    Container(public_pages, "Public Pages", "Pages designed for unauthenticated users")
+    Container(collaborator_pages, "Collaborator Pages", "Pages designed for collaborators")
+    Container(admin_pages, "Admin Pages", "Pages designed for admins")
+}
+
+System_Boundary(api_system, "API System", "The backend API system") {
+    Container(api, "API", "Routes requests to the appropriate microservices")
+    Container(instrument_service, "Instrument Service", "Handles instrument-related operations")
+    Container(receiver_service, "Receiver Service", "Handles receiver-related operations")
+    Container(campaign_service, "Campaign Service", "Handles campaign-related operations")
+    Container(data_service, "Data Service", "Handles raw and processed data operations")
+    Container(ingest_service, "Ingest Service", "Handles data ingestion from equipment")
+    Container(database, "Database", "mariadb", "Stores application data")
+}
+
+Rel(public_user, public_pages, "Uses")
+Rel(collaborator_user, collaborator_pages, "Uses")
+Rel(admin_user, admin_pages, "Uses")
+
+Rel(public_pages, api, "Makes API requests")
+Rel(collaborator_pages, api, "Makes API requests")
+Rel(admin_pages, api, "Makes API requests")
+
+Rel(api, instrument_service, "Routes instrument-related requests")
+Rel(api, receiver_service, "Routes receiver-related requests")
+Rel(api, campaign_service, "Routes campaign-related requests")
+Rel(api, data_service, "Routes data-related requests")
+Rel(api, ingest_service, "Routes ingest-related requests")
+
+Rel(instrument_service, database, "Reads from and writes to")
+Rel(receiver_service, database, "Reads from and writes to")
+Rel(campaign_service, database, "Reads from and writes to")
+Rel(data_service, database, "Reads from and writes to")
+Rel(ingest_service, database, "Writes to", "Stores ingested data")
+
+@enduml
