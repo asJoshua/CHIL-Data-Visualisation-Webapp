@@ -10,7 +10,8 @@ class InstrumentType(models.Model):
     Represents instrument types
     """
 
-    class Meta:
+    class Meta: # pylint: disable=R0903
+        """Overide settings"""
         db_table = "instrument_type_table"
 
     instrument_type_id = models.BigAutoField(primary_key=True)
@@ -21,7 +22,8 @@ class Instrument(models.Model):
     Represents an instrument.
     """
 
-    class Meta:
+    class Meta: # pylint: disable=R0903
+        """Overide settings"""
         db_table = "instrument_table"
 
     instrument_id = models.BigAutoField(primary_key=True)
@@ -38,4 +40,4 @@ class Instrument(models.Model):
             raise ValidationError("Commission date cannot be before manufacture date")
 
     def __str__(self):
-        return self.instrument_id
+        return str(self.instrument_id)

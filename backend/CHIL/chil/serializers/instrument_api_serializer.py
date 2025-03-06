@@ -12,7 +12,7 @@ class InstrumentTypeSerializer(serializers.ModelSerializer):
     Serializer for Instrument Type
     """
 
-    class Meta():
+    class Meta(): # pylint: disable=R0903, C0115
         model = InstrumentType
         fields = [
             'instrument_type_id',
@@ -25,7 +25,7 @@ class InstrumentSerializer(serializers.ModelSerializer):
     Serializer for Instrument
     """
 
-    class Meta():
+    class Meta(): # pylint: disable=R0903, C0115
         model = Instrument
         fields = [
             'instrument_id',

@@ -14,7 +14,10 @@ def instrument_type_create(
     *,
     instrument_name: str
 ) -> InstrumentType:
-    print(instrument_name)
+    """
+    Creates a new instrument type entry in the db
+    """
+
     instrument_type = InstrumentType(
         instrument_name = instrument_name
     )
@@ -24,9 +27,9 @@ def instrument_type_create(
     return instrument_type
 
 @transaction.atomic
-def instrument_create(
+def instrument_create( # pylint: disable=R0913
     *,
-    type: int,
+    type: int, # pylint: disable=W0622
     manufacture_date: date,
     manufacture_batch: str,
     commission_date: date,
@@ -34,6 +37,10 @@ def instrument_create(
     pressure_keller_min: float,
     pressure_keller_max: float
 ) -> Instrument:
+    """
+    Creates a new instrument entry in the db
+    """
+
     instrument = Instrument(
         type = type,
         manufacture_date = manufacture_date,
