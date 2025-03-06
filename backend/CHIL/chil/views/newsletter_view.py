@@ -9,8 +9,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..models.newsletter_model import Subscribers
 
-logger = logging.getLogger(__name__)
-
 class NewsletterSignup(APIView):
     """
     Views for Newsletter endpoints
@@ -28,6 +26,10 @@ class NewsletterSignup(APIView):
 
         if not email:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        if Subscribers.objects.using('newsletterdb').filter(email=email).exists():
+            return Response({"error": "This email is already subscribed"}, 
+                            status=status.HTTP_400_BAD_REQUEST)
 
         try:
             Subscribers.objects.using('newsletterdb').create(email=email)# pylint: disable=no-member
@@ -53,7 +55,7 @@ Click the link below to be redirected to the CHIL home page:
             )
 
         except Exception as e: # pylint: disable=broad-exception-caught
-            logger.error("Error during newsletter signup: %s", e)
             return Response(
+                {"error": "There was an error sending the request"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

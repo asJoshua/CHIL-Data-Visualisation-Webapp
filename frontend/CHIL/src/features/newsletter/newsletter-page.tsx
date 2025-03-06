@@ -4,7 +4,7 @@ import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
 import { Container, Typography } from '@mui/material';
 import imageSrc from "@/assets/images/BgICe.jpg";
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const Newsletter = () => {
     const [email, setEmail] = useState('');
@@ -28,7 +28,9 @@ const Newsletter = () => {
         if (!validateEmail(email)) {
             setError(true);
             setEmailErrorMessage("Please enter a valid email address");
-        } else {
+        } 
+        
+        else {
             setError(false);
             setEmailErrorMessage("");
     
@@ -45,16 +47,22 @@ const Newsletter = () => {
                 if (response.status == 200) {
                     setShowSuccess(true);
                     setShowSuccessMessage("Thank you for subscribing! You will be notified of any major changes.");
-                } else {
+                }else {
                     setShowSuccess(false);
                     setError(true);
                     setEmailErrorMessage("Something went wrong, please try again.");
                 }
-            } catch (error) {
-                console.error("Error occurred:", error);
-                setShowSuccess(false);
-                setError(true);
-                setEmailErrorMessage("There was an error sending the request.");
+
+            } catch (error: AxiosError | any) {
+                if (error.response?.status === 400 && error.response.data?.error === "This email is already subscribed"){
+                    setShowSuccess(false);
+                    setError(true);
+                    setEmailErrorMessage("This email is already subscribed")
+                } else if(error.response?.status === 500 && error.response.data?.error === "There was an error sending the request") {
+                    setShowSuccess(false);
+                    setError(true);
+                    setEmailErrorMessage("There was an error sending the request");
+                }
             }
     
             setEmail("");
