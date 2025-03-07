@@ -6,6 +6,10 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from ..utils import (
+    authenticate_by_group
+)
+
 from ..serializers import (
     InstrumentTypeSerializer,
     InstrumentSerializer
@@ -23,6 +27,12 @@ class InstrumentTypeCreateView(APIView):
 
     def post(self, request):
         """Create a new instrument type"""
+
+        auth_result = authenticate_by_group(request, ['admin'])
+
+        if not auth_result:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         serializer = InstrumentTypeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -37,6 +47,12 @@ class InstrumentCreateView(APIView):
 
     def post(self, request):
         """Create a new instrument of a specifed type"""
+
+        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
+
+        if not auth_result:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         serializer = InstrumentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
