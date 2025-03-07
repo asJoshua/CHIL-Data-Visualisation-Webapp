@@ -22,6 +22,7 @@ class NewsletterSignup(APIView):
         """
         data = self.request.data
         email = data.get('email')
+        # can be updated later on
         link = 'http://localhost:5173/home'
 
         if not email:
