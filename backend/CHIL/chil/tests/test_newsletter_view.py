@@ -40,7 +40,7 @@ class NewsletterSignupTestCase(TestCase):
         self.assertEqual(response.data['error'], "This email is already subscribed")
 
     @patch('chil.models.newsletter_model.Subscribers.objects.using')
-    def test_newsletter_signup_no_email(self):
+    def test_newsletter_signup_no_email(self, mock_db):
         """
         400 error is returned when no email is provided.
         """
