@@ -10,7 +10,8 @@ from .auth_view import (
 
 from .instrument_api_view import (
     InstrumentTypeCreateView,
-    InstrumentCreateView
+    InstrumentCreateView,
+    InstrumentGetView
 )
 
 __all__ = [
@@ -19,4 +20,5 @@ __all__ = [
     'LogoutView',
     'InstrumentTypeCreateView',
     'InstrumentCreateView',
+    'InstrumentGetView',
 ]

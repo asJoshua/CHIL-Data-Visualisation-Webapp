@@ -2,6 +2,7 @@
 All the buisness logic for the instrument model
 """
 
+from django.db.models import Q
 from datetime import date
 from django.db import transaction
 from ..models import (
@@ -54,3 +55,12 @@ def instrument_create( # pylint: disable=R0913
     instrument.save()
 
     return instrument
+
+def instrument_get_by_id(*, id = id):
+    """
+    Gets an instrument entry from the db
+    """
+
+    query = Q(instrument_id=id)
+
+    return Instrument.objects.filter(query).values()

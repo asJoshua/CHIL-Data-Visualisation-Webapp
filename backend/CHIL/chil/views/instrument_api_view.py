@@ -17,7 +17,8 @@ from ..serializers import (
 
 from ..services import (
     instrument_type_create,
-    instrument_create
+    instrument_create,
+    instrument_get_by_id
 )
 
 class InstrumentTypeCreateView(APIView):
@@ -59,3 +60,16 @@ class InstrumentCreateView(APIView):
         instrument_create(**serializer.validated_data)
 
         return Response(status=status.HTTP_201_CREATED)
+
+class InstrumentGetView(APIView):
+    """
+    Get Instrument by id
+    """
+
+    def get(self, request):
+        """Gets an instrument by id"""
+        response = instrument_get_by_id(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        return Response(status=status.HTTP_200_OK, data=response[0])

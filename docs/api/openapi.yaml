@@ -90,37 +90,6 @@ paths:
         404:
           description: Type not found
 
-
-  /instrument/list:
-    get:
-      tags:
-        - instrument
-      summary: Lists all instruments of a specified type
-      description: Lists all instruments of a specified type
-      operationId: getAllInstruments
-      parameters:
-        - name: type
-          in: path
-          description: The type of instrument to list
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/instrument-list'
-        400:
-          description: Type not found
-
   /instrument/{id}:
     get:
       tags:
