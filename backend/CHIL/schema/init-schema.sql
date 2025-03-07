@@ -7,22 +7,29 @@ CREATE TABLE process_table (
     timestamp_begin     TEXT,
     timestamp_end       TEXT,
     notes               TEXT
-);    
+);
+
+CREATE TABLE instrument_type_table (
+    instrument_type_id  INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT DEFAULT NULL,
+    instrument_name     TEXT NOT NULL
+);
 
 CREATE TABLE instrument_table (
     instrument_id       INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT DEFAULT NULL,
-    type                TEXT NOT NULL,
+    type                INTEGER UNSIGNED,
     manufacture_date    TEXT,
     manufacture_batch   TEXT,
     commission_date     TEXT,
     notes               TEXT,
     pressure_keller_min REAL NOT NULL DEFAULT 0,
-    pressure_keller_max REAL NOT NULL
+    pressure_keller_max REAL NOT NULL,
+    -- Assign Foreign Keys
+    FOREIGN KEY (type) REFERENCES instrument_type_table(instrument_type_id)
 );
 
 CREATE TABLE receiver_table (
     receiver_id         INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT DEFAULT NULL,
-    name       TEXT NOT NULL, 
+    name       TEXT NOT NULL,
     type       TEXT NOT NULL,
     imei_number         TEXT, -- associated with the Iridium receiver
     manufacture_date    TEXT,
@@ -36,7 +43,7 @@ CREATE TABLE campaign_table (
     name                TEXT NOT NULL, -- i.e. SLIDE2024, Donkey!
     description         TEXT,
     -- location fields
-    latitude            REAL, 
+    latitude            REAL,
     longitude           REAL,
     elevation           REAL,
     -- dates
@@ -46,7 +53,7 @@ CREATE TABLE campaign_table (
 
 CREATE TABLE instrument_deployment_table (
     deployment_id       INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT DEFAULT NULL,
-    description         TEXT, -- i.e. location of the moulin the instrument was deployed in 
+    description         TEXT, -- i.e. location of the moulin the instrument was deployed in
     campaign_id         INTEGER UNSIGNED,
     instrument_id       INTEGER UNSIGNED,
     start_timestamp     TEXT NOT NULL,
@@ -85,7 +92,7 @@ CREATE TABLE ingest_event_table (
     account_id          TEXT, -- accountId in 'identity' of LingoMO messages
     description         TEXT,
     timestamp           TEXT NOT NULL    -- time started?
-);   
+);
 
 CREATE TABLE ingest_table (
     ingest_id           INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT DEFAULT NULL,
@@ -120,7 +127,7 @@ CREATE TABLE ingest_localpacket_table (
 
 CREATE TABLE ingest_manual_table(
     ingest_id           INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT DEFAULT NULL,
-    metadata            TEXT,    
+    metadata            TEXT,
     -- Assign foreign keys
     FOREIGN KEY (ingest_id) REFERENCES ingest_table(ingest_id)
 ); -- this should be able to record unique metadata/notes for each ingest
@@ -224,7 +231,7 @@ CREATE TABLE cryowurst_data_table (
     cryowurst_raw_id    INTEGER UNSIGNED,
     process_id          INTEGER UNSIGNED,
     temperature_tmp117  REAL,
-    mag_x               REAL,   
+    mag_x               REAL,
     mag_y               REAL,
     mag_z               REAL,
     accel_imu_x         REAL,
@@ -314,5 +321,5 @@ CREATE TABLE conductivity_calibration_table (
     conductivity    REAL,
     temperature     REAL,
     FOREIGN KEY (calibration_id) REFERENCES calibration_table(calibration_id)
-);   
+);
 COMMIT;
