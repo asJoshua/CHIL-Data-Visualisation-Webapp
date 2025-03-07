@@ -4,6 +4,8 @@ import { DeploymentTopBar } from '@/features/individual-deployment/deployment-to
 import { useParams } from 'react-router-dom';
 import { theme } from "@/theme/theme";
 import { ThemeProvider } from "@mui/material/styles";
+import { Box } from '@/components/ui/box/box';
+import { CollabsibleGraphContainer } from '@/components/ui/collapsible-graph-container/collapsible-graph-container';
 
 
 const IndividualDeploymentsRoot = (): React.JSX.Element => {
@@ -16,7 +18,13 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
     return (
         <ThemeProvider theme={theme}>
             <VariableLayout>
-                <DeploymentTopBar deployment_id={Number(id)}/>
+                <Box className='flex flex-col gap-y-4 flex-wrap justify-center px-80 py-10'>
+                    <DeploymentTopBar deployment_id={Number(id)}/>
+                    <Box className='flex flex-col gap-y-4 flex-wrap justify-center content-center'>
+                        <CollabsibleGraphContainer></CollabsibleGraphContainer>
+                        <CollabsibleGraphContainer></CollabsibleGraphContainer>
+                    </Box>
+                </Box>
             </VariableLayout>
         </ThemeProvider>
     );
