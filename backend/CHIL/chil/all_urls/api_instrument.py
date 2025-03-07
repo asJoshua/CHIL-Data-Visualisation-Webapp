@@ -7,7 +7,8 @@ from ..views import (
     InstrumentTypeCreateView,
     InstrumentCreateView,
     InstrumentGetView,
-    InstrumentUpdateView
+    InstrumentUpdateView,
+    InstrumentDeleteView
 )
 
 urlpatterns = [
@@ -30,5 +31,10 @@ urlpatterns = [
         'update/',
         InstrumentUpdateView.as_view(),
         name='update_instrument_by_id'
+    ),
+    path(
+        'delete/',
+        InstrumentDeleteView.as_view(),
+        name='delete_instrument_by_id'
     )
 ]

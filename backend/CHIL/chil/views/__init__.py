@@ -12,7 +12,8 @@ from .instrument_api_view import (
     InstrumentTypeCreateView,
     InstrumentCreateView,
     InstrumentGetView,
-    InstrumentUpdateView
+    InstrumentUpdateView,
+    InstrumentDeleteView
 )
 
 __all__ = [
@@ -22,5 +23,6 @@ __all__ = [
     'InstrumentTypeCreateView',
     'InstrumentCreateView',
     'InstrumentGetView',
-    'InstrumentUpdateView'
+    'InstrumentUpdateView',
+    'InstrumentDeleteView'
 ]

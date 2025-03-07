@@ -19,7 +19,8 @@ from ..services import (
     instrument_type_create,
     instrument_create,
     instrument_get_by_id,
-    instrument_update
+    instrument_update,
+    instrument_delete
 )
 
 class InstrumentTypeCreateView(APIView):
@@ -88,9 +89,24 @@ class InstrumentUpdateView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        # serializer = InstrumentSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-
         instrument_update(id=request.data['id'], data=request.data)
 
         return Response(status=status.HTTP_200_OK)
+
+class InstrumentDeleteView(APIView):
+    """
+    Delete instrument by id
+    """
+
+    def delete(self, request):
+        """Deletes an instrument by id"""
+
+        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
+
+        if not auth_result:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        if not instrument_delete(id=request.data['id']):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)

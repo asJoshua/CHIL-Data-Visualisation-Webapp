@@ -75,6 +75,9 @@ def instrument_update(
     id: int,
     data: list
 ) -> Instrument | tuple[bool, str]:
+    """
+    Updates an instrument entry
+    """
 
     # Get instrument entry
     query = Q(instrument_id=id)
@@ -103,3 +106,23 @@ def instrument_update(
     )
 
     return updated_instrument
+
+@transaction.atomic
+def instrument_delete(
+    *,
+    id: int
+) -> bool:
+    """
+    Deletes an instrument entry from the db by id
+    """
+
+    query = Q(instrument_id=id)
+    instrument = Instrument.objects.filter(query)
+
+    if len(instrument) == 0:
+        return False
+
+    print(instrument)
+
+    instrument.delete()
+    return True
