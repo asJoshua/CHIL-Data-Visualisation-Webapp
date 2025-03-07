@@ -2,7 +2,6 @@
 Views for Newsletter endpoints
 """
 
-import logging
 from django.core.mail import send_mail
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -27,9 +26,10 @@ class NewsletterSignup(APIView):
 
         if not email:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
-        if Subscribers.objects.using('newsletterdb').filter(email=email).exists():
-            return Response({"error": "This email is already subscribed"}, 
+
+        if Subscribers.objects.using('newsletterdb').filter(email=email).exists():# pylint: disable=no-member
+
+            return Response({"error": "This email is already subscribed"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
@@ -57,6 +57,6 @@ Click the link below to be redirected to the CHIL home page:
 
         except Exception as e: # pylint: disable=broad-exception-caught
             return Response(
-                {"error": "There was an error sending the request"},
+                {e: "There was an error sending the request"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

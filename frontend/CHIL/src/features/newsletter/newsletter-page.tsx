@@ -4,7 +4,7 @@ import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
 import { Container, Typography } from '@mui/material';
 import CustomThemeProvider from "@/theme/ThemeProvider";
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 export type NewsletterProps = {
     apiURL: string,
@@ -60,15 +60,17 @@ const Newsletter = ( {apiURL, imageSrc}: NewsletterProps) => {
                     setEmailErrorMessage("Something went wrong, please try again.");
                 }
 
-            } catch (error: AxiosError | any) {
-                if (error.response?.status === 400 && error.response.data?.error === "This email is already subscribed"){
-                    setShowSuccess(false);
-                    setError(true);
-                    setEmailErrorMessage("This email is already subscribed")
-                } else if(error.response?.status === 500 && error.response.data?.error === "There was an error sending the request") {
-                    setShowSuccess(false);
-                    setError(true);
-                    setEmailErrorMessage("There was an error sending the request");
+            } catch (error: unknown) {
+                if (axios.isAxiosError(error)) {
+                    if (error.response?.status === 400 && error.response.data?.error === "This email is already subscribed"){
+                        setShowSuccess(false);
+                        setError(true);
+                        setEmailErrorMessage("This email is already subscribed")
+                    } else if(error.response?.status === 500 && error.response.data?.error === "There was an error sending the request") {
+                        setShowSuccess(false);
+                        setError(true);
+                        setEmailErrorMessage("There was an error sending the request");
+                    }
                 }
             }
     

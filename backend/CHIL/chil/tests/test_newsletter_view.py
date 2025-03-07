@@ -1,11 +1,11 @@
 """
     Test the newsletter view
 """
+
+from unittest.mock import patch, MagicMock
 from django.urls import reverse
 from django.test import TestCase
 from rest_framework import status
-from unittest.mock import patch, MagicMock
-from ..models.newsletter_model import Subscribers
 
 class NewsletterSignupTestCase(TestCase):
     """
@@ -40,7 +40,7 @@ class NewsletterSignupTestCase(TestCase):
         self.assertEqual(response.data['error'], "This email is already subscribed")
 
     @patch('chil.models.newsletter_model.Subscribers.objects.using')
-    def test_newsletter_signup_no_email(self, mock_db):
+    def test_newsletter_signup_no_email(self):
         """
         400 error is returned when no email is provided.
         """
