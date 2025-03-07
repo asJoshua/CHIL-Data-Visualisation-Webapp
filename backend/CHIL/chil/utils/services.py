@@ -1,12 +1,17 @@
+# pylint: skip-file
+"""
+Util code for services
+"""
 from typing import Any, Dict, List, Tuple, TypeVar
 
 from django.db import models
 from django.utils import timezone
 
-DjangoModelType = TypeVar("DjangoModelType", bound=models.Model)
+DjangoModelType = TypeVar("DjangoModelType", bound=models.Model) # pylint: ignore=C0103
 
 
-# From: https://github.com/HackSoftware/Django-Styleguide-Example/blob/master/styleguide_example/common/services.py
+# From: https://github.com/HackSoftware/Django-Styleguide-Example/blob/master/
+#   styleguide_example/common/services.py
 # Accessed 07 Mar 2025
 def model_update(
     *, instance: DjangoModelType, fields: List[str], data: Dict[str, Any], auto_updated_at=True
@@ -50,7 +55,10 @@ def model_update(
         # If field is not an actual model field, raise an error
         model_field = model_fields.get(field)
 
-        assert model_field is not None, f"{field} is not part of {instance.__class__.__name__} fields."
+        assert(
+            model_field is not None,
+            f"{field} is not part of {instance.__class__.__name__} fields."
+        )
 
         # If we have m2m field, handle differently
         if isinstance(model_field, models.ManyToManyField):
@@ -83,7 +91,8 @@ def model_update(
         related_manager.set(value)
 
         # Still not sure about this.
-        # What if we only update m2m relations & nothing on the model? Is this still considered as updated?
+        # What if we only update m2m relations & nothing on the model?
+        # Is this still considered as updated?
         has_updated = True
 
     return instance, has_updated

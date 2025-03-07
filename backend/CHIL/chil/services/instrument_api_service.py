@@ -2,8 +2,8 @@
 All the buisness logic for the instrument model
 """
 
-from django.db.models import Q
 from datetime import date
+from django.db.models import Q
 from django.db import transaction
 from ..models import (
     InstrumentType,
@@ -60,19 +60,19 @@ def instrument_create( # pylint: disable=R0913
 
     return instrument
 
-def instrument_get_by_id(*, id: int):
+def instrument_get_by_id(*, instrument_id: int):
     """
     Gets an instrument entry from the db
     """
 
-    query = Q(instrument_id=id)
+    query = Q(instrument_id=instrument_id)
 
-    return Instrument.objects.filter(query)
+    return Instrument.objects.filter(query) # pylint: disable=E1101
 
 @transaction.atomic
 def instrument_update(
     *,
-    id: int,
+    instrument_id: int,
     data: list
 ) -> Instrument | tuple[bool, str]:
     """
@@ -80,28 +80,17 @@ def instrument_update(
     """
 
     # Get instrument entry
-    query = Q(instrument_id=id)
-    instrument = Instrument.objects.filter(query)
+    query = Q(instrument_id=instrument_id)
+    instrument = Instrument.objects.filter(query) # pylint: disable=E1101
 
     if len(instrument) == 0:
         return (False, "404")
-
-    fields = [
-        'instrument_id',
-        'type',
-        'manufacture_date',
-        'manufacture_batch',
-        'commission_date',
-        'notes',
-        'pressure_keller_min',
-        'pressure_keller_max'
-    ]
 
     instrument = instrument[0]
 
     updated_instrument, _ = model_update(
         instance=instrument,
-        fields=fields,
+        fields=Instrument.fields,
         data=data
     )
 
@@ -110,14 +99,14 @@ def instrument_update(
 @transaction.atomic
 def instrument_delete(
     *,
-    id: int
+    instrument_id: int
 ) -> bool:
     """
     Deletes an instrument entry from the db by id
     """
 
-    query = Q(instrument_id=id)
-    instrument = Instrument.objects.filter(query)
+    query = Q(instrument_id=instrument_id)
+    instrument = Instrument.objects.filter(query) # pylint: disable=E1101
 
     if len(instrument) == 0:
         return False

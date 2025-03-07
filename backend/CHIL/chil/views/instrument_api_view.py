@@ -70,7 +70,7 @@ class InstrumentGetView(APIView):
 
     def get(self, request):
         """Gets an instrument by id"""
-        response = instrument_get_by_id(id=request.data['id'])
+        response = instrument_get_by_id(instrument_id=request.data['id'])
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -89,7 +89,7 @@ class InstrumentUpdateView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        instrument_update(id=request.data['id'], data=request.data)
+        instrument_update(instrument_id=request.data['id'], data=request.data)
 
         return Response(status=status.HTTP_200_OK)
 
@@ -106,7 +106,7 @@ class InstrumentDeleteView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        if not instrument_delete(id=request.data['id']):
+        if not instrument_delete(instrument_id=request.data['id']):
             return Response(status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

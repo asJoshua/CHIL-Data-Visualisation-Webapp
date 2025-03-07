@@ -1,5 +1,8 @@
+"""
+Auth util function that are used throughout the app
+"""
+
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.response import Response
 
 JWT_authenticator = JWTAuthentication()
 

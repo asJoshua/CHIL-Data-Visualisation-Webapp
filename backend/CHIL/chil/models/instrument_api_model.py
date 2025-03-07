@@ -35,6 +35,17 @@ class Instrument(models.Model):
     pressure_keller_min = models.FloatField()
     pressure_keller_max = models.FloatField()
 
+    fields = [
+        'instrument_id',
+        'type',
+        'manufacture_date',
+        'manufacture_batch',
+        'commission_date',
+        'notes',
+        'pressure_keller_min',
+        'pressure_keller_max'
+    ]
+
     def clean(self):
         if self.manufacture_date > self.commission_date:
             raise ValidationError("commission_date cannot be before manufacture_date")
