@@ -18,7 +18,8 @@ from ..serializers import (
 from ..services import (
     instrument_type_create,
     instrument_create,
-    instrument_get_by_id
+    instrument_get_by_id,
+    instrument_update
 )
 
 class InstrumentTypeCreateView(APIView):
@@ -71,5 +72,25 @@ class InstrumentGetView(APIView):
         response = instrument_get_by_id(id=request.data['id'])
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         return Response(status=status.HTTP_200_OK, data=response[0])
+
+class InstrumentUpdateView(APIView):
+    """
+    Update instrument by id
+    """
+
+    def put(self, request):
+        """Updates an instrument by id"""
+
+        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
+
+        if not auth_result:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        # serializer = InstrumentSerializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+
+        instrument_update(id=request.data['id'], data=request.data)
+
+        return Response(status=status.HTTP_200_OK)

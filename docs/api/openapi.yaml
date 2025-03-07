@@ -155,6 +155,8 @@ paths:
           description: Success
         400:
           description: Bad Request
+        401:
+          description: Unauthorized
         404:
           description: Type or Id not found
         409:

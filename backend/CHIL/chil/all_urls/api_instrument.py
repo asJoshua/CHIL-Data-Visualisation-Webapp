@@ -6,7 +6,8 @@ from django.urls import path
 from ..views import (
     InstrumentTypeCreateView,
     InstrumentCreateView,
-    InstrumentGetView
+    InstrumentGetView,
+    InstrumentUpdateView
 )
 
 urlpatterns = [
@@ -24,5 +25,10 @@ urlpatterns = [
         'get/',
         InstrumentGetView.as_view(),
         name='get_instrument_by_id'
+    ),
+    path(
+        'update/',
+        InstrumentUpdateView.as_view(),
+        name='update_instrument_by_id'
     )
 ]

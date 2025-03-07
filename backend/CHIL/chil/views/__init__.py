@@ -11,7 +11,8 @@ from .auth_view import (
 from .instrument_api_view import (
     InstrumentTypeCreateView,
     InstrumentCreateView,
-    InstrumentGetView
+    InstrumentGetView,
+    InstrumentUpdateView
 )
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     'InstrumentTypeCreateView',
     'InstrumentCreateView',
     'InstrumentGetView',
+    'InstrumentUpdateView'
 ]

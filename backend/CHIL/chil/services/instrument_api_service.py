@@ -10,6 +10,10 @@ from ..models import (
     Instrument
 )
 
+from ..utils import (
+    model_update
+)
+
 @transaction.atomic
 def instrument_type_create(
     *,
@@ -56,11 +60,46 @@ def instrument_create( # pylint: disable=R0913
 
     return instrument
 
-def instrument_get_by_id(*, id = id):
+def instrument_get_by_id(*, id: int):
     """
     Gets an instrument entry from the db
     """
 
     query = Q(instrument_id=id)
 
-    return Instrument.objects.filter(query).values()
+    return Instrument.objects.filter(query)
+
+@transaction.atomic
+def instrument_update(
+    *,
+    id: int,
+    data: list
+) -> Instrument | tuple[bool, str]:
+
+    # Get instrument entry
+    query = Q(instrument_id=id)
+    instrument = Instrument.objects.filter(query)
+
+    if len(instrument) == 0:
+        return (False, "404")
+
+    fields = [
+        'instrument_id',
+        'type',
+        'manufacture_date',
+        'manufacture_batch',
+        'commission_date',
+        'notes',
+        'pressure_keller_min',
+        'pressure_keller_max'
+    ]
+
+    instrument = instrument[0]
+
+    updated_instrument, _ = model_update(
+        instance=instrument,
+        fields=fields,
+        data=data
+    )
+
+    return updated_instrument
