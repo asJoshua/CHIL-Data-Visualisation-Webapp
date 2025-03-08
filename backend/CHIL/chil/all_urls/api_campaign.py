@@ -4,7 +4,6 @@ The URLS for the campaign endpoints in the API
 
 from django.urls import path
 from ..views import (
-    CampaignTypeCreateView,
     CampaignCreateView,
     CampaignGetView,
     CampaignUpdateView,
@@ -12,11 +11,6 @@ from ..views import (
 )
 
 urlpatterns = [
-    path(
-        'type/',
-        CampaignTypeCreateView.as_view(),
-        name='create_campaign_type'
-    ),
     path(
         '',
         CampaignCreateView.as_view(),
