@@ -106,8 +106,8 @@ def campaign_list_all() -> list:
     campaigns = Campaign.objects.filter(query) # pylint: disable=E1101
 
     if len(campaigns) == 0:
-        return(False)
-    
+        return False
+
     print(campaigns)
 
     return list(campaigns)
