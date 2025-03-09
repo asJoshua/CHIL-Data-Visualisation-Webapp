@@ -1,23 +1,27 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
 import { Grid2 as Grid, Button, Typography, Container, TextField } from '@mui/material';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePicker/datePickerComp';
-import { BorderAll } from '@mui/icons-material';
 
 const EditGraphRoot = (): React.JSX.Element => {
+
     
-    // const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
-    // const handleChange = (date: any) => {
-    //     if (date) {
-    //       setStartDate(date);
-    //     } else {
-    //       setStartDate(new Date());
-    //     }
-    // };
+    const datePickerIds = ["start-date", "end-date"]
+    const dateFormat = "dd-MM-yyyy"
 
+    const handleDateChange = (pickerId: string, date: Date) => {
+        if (pickerId = datePickerIds[0]) {
+            setStartDate(date)
+        } else {
+            setEndDate(date)
+        }
+        console.log(startDate, endDate)
+    }
+    
     return (
         <VariableLayout>
             <Container>
@@ -45,17 +49,19 @@ const EditGraphRoot = (): React.JSX.Element => {
                         Graph be here
                     </Grid>
                     <Grid size={6}>
-                        <Grid container justifyContent="center" alignContent="center" spacing={1}>
+                        <Grid container justifyContent="right" spacing={1}>
                             <DatePickerComp
-                                id='start-date'
-                                dateFormat='yyyy-mm-dd'
+                                id={datePickerIds[0]}
+                                dateFormat={dateFormat}
                                 placeholderText='Please select start date'
+                                onDateChange={handleDateChange}
                                 />
                             <p>-</p>
                             <DatePickerComp
-                                id='end-date'
-                                dateFormat='yyyy-mm-dd'
+                                id={datePickerIds[1]}
+                                dateFormat={dateFormat}
                                 placeholderText='Please select start date'
+                                onDateChange={handleDateChange}
                                 />
                         </Grid>
                     </Grid> 

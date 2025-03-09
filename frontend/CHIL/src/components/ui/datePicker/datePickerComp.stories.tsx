@@ -12,9 +12,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    id: "Crazy",
+    id: "Default Story",
     dateFormat: "yyyy-mm-dd",
-    placeholderText: "exmple text",
-    className: "defaultStyle"
+    placeholderText: "Placeholder text",    
   }
 };
+

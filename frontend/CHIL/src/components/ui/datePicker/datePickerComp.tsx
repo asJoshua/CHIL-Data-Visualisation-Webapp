@@ -8,6 +8,7 @@ export const DatePickerComp = (props: {
     dateFormat: string | string[] | undefined;
     placeholderText: string | undefined; 
     className?: string;
+    onDateChange?: (arg0: string, arg1: Date) => void
 })  => {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -17,6 +18,9 @@ export const DatePickerComp = (props: {
             setSelectedDate(date)
         } else {
             setSelectedDate(new Date())
+        }
+        if (props.onDateChange && props.id) {
+            props.onDateChange(props.id, selectedDate);
         }
     };
 
