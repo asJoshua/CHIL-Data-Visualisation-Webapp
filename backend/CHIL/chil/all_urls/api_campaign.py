@@ -7,7 +7,8 @@ from ..views import (
     CampaignCreateView,
     CampaignGetView,
     CampaignUpdateView,
-    CampaignDeleteView
+    CampaignDeleteView,
+    CampaginListAll
 )
 
 urlpatterns = [
@@ -30,5 +31,10 @@ urlpatterns = [
         'delete/',
         CampaignDeleteView.as_view(),
         name='delete_campaign_by_id'
+    ),
+    path(
+        'list/',
+        CampaginListAll.as_view(),
+        name='list_all_campaigns'
     )
 ]
