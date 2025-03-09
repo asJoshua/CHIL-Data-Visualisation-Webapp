@@ -95,3 +95,19 @@ def campaign_delete(
 
     campaign.delete()
     return True
+
+@transaction.atomic
+def campaign_list_all() -> list:
+    """
+    List all campaigns.
+    """
+
+    query = Q()
+    campaigns = Campaign.objects.filter(query) # pylint: disable=E1101
+
+    if len(campaigns) == 0:
+        return(False)
+    
+    print(campaigns)
+
+    return list(campaigns)
