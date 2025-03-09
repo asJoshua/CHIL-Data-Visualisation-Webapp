@@ -3,19 +3,20 @@ import { Grid2 as Grid, Button, Typography, Container, TextField } from '@mui/ma
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
-import DatePickerComp from '@/components/ui/datePicker/datePickerComp';
+import { DatePickerComp } from '@/components/ui/datePicker/datePickerComp';
+import { BorderAll } from '@mui/icons-material';
 
 const EditGraphRoot = (): React.JSX.Element => {
     
-    const [startDate, setStartDate] = useState(new Date());
+    // const [startDate, setStartDate] = useState(new Date());
 
-    const handleChange = (date: any) => {
-        if (date) {
-          setStartDate(date);
-        } else {
-          setStartDate(new Date());
-        }
-    };
+    // const handleChange = (date: any) => {
+    //     if (date) {
+    //       setStartDate(date);
+    //     } else {
+    //       setStartDate(new Date());
+    //     }
+    // };
 
     return (
         <VariableLayout>
@@ -44,14 +45,19 @@ const EditGraphRoot = (): React.JSX.Element => {
                         Graph be here
                     </Grid>
                     <Grid size={6}>
-                        {/* <DatePicker selected={startDate} onChange={(date) => {
-                            if (date) {
-                                setStartDate(date)
-                            } else {
-                                setStartDate(new Date())
-                            }
-                        } } /> */}
-                        <DatePickerComp textPlaceholder="Start date"/>
+                        <Grid container justifyContent="center" alignContent="center" spacing={1}>
+                            <DatePickerComp
+                                id='start-date'
+                                dateFormat='yyyy-mm-dd'
+                                placeholderText='Please select start date'
+                                />
+                            <p>-</p>
+                            <DatePickerComp
+                                id='end-date'
+                                dateFormat='yyyy-mm-dd'
+                                placeholderText='Please select start date'
+                                />
+                        </Grid>
                     </Grid> 
                 </Grid>
 

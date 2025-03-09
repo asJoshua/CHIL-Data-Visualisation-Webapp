@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; 
 import styles from './datePickerComp.module.css'; 
@@ -7,7 +7,7 @@ export const DatePickerComp = (props: {
     id: string | undefined; 
     dateFormat: string | string[] | undefined;
     placeholderText: string | undefined; 
-    className: string;
+    className?: string;
 })  => {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
