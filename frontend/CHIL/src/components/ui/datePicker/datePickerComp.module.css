@@ -1,0 +1,14 @@
+.defaultStyle {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.defaultStyle:hover {
+    background-color: #CFDFE3;
+}
+
+.defaultStyle:focus {
+    background-color: #CFDFE3;
+}
