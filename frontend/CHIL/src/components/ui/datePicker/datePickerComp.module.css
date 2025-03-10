@@ -1,8 +1,13 @@
 .defaultStyle {
     border: 1px solid black;
+    width: 100% !important;
     border-radius: 5px;
     padding: 5px;
     text-align: center;
+}
+
+.fullWidth {
+    width: 100% !important;
 }
 
 .defaultStyle:hover {

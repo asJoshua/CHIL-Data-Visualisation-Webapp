@@ -26,13 +26,14 @@ export const DatePickerComp = (props: {
 
     return (
         <DatePicker
-        id={props.id}
-        selected={selectedDate}
-        onChange={handleDateChange}
-        dateFormat={props.dateFormat}
-        placeholderText={props.placeholderText}
-        className={`${styles.defaultStyle} ${props.className || ''}`}
-        />
+            id={props.id}
+            selected={selectedDate}
+            onChange={handleDateChange}
+            dateFormat={props.dateFormat}
+            placeholderText={props.placeholderText}
+            className={`${styles.defaultStyle} ${props.className || ''}`}
+            wrapperClassName={styles.fullWidth}
+            />    
     );
 }
 

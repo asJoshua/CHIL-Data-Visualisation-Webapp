@@ -45,24 +45,44 @@ const EditGraphRoot = (): React.JSX.Element => {
                 <TextField id="outlined-basic" label="Graph Name" variant="outlined" fullWidth/>
 
                 <Grid container>
+
                     <Grid size={6}>
                         Graph be here
                     </Grid>
+
                     <Grid size={6}>
-                        <Grid container justifyContent="right" spacing={1}>
-                            <DatePickerComp
-                                id={datePickerIds[0]}
-                                dateFormat={dateFormat}
-                                placeholderText='Please select start date'
-                                onDateChange={handleDateChange}
-                                />
-                            <p>-</p>
-                            <DatePickerComp
-                                id={datePickerIds[1]}
-                                dateFormat={dateFormat}
-                                placeholderText='Please select start date'
-                                onDateChange={handleDateChange}
-                                />
+                        {/* Date range select */}
+                        <Grid container spacing={1}>
+                            <Grid size={6}>
+                                <DatePickerComp 
+                                    id={datePickerIds[0]}
+                                    dateFormat={dateFormat}
+                                    placeholderText='Please select start date'
+                                    onDateChange={handleDateChange}/>
+                            </Grid>
+                            <Grid size={6}>
+                                <DatePickerComp
+                                    id={datePickerIds[1]}
+                                    dateFormat={dateFormat}
+                                    placeholderText='Please select start date'
+                                    onDateChange={handleDateChange}/>
+                            </Grid>
+                        </Grid>
+
+                        {/* Plot select */}
+                        <Grid container spacing={1}>
+                            <Grid size={6}>
+                                <Button variant='contained' size='large' fullWidth disabled>Plot 1</Button>
+                            </Grid>
+                            <Grid size={6}>
+                                <Button variant='contained' size='large' fullWidth>Plot 2</Button>
+                            </Grid>
+                        </Grid>
+
+                        {/* Instrument Select */}
+                        <Grid container>
+
+
                         </Grid>
                     </Grid> 
                 </Grid>
