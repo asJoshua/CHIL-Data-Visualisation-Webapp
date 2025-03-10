@@ -2,7 +2,7 @@ import { VariableLayout } from '@/components/layouts/variable-layout';
 import { Grid2 as Grid, Button, Typography, Container, TextField } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
-import { DatePickerComp } from '@/components/ui/datePicker/datePickerComp';
+import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 
 const EditGraphRoot = (): React.JSX.Element => {
 
@@ -81,7 +81,6 @@ const EditGraphRoot = (): React.JSX.Element => {
 
                         {/* Instrument Select */}
                         <Grid container>
-
 
                         </Grid>
                     </Grid> 
