@@ -1,0 +1,51 @@
+@startuml API-Container-Diagram
+!include <c4/C4_Context.puml>
+!include <c4/C4_Container.puml>
+title Website Container Diagram with API System Integrated
+
+Person_Ext(public_user, "Public User", "An unauthenticated user (Can't make write requests to the database via the API)")
+Person_Ext(collaborator_user, "Collaborator User", "An authorized and authenticated user")
+Person_Ext(admin_user, "Admin User", "An authorized and authenticated user")
+
+System_Boundary(spa, "SPA", "The React SPA") {
+    Container(public_pages, "Public Pages", "Pages designed for unauthenticated users")
+    Container(collaborator_pages, "Collaborator Pages", "Pages designed for collaborators")
+    Container(admin_pages, "Admin Pages", "Pages designed for admins")
+}
+
+System_Ext(api, "API", "The API that the website uses to get data, can also be accessed by authorized 3rd parties.")
+
+System_Boundary(api_system, "API System", "The backend API system") {
+    Container(instrument_service, "Instrument Service", "Handles instrument-related operations")
+    Container(receiver_service, "Receiver Service", "Handles receiver-related operations")
+    Container(campaign_service, "Campaign Service (Grouped Deployments)", "Handles campaign-related operations")
+    Container(data_service, "Data Service", "Handles raw and processed data operations")
+    Container(ingest_service, "Ingest Service", "Handles data ingestion from equipment")
+}
+
+SystemDb(MariaDb, "MariaDb", "Stores all of the data collected from the instruments")
+System_Ext(equipment, "Equipment", "Deployed equipment gathering data")
+
+Rel(public_user, public_pages, "Uses")
+Rel(collaborator_user, collaborator_pages, "Uses")
+Rel(admin_user, admin_pages, "Uses")
+
+Rel(public_pages, api, "Makes API requests")
+Rel(collaborator_pages, api, "Makes API requests")
+Rel(admin_pages, api, "Makes API requests")
+
+Rel(api, instrument_service, "Instrument-related requests")
+Rel(api, receiver_service, "Receiver-related requests")
+Rel(api, campaign_service, "Campaign-related requests")
+Rel(api, data_service, "Data-related requests")
+Rel(api, ingest_service, "Ingest-related requests")
+
+Rel(equipment, ingest_service, "Sends raw data to", "Data ingestion")
+
+Rel(instrument_service, MariaDb, "Reads from and writes to")
+Rel(receiver_service, MariaDb, "Reads from and writes to")
+Rel(campaign_service, MariaDb, "Reads from and writes to")
+Rel(data_service, MariaDb, "Reads from")
+Rel(ingest_service, MariaDb, "Writes to", "Stores ingested data")
+
+@enduml
