@@ -2,22 +2,38 @@ import { useState } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+import axios from 'axios';
+import { CustomJWTPayload } from "@/components/auth/protectedRoute"
+import { useAuth } from '@/components/auth/authenticationProvider';
 
-const LoginForm = () => {
-    const [ showError, setError ] = useState(false)
+export type LoginFormProps = {
+    tokenURI: string,
+}
+
+const LoginForm = ({
+    tokenURI,
+}: LoginFormProps) => {
+    const [ showUsernameError, setUsernameError ] = useState(false)
+    const [ showPasswordError, setPasswordError ] = useState(false)
     const [ usernameErrorMessage, setUsernameErrorMessage ] = useState("")
     const [ passwordErrorMessage, setPasswordErrorMessage ] = useState("")
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [usernameInput, setUsernameInput] = useState('');
+    const [passwordInput, setPasswordInput] = useState('');
+
+    const navigate = useNavigate();
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value);
+        setUsernameInput(e.target.value);
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
+        setPasswordInput(e.target.value);
     };
+
+    const { setToken } = useAuth();
 
     const handleLogin = () => {
         let shouldError = false;
@@ -25,41 +41,76 @@ const LoginForm = () => {
         let passwordErrorMessage = "";
 
         // Basic input validation
-        if (username === "") {
+        if (usernameInput === "") {
             shouldError = true;
+            setUsernameError(true);
             usernameErrorMessage = "Must not be blank";
+        } else {
+            setUsernameError(false);
         }
 
-        if (password === "") {
+        if (passwordInput === "") {
             shouldError = true;
+            setPasswordError(true)
             passwordErrorMessage = "Must not be blank";
+        } else {
+            setPasswordError(false);
         }
 
         // If inputs are blank, don't make the API request
         if (shouldError === true){
-            setError(shouldError);
             setUsernameErrorMessage(usernameErrorMessage);
             setPasswordErrorMessage(passwordErrorMessage);
             return false;
-        } 
+        }
 
         // Change to a promise and api request
-        const success = false;
+        axios({
+            method: 'post',
+            url: tokenURI,
+            withCredentials: true,
+            data: {
+                username: usernameInput,
+                password: passwordInput,
+            }
+        })
+            .then((response) => {
+                // Set JWT to local storage (Refresh token should be stored in HTTP only cookie)
+                // Redirect to correct auth page
+                setUsernameError(false);
+                setPasswordError(false);
+                setUsernameErrorMessage("");
+                setPasswordErrorMessage("");
+                setToken(response.data.access);
 
-        if (success){
-            // Set tokens to local storage
-            // Redirect to correct auth page
-            setError(false);
-            setUsernameErrorMessage("");
-            setPasswordErrorMessage("");
-            return true;
-        } else {
-            // Username or Password wrong
-            setError(true);
-            setUsernameErrorMessage("Username or Password incorrect");
-            setPasswordErrorMessage("Username or Password incorrect");
-            return false;
-        }
+                const groups = jwtDecode<CustomJWTPayload>(response.data.access)["groups"];
+
+                switch(groups[0]){
+                    case("admin"):
+                        navigate("/admin/test");
+                        break;
+                    case("collaborator"):
+                        navigate("/collaborator/test");
+                        break;
+                    default:
+                        console.warn("Group not found: ", groups[0])
+                        break;
+                }
+            })
+            .catch((error) => {
+                if (error.response) {
+                    // Username or Password wrong
+                    setUsernameError(true);
+                    setPasswordError(true);
+                    setUsernameErrorMessage("Username or Password incorrect");
+                    setPasswordErrorMessage("Username or Password incorrect");
+                    return false;
+                } else {
+                    console.error(error.message);
+                }
+                console.log(error.config);
+            })
+
     };
 
     return (
@@ -71,16 +122,16 @@ const LoginForm = () => {
                 <TextField
                     variant='outlined'
                     label='Username'
-                    error={showError}
-                    helperText={showError ? usernameErrorMessage : "" }
+                    error={showUsernameError}
+                    helperText={showUsernameError ? usernameErrorMessage : "" }
                     onChange={handleUsernameChange}
                     />
                 <TextField
                     variant='outlined'
                     label='Password'
                     type='password'
-                    error={showError}
-                    helperText={showError ? passwordErrorMessage : "" }
+                    error={showPasswordError}
+                    helperText={showPasswordError ? passwordErrorMessage : "" }
                     onChange={handlePasswordChange}
                     />
                 <Button

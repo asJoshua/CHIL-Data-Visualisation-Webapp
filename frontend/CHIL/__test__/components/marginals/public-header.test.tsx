@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { PublicHeader } from '../../../src/components/marginals/public-header'
+import { AuthProvider } from '../../../src/components/auth/authenticationProvider'
 import { publicHeaderConfig } from '../../../src/config/headerLinks'
 import '@testing-library/jest-dom/jest-globals';
 import '@testing-library/jest-dom';
@@ -23,7 +24,9 @@ describe('Public Header', () => {
     it('renders the navigation buttons correctly', () => {
         render(
             <MemoryRouter>
-                <PublicHeader />
+                <AuthProvider>
+                    <PublicHeader />
+                </AuthProvider>
             </MemoryRouter>
         );
 
@@ -39,7 +42,9 @@ describe('Public Header', () => {
     it('navigates to the correct pages', () => {
         render(
             <MemoryRouter>
-                <PublicHeader />
+                <AuthProvider>
+                    <PublicHeader />
+                </AuthProvider>
             </MemoryRouter>
         );
 
