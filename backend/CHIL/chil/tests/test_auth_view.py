@@ -1,7 +1,6 @@
 """
     Test the auth view
 """
-
 from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
