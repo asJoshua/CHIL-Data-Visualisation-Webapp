@@ -133,7 +133,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                                     size='large' 
                                     onClick={handlePlotChange} 
                                     fullWidth
-                                    disabled={!currentPlot}
+                                    disabled={currentPlot === 'plotTwo'}
                                 >
                                     Plot 2
                                 </Button>
@@ -181,6 +181,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                         </Grid>
 
                         {/* Scale select */}
+                        
                     </Grid> 
                 </Grid>
 

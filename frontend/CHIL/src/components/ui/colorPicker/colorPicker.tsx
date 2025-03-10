@@ -42,6 +42,7 @@ export const ColorPicker = (props: { onColorChange?: (arg0: string) => void; }) 
             <Button 
                 onClick={handleOpen}
                 size='large'
+                fullWidth
                 style={{
                     backgroundColor: color,
                     color: getTextColor(color),
