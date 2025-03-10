@@ -4,24 +4,24 @@ import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
+import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
 
 const EditGraphRoot = (): React.JSX.Element => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [currentPlot, setCurrentPlot] = useState(true);
-    const [instrument, setInstrument] = useState('');
+    const [currentPlot, setCurrentPlot] = useState('plotOne');
 
     const [plotInformation, setPlotInformation] = useState({
         plotOne : { instrument : 'breh',
                     measurement : 'uhm',
                     color : '#129321',
-                    scale : 67
+                    scale : '67'
                 },
         plotTwo : { instrument : 'breh',
                     measurement : 'uhm',
                     color : '#129321',
-                    scale : 67
+                    scale : '67'
                 }
     });
 
@@ -34,24 +34,35 @@ const EditGraphRoot = (): React.JSX.Element => {
     }
 
     const handlePlotChange = () => {
-        if (currentPlot) { 
-            setCurrentPlot(false);
-        } 
-        else { 
-            setCurrentPlot(true);
+        if (currentPlot == 'plotOne') {
+            setCurrentPlot('plotTwo')
+        } else {
+            setCurrentPlot('plotOne')
         }
     }
 
-    const handleInstrumentChange = (selectedOption: string) => {
-        setInstrument(selectedOption);
+    const handleInstrumentChange = (newInstrument: string) => {
+        handleValueChange(newInstrument, currentPlot, 'instrument');
     }
 
     const handleMeasurementChange = (newMeasurement: string) => {
+        handleValueChange(newMeasurement, currentPlot, 'measurement') 
+    }
+
+    const handleColorChange = (newColor: string) => {
+        handleValueChange(newColor, currentPlot, 'color')
+    }
+
+    const handleScaleChange = (newScale: string) => {
+        handleValueChange(newScale, currentPlot, 'scale')
+    }
+
+    const handleValueChange = (value: string, plot: any, valueKey: any) => {
         setPlotInformation((prevPlotInformation) => ({
             ...prevPlotInformation,
-            plotOne: {
-              ...prevPlotInformation.plotOne,
-              measurement: newMeasurement,
+            [plot]: {
+                ...prevPlotInformation.plotOne,
+                [valueKey]: value,
             },
         }));
     }
@@ -111,7 +122,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                                     size='large' 
                                     onClick={handlePlotChange}
                                     fullWidth 
-                                    disabled={currentPlot}
+                                    disabled={currentPlot === 'plotOne'}
                                 >
                                     Plot 1
                                 </Button>
@@ -157,7 +168,17 @@ const EditGraphRoot = (): React.JSX.Element => {
                                 ]} />
                         </Grid>
 
-                        {/* Colour Select */}
+                        {/* Color Select */}
+                        <Grid container>
+                            <Grid size={6}>
+                                <p>Plot Colour</p>
+                            </Grid>
+                            <Grid size={6}>
+                                <ColorPicker
+                                    onColorChange={handleColorChange}
+                                />
+                            </Grid>
+                        </Grid>
 
                         {/* Scale select */}
                     </Grid> 
