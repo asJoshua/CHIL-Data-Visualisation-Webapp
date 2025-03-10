@@ -5,8 +5,7 @@ import { useParams } from 'react-router-dom';
 import { theme } from "@/theme/theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box } from '@/components/ui/box/box';
-import { CollabsibleGraphContainer } from '@/components/ui/collapsible-graph-container/collapsible-graph-container';
-
+import { CollapsibleGraphContainer } from '@/components/ui/collapsible-graph-container/collapsible-graph-container';
 
 const IndividualDeploymentsRoot = (): React.JSX.Element => {
     const { id } = useParams<'id'>();
@@ -21,8 +20,8 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
                 <Box className='flex flex-col gap-y-4 flex-wrap justify-center px-80 py-10'>
                     <DeploymentTopBar deployment_id={Number(id)}/>
                     <Box className='flex flex-col gap-y-4 flex-wrap justify-center content-center'>
-                        <CollabsibleGraphContainer></CollabsibleGraphContainer>
-                        <CollabsibleGraphContainer></CollabsibleGraphContainer>
+                        <CollapsibleGraphContainer></CollapsibleGraphContainer>
+                        <CollapsibleGraphContainer></CollapsibleGraphContainer>
                     </Box>
                 </Box>
             </VariableLayout>

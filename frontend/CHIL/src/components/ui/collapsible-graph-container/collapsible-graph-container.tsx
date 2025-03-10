@@ -11,7 +11,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import DatasetIcon from '@mui/icons-material/Dataset';
 
 
-const CollabsibleGraphContainer = () => {
+const CollapsibleGraphContainer = () => {
     return (
         <Accordion className="size-full">
             <AccordionSummary
@@ -52,4 +52,4 @@ const CollabsibleGraphContainer = () => {
     );
 };
 
-export { CollabsibleGraphContainer };
+export { CollapsibleGraphContainer };
