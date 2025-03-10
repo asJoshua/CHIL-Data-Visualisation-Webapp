@@ -3,7 +3,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 export const DropDownSelect = (props: {
-    onSelectChange?: any;
+    onSelectChange?: (selectedOption: string) => void;
     labelText: string | undefined;
     selectId: string | undefined;
     labelId: string | undefined;
@@ -21,7 +21,7 @@ export const DropDownSelect = (props: {
     };
 
     return (
-        <Box sx={{ minWidth: 120 }}>
+        <Box sx={{ minWidth: 120 }} width='100%'>
         <FormControl fullWidth>
             <InputLabel id={props.labelId}>{props.labelText}</InputLabel>
             <Select
@@ -32,7 +32,7 @@ export const DropDownSelect = (props: {
                 onChange={handleChange}
             >
                 {props.options.map((option: { value: string | number ; label: string; }) => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem key={option.value} value={option.value} sx={{ color: 'black' }}>
                         {option.label}
                     </MenuItem>
                 ))}
