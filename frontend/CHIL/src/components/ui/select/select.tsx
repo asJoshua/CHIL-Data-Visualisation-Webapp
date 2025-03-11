@@ -1,8 +1,9 @@
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css'; 
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 export const DropDownSelect = (props: {
+    valueOverride?: any;
     onSelectChange?: (selectedOption: string) => void;
     labelText: string | undefined;
     selectId: string | undefined;
@@ -16,9 +17,15 @@ export const DropDownSelect = (props: {
     const handleChange = (event: SelectChangeEvent) => {
         setSelectedOption(event.target.value as string);
         if (props.onSelectChange) {
-            props.onSelectChange(selectedOption);
+            props.onSelectChange(event.target.value as string);
         }
     };
+
+    useEffect(() => {
+        if (props.valueOverride?.[0] !== undefined && props.valueOverride !== 'null') {
+            setSelectedOption(props.valueOverride[1] as string);
+        }
+    }, [props.valueOverride?.[0]]);
 
     return (
         <Box sx={{ minWidth: 120 }} width='100%'>

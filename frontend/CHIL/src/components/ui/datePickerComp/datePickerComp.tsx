@@ -28,9 +28,9 @@ export const DatePickerComp = (props: {
         <DatePicker
             id={props.id}
             selected={selectedDate}
-            onChange={handleDateChange}
             dateFormat={props.dateFormat}
             placeholderText={props.placeholderText}
+            onChange={handleDateChange}
             className={`${styles.defaultStyle} ${props.className || ''}`}
             wrapperClassName={styles.fullWidth}
             />    

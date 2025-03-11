@@ -11,7 +11,8 @@ const EditGraphRoot = (): React.JSX.Element => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [currentPlot, setCurrentPlot] = useState('plotOne');
+    type PlotName = "plotOne" | "plotTwo";
+    const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
     const [plotInformation, setPlotInformation] = useState({
         plotOne : { instrument : '',
                     measurement : '',
@@ -151,7 +152,8 @@ const EditGraphRoot = (): React.JSX.Element => {
                                 options={[
                                     { value: 'cryowurst', label: 'Cryowurst' },
                                     { value: 'cryoegg', label: 'Cryoegg' }
-                                ]} />
+                                ]} 
+                                valueOverride={[currentPlot, plotInformation[currentPlot].instrument]}/>
                         </Grid>
 
                         {/* Measurement Select */}
@@ -165,7 +167,8 @@ const EditGraphRoot = (): React.JSX.Element => {
                                 options={[
                                     { value: 'tilt', label: 'Tilt' },
                                     { value: 'conductivity', label: 'Conductivity' }
-                                ]} />
+                                ]} 
+                                valueOverride={[currentPlot, plotInformation[currentPlot].measurement]}/>
                         </Grid>
 
                         {/* Color Select */}
