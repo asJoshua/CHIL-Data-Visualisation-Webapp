@@ -179,6 +179,8 @@ const EditGraphRoot = (): React.JSX.Element => {
                             <Grid size={6}>
                                 <ColorPicker
                                     onColorChange={handleColorChange}
+                                    defaultColor='#AABBCC'
+                                    valueOverride={[currentPlot, plotInformation[currentPlot].measurement]}
                                 />
                             </Grid>
                         </Grid>

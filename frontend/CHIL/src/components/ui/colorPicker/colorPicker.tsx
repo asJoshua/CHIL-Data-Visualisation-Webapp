@@ -10,8 +10,11 @@ const centerColorPicker = {
     transform: 'translate(-50%, -50%)'
 };
 
-export const ColorPicker = (props: { onColorChange?: (arg0: string) => void; })  => {
-
+export const ColorPicker = (props: {
+    defaultColor: String;
+    valueOverride?: any; 
+    onColorChange?: (arg0: string) => void; 
+})  => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -36,6 +39,14 @@ export const ColorPicker = (props: { onColorChange?: (arg0: string) => void; }) 
             props.onColorChange(color)
         } 
     }, [color]);
+
+    useEffect(() => {
+        if (props.valueOverride?.[1] == '') {
+            setColor(props.defaultColor as string)
+        } else if (props.valueOverride?.[0] !== undefined && props.valueOverride !== 'null') {
+            setColor(props.valueOverride[1]);
+        }
+    }, [props.valueOverride?.[0]]);
 
     return (
         <div>
