@@ -5,23 +5,23 @@ import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
+import { NumberSelect } from '@/components/ui/numberInput/numberInput';
 
 const EditGraphRoot = (): React.JSX.Element => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [currentPlot, setCurrentPlot] = useState('plotOne');
-
     const [plotInformation, setPlotInformation] = useState({
-        plotOne : { instrument : 'breh',
-                    measurement : 'uhm',
-                    color : '#129321',
-                    scale : '67'
+        plotOne : { instrument : '',
+                    measurement : '',
+                    color : '',
+                    scale : ''
                 },
-        plotTwo : { instrument : 'breh',
-                    measurement : 'uhm',
-                    color : '#129321',
-                    scale : '67'
+        plotTwo : { instrument : '',
+                    measurement : '',
+                    color : '',
+                    scale : ''
                 }
     });
 
@@ -170,7 +170,7 @@ const EditGraphRoot = (): React.JSX.Element => {
 
                         {/* Color Select */}
                         <Grid container>
-                            <Grid size={6}>
+                            <Grid size={6} alignContent='center'>
                                 <p>Plot Colour</p>
                             </Grid>
                             <Grid size={6}>
@@ -181,6 +181,19 @@ const EditGraphRoot = (): React.JSX.Element => {
                         </Grid>
 
                         {/* Scale select */}
+                        <Grid container>
+                            <Grid size={6} alignContent='center'>
+                                <p>Scale</p>
+                            </Grid>
+                            <Grid size={6}>
+                                <NumberSelect 
+                                    id="scale"
+                                    label="Scale"
+                                    onNumberChange={handleScaleChange}
+                                />
+                            </Grid>
+                            
+                        </Grid>
                         
                     </Grid> 
                 </Grid>
