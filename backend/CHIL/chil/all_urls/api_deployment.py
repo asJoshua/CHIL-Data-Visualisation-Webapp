@@ -3,7 +3,7 @@ The URLS for the deployment endpoints in the API
 """
 
 from django.urls import path
-from ..views import (
+from ..views.deployment_api_view import (
     DeploymentCreateView,
     DeploymentGetAllView,
     DeploymentGetView,
