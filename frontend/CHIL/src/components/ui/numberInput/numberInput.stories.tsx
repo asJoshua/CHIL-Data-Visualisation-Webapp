@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ColorPicker } from './numberInput';
+import { NumberSelect } from './numberInput';
 
 const meta = {
-  component: ColorPicker,
-} satisfies Meta<typeof ColorPicker>;
+  component: NumberSelect,
+} satisfies Meta<typeof NumberSelect>;
 
 export default meta;
 
