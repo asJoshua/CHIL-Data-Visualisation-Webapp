@@ -34,7 +34,7 @@ const createAppRouter = () => {
                         {
                             path: paths.public.deployments.edit.path, // ":id/edit"
                             lazy: async () => {
-                                const { EditGraphRoot } = await import('@/app/routes/public/editGraph.tsx'); 
+                                const { EditGraphRoot } = await import('@/app/routes/public/editGraph/editGraph'); 
                                 return { Component: EditGraphRoot };
                             }
                         },
