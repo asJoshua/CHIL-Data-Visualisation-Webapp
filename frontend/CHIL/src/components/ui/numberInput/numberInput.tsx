@@ -24,7 +24,34 @@ export const NumberSelect = (props: {
             type='number' 
             variant="outlined"
             fullWidth
-            onChange={handleChange}/>  
+            onChange={handleChange}
+            sx={{
+                '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'black',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'black',
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'black', 
+                },
+                backgroundColor: 'white', 
+                '&:hover': {
+                    backgroundColor: '#CFDFE3', 
+                },
+                '& input[type=number]': {
+                    '-moz-appearance': 'textfield'
+                },
+                '& input[type=number]::-webkit-outer-spin-button': {
+                    '-webkit-appearance': 'none',
+                    margin: 0
+                },
+                '& input[type=number]::-webkit-inner-spin-button': {
+                    '-webkit-appearance': 'none',
+                    margin: 0
+                }
+            }}
+            />  
     );
 }
 

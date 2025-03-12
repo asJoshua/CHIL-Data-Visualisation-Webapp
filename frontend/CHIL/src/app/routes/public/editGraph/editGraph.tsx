@@ -72,23 +72,27 @@ const EditGraphRoot = (): React.JSX.Element => {
         <VariableLayout>
             <Container>
 
-                <Grid container justifyContent="space-between">
-                    <Grid>
-                        <Typography variant="h2" gutterBottom color='textSecondary'>
-                            Depoy-TEST
-                        </Typography>
-                    </Grid>
-                    <Grid container spacing={1}>
-                        <Grid>
-                            <Button variant='contained' size='large'>CANCEL</Button>
+                <Box mt={1} mb={1}>
+                    <Grid container justifyContent="space-between">
+                        <Grid alignContent='center'>
+                            <Typography variant="h2" color='textSecondary' sx={{ textAlign: 'center', marginBottom: 0 }}>
+                                Depoy-TEST
+                            </Typography>
                         </Grid>
-                        <Grid>
-                            <Button variant='contained' size='large'>ADD</Button>
+                        <Grid container spacing={1} alignContent='center'>
+                            <Grid>
+                                <Button variant='contained' size='large'>CANCEL</Button>
+                            </Grid>
+                            <Grid>
+                                <Button variant='contained' size='large'>ADD</Button>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-
-                <TextField id="outlined-basic" label="Graph Name" variant="outlined" fullWidth/>
+                </Box>
+                
+                <Box mb={1}>
+                    <TextField id="outlined-basic" label="Graph Name" variant="outlined" fullWidth/>
+                </Box>
 
                 <Grid container>
 
