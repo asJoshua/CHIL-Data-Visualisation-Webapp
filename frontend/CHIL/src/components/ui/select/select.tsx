@@ -37,6 +37,21 @@ export const DropDownSelect = (props: {
                 value={selectedOption}
                 label={props.selectLabel}
                 onChange={handleChange}
+                sx={{
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'black', // Change border color
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'black', // Change hover border color
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'black', // Change focused border color
+                    },
+                    backgroundColor: 'white', // Default background color
+                    '&:hover': {
+                        backgroundColor: '#CFDFE3', // Hover background color
+                    },
+                }}
             >
                 {props.options.map((option: { value: string | number ; label: string; }) => (
                     <MenuItem key={option.value} value={option.value} sx={{ color: 'black' }}>

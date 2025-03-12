@@ -2,6 +2,8 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; 
 import styles from './datePickerComp.module.css'; 
+import './datePickerOverride.css'; 
+import { Box } from '@mui/material';
 
 export const DatePickerComp = (props: {
     id: string | undefined; 
@@ -26,14 +28,14 @@ export const DatePickerComp = (props: {
 
     return (
         <DatePicker
-            id={props.id}
-            selected={selectedDate}
-            dateFormat={props.dateFormat}
-            placeholderText={props.placeholderText}
-            onChange={handleDateChange}
-            className={`${styles.defaultStyle} ${props.className || ''}`}
-            wrapperClassName={styles.fullWidth}
-            />    
+        id={props.id}
+        selected={selectedDate}
+        dateFormat={props.dateFormat}
+        placeholderText={props.placeholderText}
+        onChange={handleDateChange}
+        className={`${styles.defaultStyle} ${props.className || ''}`}
+        wrapperClassName={styles.fullWidth}
+        />
     );
 }
 

@@ -1,14 +1,17 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
-import { Grid2 as Grid, Button, Typography, Container, TextField, Box } from '@mui/material';
+import { Grid2 as Grid, Typography, Container, Box } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
 import { NumberSelect } from '@/components/ui/numberInput/numberInput';
+import { Button } from '@/components/ui/button/button';
+import { TextField } from '@/components/ui/text-field/text-field';
 
 const EditGraphRoot = (): React.JSX.Element => {
 
+    const [graphName, setGraphName] = useState('')
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     type PlotName = "plotOne" | "plotTwo";
@@ -25,6 +28,11 @@ const EditGraphRoot = (): React.JSX.Element => {
                     scale : ''
                 }
     });
+    const [isDisabled, setisDisabled] = useState(false);
+
+    const handleGraphNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setGraphName(e.target.value);
+    };
 
     const handleDateChange = (pickerId: string, date: Date) => {
         if (pickerId = 'start-date') {
@@ -67,28 +75,64 @@ const EditGraphRoot = (): React.JSX.Element => {
             },
         }));
     }
-    
+
+    const disabledDivStyle = {
+        pointerEvents: 'none',
+        opacity: 0.5,
+    };
+
+    const triggerValueOverride = async () => {
+        setisDisabled(true);
+        const tempCurrentPlot = currentPlot;
+        await setCurrentPlot('plotOne');
+        await setCurrentPlot('plotTwo');
+        setCurrentPlot(tempCurrentPlot);
+        setisDisabled(false);
+    }
+
+    const handlePlotReset = async () => {
+        setPlotInformation((prevPlotInformation) => ({
+            ...prevPlotInformation,
+            [currentPlot]: {
+                instrument : '',
+                measurement : '',
+                color : '',
+                scale : ''
+            },
+        }));
+        triggerValueOverride();
+    }
+
     return (
         <VariableLayout>
             <Container>
 
-                <Grid container justifyContent="space-between">
-                    <Grid>
-                        <Typography variant="h2" gutterBottom color='textSecondary'>
-                            Depoy-TEST
-                        </Typography>
-                    </Grid>
-                    <Grid container spacing={1}>
-                        <Grid>
-                            <Button variant='contained' size='large'>CANCEL</Button>
+                <Box mt={1} mb={1}>
+                    <Grid container justifyContent="space-between">
+                        <Grid container alignContent='center'>
+                            <Typography variant="h2" color='textSecondary' sx={{ textAlign: 'center', marginBottom: 0 }}>
+                                Depoy-TEST
+                            </Typography>
                         </Grid>
-                        <Grid>
-                            <Button variant='contained' size='large'>ADD</Button>
+                        <Grid container spacing={1} alignContent='center'>
+                            <Grid>
+                                <Button variant='contained' size='large'>CANCEL</Button>
+                            </Grid>
+                            <Grid>
+                                <Button variant='contained' size='large'>ADD</Button>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-
-                <TextField id="outlined-basic" label="Graph Name" variant="outlined" fullWidth/>
+                </Box>
+                
+                <Box mb={1}>
+                    <TextField 
+                        id="outlined-basic" 
+                        label="Graph Name" 
+                        variant="outlined" 
+                        fullWidth
+                        onChange={handleGraphNameChange}/>
+                </Box>
 
                 <Grid container>
 
@@ -145,7 +189,8 @@ const EditGraphRoot = (): React.JSX.Element => {
                             </Grid>
                         </Box>
                         
-                        {/* Instrument Select */}
+                        {/* Instrument Select */ }
+                        <Box sx={isDisabled ? disabledDivStyle : {}}>
                         <Box mb={1}>
                             <Grid container>
                                 <DropDownSelect 
@@ -196,19 +241,28 @@ const EditGraphRoot = (): React.JSX.Element => {
                         </Box>
                         
                         {/* Scale select */}
-                        <Grid container>
-                            <Grid size={6} alignContent='center'>
-                                <p>Scale</p>
+                        <Box mb={1}>
+                            <Grid container>
+                                <Grid size={6} alignContent='center'>
+                                    <p>Scale</p>
+                                </Grid>
+                                <Grid size={6}>
+                                    <NumberSelect 
+                                        id="scale"
+                                        label="Scale"
+                                        onNumberChange={handleScaleChange}
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid size={6}>
-                                <NumberSelect 
-                                    id="scale"
-                                    label="Scale"
-                                    onNumberChange={handleScaleChange}
-                                />
+                        </Box>
+                        </Box>
+                        
+                        {/* Reset Plot */}
+                        <Box mb={1}>
+                            <Grid container direction='row-reverse'>
+                                <Button variant='contained' size='large' fullWidth onClick={handlePlotReset}>Reset Plot</Button>
                             </Grid>
-                            
-                        </Grid>
+                        </Box>
                         
                     </Grid> 
                 </Grid>
