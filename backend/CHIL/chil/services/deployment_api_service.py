@@ -49,7 +49,7 @@ def deployment_get_all():
     """
     Gets all deployments from the db
     """
-    return Deployment.objects.all()
+    return Deployment.objects.all() # pylint: disable=E1101
 
 @transaction.atomic
 def deployment_update(

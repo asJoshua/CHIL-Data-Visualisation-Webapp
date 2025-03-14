@@ -1,5 +1,5 @@
 """
-Views for the Instrument API endpoints endpoints
+Views for the Deployment API endpoints endpoints
 """
 
 from rest_framework import status
@@ -54,7 +54,7 @@ class DeploymentGetView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_200_OK, data=response[0])
-    
+
 class DeploymentGetAllView(APIView):
     """
     Get all Deployments
@@ -84,7 +84,7 @@ class DeploymentUpdateView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        deployment_update(instrument_id=request.data['id'], data=request.data)
+        deployment_update(deployment_id=request.data['id'], data=request.data)
 
         return Response(status=status.HTTP_200_OK)
 
@@ -101,7 +101,7 @@ class DeploymentDeleteView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        if not deployment_delete(instrument_id=request.data['id']):
+        if not deployment_delete(deployment_id=request.data['id']):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
