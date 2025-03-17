@@ -10,6 +10,7 @@ import rectangle13 from "@/assets/images/Rectangle 1 (3).png";
 import rectangle1 from "@/assets/images/Rectangle 1.png";
 import cardiffUniversityLogo1 from "@/assets/images/Cardiff_University_(logo) 1.svg";
 import { Button } from "@mui/material";
+import { VariableLayout } from "@/components/layouts/variable-layout";
 
 const teamMembers = [
   {
@@ -50,6 +51,7 @@ const locations = [
 const AboutUsRoot = (): React.JSX.Element => {
   const [activeLocation, setActiveLocation] = useState("CANADA");
   return (
+    <VariableLayout>
     <Box sx={{ display: "flex", flexDirection: "column", bgcolor: "white" }}>
       {/* page title with background image */}
       <Box
@@ -494,6 +496,7 @@ const AboutUsRoot = (): React.JSX.Element => {
         </Box>
       </Box>
     </Box>
+    </VariableLayout>
   );
 };
 

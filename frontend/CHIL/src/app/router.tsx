@@ -39,6 +39,20 @@ const createAppRouter = () => {
                         return { Component: DeploymentsRoot };
                     }
                 },
+                {
+                    path: paths.public.individual_deployments.path,
+                    lazy: async () => {
+                        const { IndividualDeploymentsRoot } = await import('@/app/routes/public/individual-deployment.tsx');
+                        return { Component: IndividualDeploymentsRoot };
+                    }
+                },
+                {
+                    path: paths.public.newsletter.path,
+                    lazy: async () => {
+                        const { NewsletterRoot } = await import('@/app/routes/public/newsletter.tsx');
+                        return { Component: NewsletterRoot };
+                    }
+                },
             ]
         },
         {

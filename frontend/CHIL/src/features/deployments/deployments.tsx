@@ -26,7 +26,7 @@ const DeploymentsPage = (): React.JSX.Element => {
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
-    const filteredRows = rows.filter(row => 
+    const filteredRows = rows.filter(row =>
         Object.values(row).some(value =>
             value.toString().toLowerCase().includes(searchQuery.toLowerCase())
         )
@@ -38,7 +38,7 @@ const DeploymentsPage = (): React.JSX.Element => {
     }, []);
 
     const handleRowClick = (id: string) => {
-        navigate(`deployments/${id}`);
+        navigate(`/deployments/${id}`);
     }
 
     return (
@@ -48,7 +48,7 @@ const DeploymentsPage = (): React.JSX.Element => {
                         <Typography variant="h2" color="primary.main">Deployments</Typography>
                         <Typography variant="h4" color="secondary.main">All deployments of our instruments</Typography>
                         <div style={{paddingTop: "5px", paddingBottom: "5px"}}>
-                            <TextField 
+                            <TextField
                                 className="w-full max-w-sm"
                                 label="Search Deployments..."
                                 value={searchQuery}
@@ -62,7 +62,7 @@ const DeploymentsPage = (): React.JSX.Element => {
                         </div>
                         <div className="overflow-auto w-full max-h-[70vh]">
                             <DataTable columns={columns} rows={filteredRows} onRowClick={handleRowClick} />
-                        </div>                
+                        </div>
                     </Container>
                 </Container>
         </CustomThemeProvider>
