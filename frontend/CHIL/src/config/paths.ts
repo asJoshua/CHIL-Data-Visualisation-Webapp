@@ -10,7 +10,15 @@ const paths = {
         },
         deployments: {
             path: 'deployments',
-            getHref: () => '/deployments'
+            getHref: () => '/deployments',
+            view: { 
+                path: ':id',
+                getHref: (id: any) => `/deployments/${id}`
+            },
+            edit: { 
+                path: ':id/edit',
+                getHref: (id: any) => `/deployments/${id}/edit`
+            }
         },
         individual_deployments: {
             path: 'deployments/:id',
