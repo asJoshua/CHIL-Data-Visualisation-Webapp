@@ -19,7 +19,8 @@ from ..services.deployment_api_service import (
     deployment_get_by_id,
     deployment_get_all,
     deployment_update,
-    deployment_delete
+    deployment_delete,
+    deployment_get_deployment_instruments
 )
 
 class DeploymentCreateView(APIView):
@@ -70,6 +71,19 @@ class DeploymentGetAllView(APIView):
         data = list(response.values())
 
         return Response(data, status=status.HTTP_200_OK)
+    
+class DeploymentGetDeploymentInstrumentsView(APIView):
+    """
+    Gets all the instruments of a deployment from the db
+    """
+
+    def get(self, request, deployment_id):
+        """Gets all the instruments of a deployment from the db"""
+        response = deployment_get_deployment_instruments(deployment_id=deployment_id)
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=response[0])
 
 class DeploymentUpdateView(APIView):
     """

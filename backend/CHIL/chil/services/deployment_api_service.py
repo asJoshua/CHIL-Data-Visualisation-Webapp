@@ -6,7 +6,11 @@ from datetime import date
 from django.db.models import Q
 from django.db import transaction
 from ..models.deployment_api_model import (
-    Deployment
+    Deployment,
+    DeploymentInstrument,
+)
+from ..services.instrument_api_service import(
+    instrument_get_by_id
 )
 
 from ..utils import (
@@ -50,6 +54,17 @@ def deployment_get_all():
     Gets all deployments from the db
     """
     return Deployment.objects.all() # pylint: disable=E1101
+
+def deployment_get_deployment_instruments(*, deployment_id: int):
+    """
+    Gets all the instruments of a deployment from the db
+    """
+    query = Q(deployment_id=deployment_id)
+    instrument_ids = DeploymentInstrument.objects.filter(query).values_list('instrument_id', flat=True)
+    
+    instruments = [instrument_get_by_id(instrument_id=id) for id in instrument_ids]
+    
+    return instruments
 
 @transaction.atomic
 def deployment_update(

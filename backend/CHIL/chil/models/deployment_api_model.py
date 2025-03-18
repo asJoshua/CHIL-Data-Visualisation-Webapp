@@ -5,6 +5,22 @@ Defines the deployment model, used to represent instruments in the API
 from django.db import models
 from django.core.exceptions import ValidationError
 
+class DeploymentInstrument(models.Model):
+    """
+    Represents all instruments within given deployments
+    """
+
+    class Meta: # pylint: disable=R0903
+        """Overide settings"""
+        db_table = "instrument_deployment_table"
+
+    deployment_id = models.BigAutoField(primary_key=True)
+    description = models.TextField()
+    campaign_id = models.BigIntegerField()
+    instrument_id = models.BigIntegerField()
+    start_timestamp = models.DateField()
+    end_timestamp = models.DateField()
+
 class Deployment(models.Model):
     """
     Represents a deployment.

@@ -8,7 +8,8 @@ from ..views.deployment_api_view import (
     DeploymentGetAllView,
     DeploymentGetView,
     DeploymentUpdateView,
-    DeploymentDeleteView
+    DeploymentDeleteView,
+    DeploymentGetDeploymentInstrumentsView
 )
 
 urlpatterns = [
@@ -36,5 +37,10 @@ urlpatterns = [
         'delete/',
         DeploymentDeleteView.as_view(),
         name='delete_deployment_by_id'
-    )
+    ),
+    path(
+        '<int:deployment_id>/instruments',
+        DeploymentGetDeploymentInstrumentsView.as_view(),
+        name='get_all_deployment_instruments_by_id'
+    ),
 ]
