@@ -88,14 +88,6 @@ DATABASES = {
         "PASSWORD": env("DB_PASSWORD"),
         "HOST": env("DB_HOST"),
         "PORT": env("DB_PORT"),
-    }, 
-    'newsletterdb': {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": env("NEWSLETTER_DB_NAME"),
-        "USER": env("NEWSLETTER_DB_USER"),
-        "PASSWORD": env("NEWSLETTER_DB_PASSWORD"),
-        "HOST": env("NEWSLETTER_DB_HOST"),
-        "PORT": env("NEWSLETTER_DB_PORT"),
     }
 }
 

@@ -12,7 +12,7 @@ class NewsletterSignupTestCase(TestCase):
     class for newsletter view
     """
 
-    database = ["newsletterdb"]
+    database = ["largedb"]
 
     def setUp(self):
         """Set up initial test data"""

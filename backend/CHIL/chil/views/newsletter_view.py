@@ -27,13 +27,13 @@ class NewsletterSignup(APIView):
         if not email:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        if Subscribers.objects.using('newsletterdb').filter(email=email).exists():# pylint: disable=no-member
+        if Subscribers.objects.filter(email=email).exists():# pylint: disable=no-member
 
             return Response({"error": "This email is already subscribed"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            Subscribers.objects.using('newsletterdb').create(email=email)# pylint: disable=no-member
+            Subscribers.objects.create(email=email)# pylint: disable=no-member
 
             send_mail(
 # the message is not indented because it looks funny when receiving emails on mobile phones.
