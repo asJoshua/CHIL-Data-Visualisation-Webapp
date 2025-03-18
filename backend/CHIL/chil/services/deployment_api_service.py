@@ -60,10 +60,11 @@ def deployment_get_deployment_instruments(*, deployment_id: int):
     Gets all the instruments of a deployment from the db
     """
     query = Q(deployment_id=deployment_id)
-    instrument_ids = DeploymentInstrument.objects.filter(query).values_list('instrument_id', flat=True)
-    
+    instrument_ids = DeploymentInstrument.objects.filter(query).\
+                     values_list('instrument_id', flat=True) # pylint: disable=E1101
+
     instruments = [instrument_get_by_id(instrument_id=id) for id in instrument_ids]
-    
+
     return instruments
 
 @transaction.atomic

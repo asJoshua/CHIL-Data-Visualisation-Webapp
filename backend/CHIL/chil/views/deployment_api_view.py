@@ -71,13 +71,13 @@ class DeploymentGetAllView(APIView):
         data = list(response.values())
 
         return Response(data, status=status.HTTP_200_OK)
-    
+
 class DeploymentGetDeploymentInstrumentsView(APIView):
     """
     Gets all the instruments of a deployment from the db
     """
 
-    def get(self, request, deployment_id):
+    def get(self, _, deployment_id):
         """Gets all the instruments of a deployment from the db"""
         response = deployment_get_deployment_instruments(deployment_id=deployment_id)
         if len(response) == 0:

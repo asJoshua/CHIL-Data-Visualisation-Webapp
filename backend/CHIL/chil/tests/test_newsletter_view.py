@@ -12,7 +12,7 @@ class NewsletterSignupTestCase(TestCase):
     class for newsletter view
     """
 
-    database = ["largedb"]
+    database = ["default"]
 
     def setUp(self):
         """Set up initial test data"""
@@ -22,7 +22,7 @@ class NewsletterSignupTestCase(TestCase):
             'email': self.email
             }
 
-    @patch('chil.models.newsletter_model.Subscribers.objects.using')
+    @patch('chil.models.newsletter_model.Subscribers.objects')
     def test_newsletter_signup_already_subscribed(self, mock_db):
         """
         User can't subscribe twice with the same email.
@@ -39,7 +39,7 @@ class NewsletterSignupTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['error'], "This email is already subscribed")
 
-    @patch('chil.models.newsletter_model.Subscribers.objects.using')
+    @patch('chil.models.newsletter_model.Subscribers.objects')
     def test_newsletter_signup_no_email(self, _mock_db):
         """
         400 error is returned when no email is provided.
