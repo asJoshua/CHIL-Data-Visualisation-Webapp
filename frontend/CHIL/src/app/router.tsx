@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 
 import { paths } from '@/config/paths.ts';
 import { ProtectedRoute } from '@/components/auth/protectedRoute';
+import Redirect from '@/config/redirect';
 
 const createAppRouter = () => {
     return createBrowserRouter([
@@ -10,6 +11,10 @@ const createAppRouter = () => {
             // Anyone can access these routes
             path: paths.public.root.path,
             children: [
+                {
+                    path: '/',
+                    element: <Redirect />
+                },
                 {
                     path: paths.public.home.path,
                     lazy: async () => {
@@ -53,6 +58,13 @@ const createAppRouter = () => {
                         return { Component: NewsletterRoot };
                     }
                 },
+                {
+                    path: '*',
+              lazy: async () => {
+                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                return { Component: NotFound };
+              },
+            },
             ]
         },
         {
@@ -67,6 +79,13 @@ const createAppRouter = () => {
                         return { Component: TestRoot };
                     }
                 },
+                {
+                    path: '*',
+              lazy: async () => {
+                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                return { Component: NotFound };
+              },
+            },
             ]
         },
         {
@@ -83,6 +102,13 @@ const createAppRouter = () => {
                 },
             ]
         },
+        {
+            path: '*',
+      lazy: async () => {
+        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+        return { Component: NotFound };
+      },
+    },
     ]);
 }
 

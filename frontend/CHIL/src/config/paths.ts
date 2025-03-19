@@ -49,6 +49,10 @@ const paths = {
             getHref: () => '/test',
         }
     },
+    notFound: {  
+        path: '*',
+        getHref: () => '*'
+    }
 }
 
 export { paths };
