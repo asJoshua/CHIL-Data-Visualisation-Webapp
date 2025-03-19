@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Typography, Button,Grid2 as Grid, styled } from '@mui/material';
+import { Box, Typography, Grid2 as Grid, styled } from '@mui/material';
 import { VariableLayout } from "@/components/layouts/variable-layout";
 import { Link } from 'react-router-dom';
 import { paths } from '@/config/paths';
+import { Button } from '@/stories/Button';
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
     height: '83vh',
@@ -29,9 +30,9 @@ const NotFound = () => {
             The page you are looking for does not exist or has been moved.
           </Typography>
           <Box mt={4}>
-            <Button variant="contained" color="primary" component={Link} to={paths.public.home.getHref()}>
-              Go to Home
-            </Button>
+          <Link to={paths.public.home.getHref()}>
+                <Button primary label="Go to Home" />
+              </Link>
           </Box>
         </Box>
       </StyledGrid>
