@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid2 as Grid, styled } from '@mui/material';
+import { Box, Grid2 as Grid, styled, Typography} from '@mui/material';
 import { VariableLayout } from "@/components/layouts/variable-layout";
 import { Link } from 'react-router-dom';
 import { paths } from '@/config/paths';
