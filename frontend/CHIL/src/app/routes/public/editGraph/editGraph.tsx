@@ -1,5 +1,5 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
-import { Grid2 as Grid, Typography, Container, Box } from '@mui/material';
+import { Box, Container, Grid2 as Grid, Typography } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
@@ -35,7 +35,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     };
 
     const handleDateChange = (pickerId: string, date: Date) => {
-        if (pickerId = 'start-date') {
+        if (pickerId == 'start-date') {
             setStartDate(date);
         } else {
             setEndDate(date);
@@ -66,7 +66,7 @@ const EditGraphRoot = (): React.JSX.Element => {
         handleValueChange(newScale, currentPlot, 'scale')
     }
 
-    const handleValueChange = (value: string, plot: any, valueKey: any) => {
+    const handleValueChange = (value: string, plot: string, valueKey: string) => {
         setPlotInformation((prevPlotInformation) => ({
             ...prevPlotInformation,
             [plot]: {
