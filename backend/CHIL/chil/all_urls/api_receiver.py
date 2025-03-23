@@ -43,7 +43,7 @@ urlpatterns = [
         name='delete_receiver_by_id'
     ),
     path(
-        '/deployment/',
+        'deployment/',
         ReceiverDeploymentCreateView.as_view(),
         name='create_receiver_deployment'
     ),
@@ -53,17 +53,17 @@ urlpatterns = [
         name='get_all_receiver_deployment_deployments'
     ),
     path(
-        '/deployment/get/',
+        'deployment/get/',
         ReceiverDeploymentGetView.as_view(),
         name='get_receiver_deployment_by_id'
     ),
     path(
-        '/deployment/update/',
+        'deployment/update/',
         ReceiverDeploymentUpdateView.as_view(),
         name='update_receiver_deployment_by_id'
     ),
     path(
-        '/deployment/delete/',
+        'deployment/delete/',
         ReceiverDeploymentDeleteView.as_view(),
         name='delete_receiver_deployment_by_id'
     ),

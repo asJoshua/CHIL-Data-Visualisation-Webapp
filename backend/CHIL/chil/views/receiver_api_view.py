@@ -128,7 +128,7 @@ class ReceiverDeploymentCreateView(APIView):
         serializer = ReceiverDeploymentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        receiver_create(**serializer.validated_data)
+        receiver_deployment_create(**serializer.validated_data)
 
         return Response(status=status.HTTP_201_CREATED)
 
@@ -163,7 +163,7 @@ class ReceiverDeploymentGetView(APIView):
 
         return Response(status=status.HTTP_200_OK, data=response[0])
 
-# receiver/deployment/<receiver_deployment_id>
+# receiver/deployment/update/<receiver_deployment_id>
 class ReceiverDeploymentUpdateView(APIView):
     """
     Update receiver deployment by receiver_deployment_id
@@ -177,10 +177,11 @@ class ReceiverDeploymentUpdateView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        receiver_update(receiver_deployment_id=request.data['id'], data=request.data)
+        receiver_deployment_update(receiver_deployment_id=request.data['id'], data=request.data)
 
         return Response(status=status.HTTP_200_OK)
 
+# receiver/deployment/delete/<receiver_deployment_id>
 class ReceiverDeploymentDeleteView(APIView):
     """
     Delete receiver deployment by id
@@ -194,7 +195,7 @@ class ReceiverDeploymentDeleteView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        if not receiver_delete(receiver_deployment__id=request.data['id']):
+        if not receiver_deployment_delete(receiver_deployment_id=request.data['id']):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -4,6 +4,8 @@ Defines the deployment model, used to represent instruments in the API
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from ..models.campaign_api_model import Campaign
+from ..models.instrument_api_model import Instrument
 
 class DeploymentInstrument(models.Model):
     """
@@ -16,8 +18,8 @@ class DeploymentInstrument(models.Model):
 
     deployment_id = models.BigAutoField(primary_key=True)
     description = models.TextField()
-    campaign_id = models.BigIntegerField()
-    instrument_id = models.BigIntegerField()
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE)
     start_timestamp = models.DateField()
     end_timestamp = models.DateField()
 

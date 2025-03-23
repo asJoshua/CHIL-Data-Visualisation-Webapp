@@ -10,6 +10,14 @@ from ..models.receiver_api_model import (
     ReceiverDeployment,
 )
 
+from ..models.deployment_api_model import (
+    Deployment
+)
+
+from ..models.campaign_api_model import (
+    Campaign
+)
+
 from ..utils import (
     model_update
 )
@@ -111,7 +119,7 @@ def receiver_delete(
 def receiver_deployment_create( # pylint: disable=R0913
     *,
 
-    receiver_deployment_id: int, 
+    # receiver_deployment_id: int, 
     deployment_id: int,
     campaign_id: int,
     receiver_id: int,
@@ -131,11 +139,15 @@ def receiver_deployment_create( # pylint: disable=R0913
     Creates a new receiver deployment entry in the db
     """
 
+    deployment = Deployment.objects.get(id=deployment_id)
+    campaign = Campaign.objects.get(id=campaign_id)
+    receiver = Receiver.objects.get(id=receiver_id)
+
     receiver_deployment = ReceiverDeployment(
-        receiver_deployment_id=receiver_deployment_id, 
-        deployment_id=deployment_id,
-        campaign_id=campaign_id,
-        receiver_id=receiver_id,
+        # receiver_deployment_id=receiver_deployment_id, 
+        deployment_id=deployment,
+        campaign_id=campaign,
+        receiver_id=receiver,
         firmware_version=firmware_version,
         antenna_type=antenna_type,
         start_timestamp=start_timestamp,

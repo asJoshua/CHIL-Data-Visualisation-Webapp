@@ -5,6 +5,7 @@ Defines the receiver model, used to represent receivers in the API
 from django.db import models
 from django.core.exceptions import ValidationError
 from ..models.deployment_api_model import Deployment
+from ..models.campaign_api_model import Campaign
 
 class Receiver(models.Model):
     """
@@ -50,9 +51,9 @@ class ReceiverDeployment(models.Model):
         db_table = "receiver_deployments_table"
 
     receiver_deployment_id = models.AutoField(primary_key=True)
-    deployment_id = models.ForeignKey(Deployment, on_delete=models.CASCADE)
-    campaign_id = models.ForeignKey(Campaign, on_delete=models.CASCADE)
-    receiver_id = models.ForeignKey(Receiver, on_delete=models.CASCADE)
+    deployment = models.ForeignKey(Deployment, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(Receiver, on_delete=models.CASCADE)
     firmware_version = models.TextField(null=True, blank=True)
     antenna_type = models.TextField(null=True, blank=True)
     start_timestamp = models.DateField()
