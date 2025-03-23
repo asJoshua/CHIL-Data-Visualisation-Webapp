@@ -28,13 +28,13 @@ const Card = styled(Paper)({
   backgroundColor: theme.palette.primary.main,
   padding: theme.spacing(1),
   textAlign: "center",
-  boxShadow: "4px 4px 4px rgba(0, 36, 62, 1)",
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", 
   transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
   cursor: "pointer", 
 
   "&:hover": {
-    transform: "scale(1.05)", 
-    boxShadow: "6px 6px 10px rgba(0, 36, 62, 0.5)", 
+    transform: "translateY(-20px)", 
+    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.2)", 
   },
 });
 
