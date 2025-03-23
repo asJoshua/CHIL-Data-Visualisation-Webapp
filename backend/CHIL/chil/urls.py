@@ -7,5 +7,6 @@ from django.urls import include, path
 urlpatterns = [
     path('auth/', include('chil.all_urls.auth')),
     path('api/instrument/', include('chil.all_urls.api_instrument')),
+    path('api/receiver/', include('chil.all_urls.api_receiver')),
     path('newsletter/', include('chil.all_urls.newsletter'))
 ]
