@@ -4,6 +4,7 @@ Defines the receiver model, used to represent receivers in the API
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from ..models.deployment_api_model import Deployment
 
 class Receiver(models.Model):
     """
