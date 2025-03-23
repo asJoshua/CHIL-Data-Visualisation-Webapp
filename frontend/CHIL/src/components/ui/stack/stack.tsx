@@ -17,8 +17,8 @@ interface DirectionStackProps {
 }
 
 const Card = styled(Paper)({
-  width: "320px",
-  height: "350px",
+  width: "100%",
+  height: "auto",
   color: theme.palette.text.primary,
   borderRadius: "8px",
   display: "flex",
@@ -63,8 +63,7 @@ export default function DirectionStack({ items }: DirectionStackProps) {
             />
             <Typography
               variant="body1"
-              sx={{ textAlign: "left", margin: theme.spacing(2) }}
-            >
+              sx={{ textAlign: "left", margin: theme.spacing(2) }} >
               {item.text}
             </Typography>
           </Card>

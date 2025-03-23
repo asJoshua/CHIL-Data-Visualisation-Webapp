@@ -3,7 +3,7 @@ import { publicHeaderConfig } from '@/config/headerLinks';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar } from '@mui/material';
 import { Button } from '@/components/ui/button/button'
-import { LogoDev } from '@mui/icons-material';
+import logo from '@/assets/images/CHIL-Logo.svg'
 import { theme } from '@/theme/theme';
 
 const PublicHeader = (): React.JSX.Element => {
@@ -13,7 +13,7 @@ const PublicHeader = (): React.JSX.Element => {
     return (
         <AppBar position="sticky">
             <Toolbar sx={{display: 'flex', justifyContent: 'space-between', backgroundColor: theme.palette.primary.main}}>
-                <LogoDev/>
+                <img src={logo} alt="CHIL Logo" style={{ height: 25 }} />
 
                 <Box>
                     {publicHeaderConfig.map((item) => (
