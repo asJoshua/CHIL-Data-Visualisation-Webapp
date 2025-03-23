@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@/components/ui/box/box"
 import { Button } from "@/components/ui/button/button"
 import { theme } from "@/theme/theme";
-import { LogoDev } from '@mui/icons-material';
+import logo from '@/assets/images/CHIL-Logo.svg'
 
 const Footer = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Footer = (): React.JSX.Element => {
     <ThemeProvider theme={theme}>
       <Box>
         <BottomNavigation sx={{padding: theme.spacing(2) ,display: 'flex', justifyContent: 'space-between', backgroundColor:theme.palette.secondary.main}}>
-          <LogoDev sx={{color: '#fff'}}/>
+          <img src={logo} alt="CHIL Logo" style={{ height: 25 }} />
           <Box>
             {footerConfig.map((item) => (
               <Button sx={{color: theme.palette.text.primary, fontWeight: 300}} key={item[0]} onClick={() => {navigate(item[1])}}>
