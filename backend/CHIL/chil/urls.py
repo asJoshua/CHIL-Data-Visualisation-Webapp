@@ -8,5 +8,6 @@ urlpatterns = [
     path('auth/', include('chil.all_urls.auth')),
     path('api/instrument/', include('chil.all_urls.api_instrument')),
     path('api/receiver/', include('chil.all_urls.api_receiver')),
-    path('newsletter/', include('chil.all_urls.newsletter'))
+    path('api/deployment/', include('chil.all_urls.api_deployment')),
+    path('newsletter/', include('chil.all_urls.newsletter')),
 ]
