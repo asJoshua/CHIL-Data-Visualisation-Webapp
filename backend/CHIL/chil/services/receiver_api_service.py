@@ -27,7 +27,7 @@ def receiver_create( # pylint: disable=R0913
     *,
 
     name: str,
-    type: str,
+    type: str, # pylint: disable=W0622
     imei_number: str,
     manufacture_date: date,
     manufacture_batch: str,
@@ -116,10 +116,10 @@ def receiver_delete(
     return True
 
 @transaction.atomic
-def receiver_deployment_create( # pylint: disable=R0913
+def receiver_deployment_create( # pylint: disable=R0913, r0914
     *,
 
-    # receiver_deployment_id: int, 
+    # receiver_deployment_id: int,
     deployment_id: int,
     campaign_id: int,
     receiver_id: int,
@@ -139,12 +139,12 @@ def receiver_deployment_create( # pylint: disable=R0913
     Creates a new receiver deployment entry in the db
     """
 
-    deployment = Deployment.objects.get(id=deployment_id)
-    campaign = Campaign.objects.get(id=campaign_id)
-    receiver = Receiver.objects.get(id=receiver_id)
+    deployment = Deployment.objects.get(id=deployment_id) # pylint: disable=no-member
+    campaign = Campaign.objects.get(id=campaign_id) # pylint: disable=no-member
+    receiver = Receiver.objects.get(id=receiver_id) # pylint: disable=no-member
 
     receiver_deployment = ReceiverDeployment(
-        # receiver_deployment_id=receiver_deployment_id, 
+        # receiver_deployment_id=receiver_deployment_id,
         deployment_id=deployment,
         campaign_id=campaign,
         receiver_id=receiver,
@@ -179,8 +179,8 @@ def receiver_deployment_get_all(*, receiver_id):
     Gets all deployments of a specific receiver from the db.
     """
 
-    deployments = ReceiverDeployment.objects.filter(receiver_id=receiver_id)
-    
+    deployments = ReceiverDeployment.objects.filter(receiver_id=receiver_id) # pylint: disable=no-member
+
     return deployments
 
 @transaction.atomic

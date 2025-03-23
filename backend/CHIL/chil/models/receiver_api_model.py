@@ -25,7 +25,7 @@ class Receiver(models.Model):
     commission_date = models.DateField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
 
-    fields = ["receiver_id", 
+    fields = ["receiver_id",
               "name",
               "type",
               "imei_number",
@@ -40,7 +40,7 @@ class Receiver(models.Model):
 
     def __str__(self):
         return str(self.receiver_id)
-    
+
 class ReceiverDeployment(models.Model):
     """
     Represents a receivers deployment.
@@ -66,7 +66,7 @@ class ReceiverDeployment(models.Model):
     latest_longitude = models.FloatField(null=True, blank=True)
     latest_elevation = models.FloatField(null=True, blank=True)
 
-    fields = ["receiver_deployment_id", 
+    fields = ["receiver_deployment_id",
               "deployment_id",
               "campaign_id",
               "receiver_id",

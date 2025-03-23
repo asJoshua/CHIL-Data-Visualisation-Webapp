@@ -58,11 +58,11 @@ class ReceiverGetAllView(APIView):
         response = receiver_get_all()
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         data = list(response.values())
 
         return Response(data, status=status.HTTP_200_OK)
-    
+
 class ReceiverGetView(APIView):
     """
     Get Receiver by id
@@ -144,11 +144,11 @@ class ReceiverDeploymentGetAllView(APIView):
 
         if not deployments.exists():
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         serializer = ReceiverDeploymentSerializer(deployments, many=True)
-        
+
         return Response(data=serializer.data, status=status.HTTP_200_OK)
-    
+
 # receiver/deployment/get/<receiver_deployment_id>
 class ReceiverDeploymentGetView(APIView):
     """
