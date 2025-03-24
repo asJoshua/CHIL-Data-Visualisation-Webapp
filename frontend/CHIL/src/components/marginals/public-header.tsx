@@ -17,13 +17,27 @@ const PublicHeader = (): React.JSX.Element => {
 
                 <Box>
                     {publicHeaderConfig.map((item) => (
-                        <Button sx={{color: theme.palette.text.primary, fontWeight: 300}} key={item[0]} onClick={() => {navigate(item[1])}}>
+                        <Button sx={{
+                            color: theme.palette.text.primary, 
+                            fontWeight: 300, 
+                            transition: 'color 0.3s ease-in-out',
+                            '&:hover': { color: theme.palette.secondary.main } 
+                            }} key={item[0]} onClick={() => {navigate(item[1])}}>
                             {item[0]}
                         </Button>
                     ))}
 
                     <Button
-                        sx={{ml: 2, fontWeight: 300,backgroundColor: theme.palette.primary.light, color: theme.palette.text.primary}}
+                        sx={{
+                            ml: 2, 
+                            fontWeight: 300,
+                            backgroundColor: theme.palette.primary.light, 
+                            color: theme.palette.text.primary,
+                            transition: 'background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                            '&:hover': { 
+                                backgroundColor: theme.palette.secondary.main,
+                                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)' 
+                            }}}
                         onClick={() => {navigate('/login')}}
                     >
                         Login
