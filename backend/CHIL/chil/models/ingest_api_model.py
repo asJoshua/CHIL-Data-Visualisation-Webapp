@@ -1,6 +1,10 @@
 """
 Defines the ingest models, used to represent the ingested data in the API
 
+Tables:
+- Ingest
+- Process
+
 - Cryoegg raw data
 - Cryoegg processed data
 
@@ -13,22 +17,57 @@ Defines the ingest models, used to represent the ingested data in the API
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.timezone import now
 from ..models.instrument_api_model import Instrument
-from ..models.ingest_api_model import (
-    CryoeggData,
-    HydrobeanData,
-    CryowurstData
-)
 
-# Process Table
-class Process(models.Model):
+# Ingest Table
+class Ingest(models.Model):
     """
-    Represents cryoegg raw data.
+    Represents the ingest table.
     """
 
     class Meta: # pylint: disable=R0903
         """Overide settings"""
-        db_table = "cryoegg_raw_table"
+        db_table = "ingest_lingomo_table"
+
+    ingest_id = models.BigAutoField(primary_key=True)
+    lingomo_id = models.TextField()
+    received_timestamp = models.DateTimeField()
+    imei = models.TextField()
+    serial = models.TextField()
+    momsn = models.IntegerField()
+    longitude = models.FloatField()
+    latitude = models.FloatField()
+    accuracy = models.FloatField()
+
+    fields = [
+        'ingest_id',
+        'lingomo_id',
+        'received_timestamp',
+        'imei',
+        'serial',
+        'momsn',
+        'longitude',
+        'latitude',
+        'accuracy'
+    ]
+
+    def clean(self):
+        if self.received_timestamp > now():
+            raise ValidationError({"received_timestamp": "Received timestamp cannot be in the future."})
+
+    def __str__(self):
+        return str(self.ingest_id)
+
+# Process Table
+class Process(models.Model):
+    """
+    Represents the process table.
+    """
+
+    class Meta: # pylint: disable=R0903
+        """Overide settings"""
+        db_table = "process_table"
 
     process_id = models.BigAutoField(primary_key=True)
     type = models.IntegerField()
@@ -47,11 +86,8 @@ class Process(models.Model):
     ]
 
     def clean(self):
-        if self.manufacture_date > self.commission_date:
-            raise ValidationError("commission_date cannot be before manufacture_date")
-
-        if self.pressure_keller_max < self.pressure_keller_min:
-            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
+        if self.timestamp_end < self.timestamp_begin:
+            raise ValidationError("timestamp_end cannot be before timestamp_begin")
 
     def __str__(self):
         return str(self.process_id)
@@ -66,9 +102,9 @@ class CryoeggRaw(models.Model):
         """Overide settings"""
         db_table = "cryoegg_raw_table"
 
-    cryoegg_raw_id = models.BigAutoField(primary_key=True)
-    cryoegg_data_id = models.ForeignKey(CryoeggData, on_delete=models.CASCADE)
-    ingest_id = models.ForeignKey(Ingest, on_delete=models.CASCADE)
+    cryoegg_raw = models.BigAutoField(primary_key=True)
+    receiver_data_id = models.IntegerField()
+    ingest = models.ForeignKey(Ingest, on_delete=models.CASCADE)
     instrument_id = models.ForeignKey(Instrument, on_delete=models.CASCADE)
     conductivity_raw = models.IntegerField()
     temperature_pt1000_raw = models.IntegerField()
@@ -94,13 +130,6 @@ class CryoeggRaw(models.Model):
         'packet_version',
     ]
 
-    def clean(self):
-        if self.manufacture_date > self.commission_date:
-            raise ValidationError("commission_date cannot be before manufacture_date")
-
-        if self.pressure_keller_max < self.pressure_keller_min:
-            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
-
     def __str__(self):
         return str(self.cryoegg_raw_id)
 
@@ -115,12 +144,12 @@ class CryoeggData(models.Model):
         db_table = "cryoegg_data_table"
 
     cryoegg_data_id = models.BigAutoField(primary_key=True)
-    cryoegg_raw_id = models.ForeignKey(CryoeggRaw, on_delete=models.CASCADE)
-    process_id = models.ForeignKey(Process, on_delete=models.CASCADE)
-    conductivity = models.FloatField()
-    temperature_pt1000 = models.IntegerField()
-    pressure = models.FloatField()
-    temperature = models.FloatField()
+    cryoegg_raw = models.ForeignKey(CryoeggRaw, on_delete=models.CASCADE, null=True, blank=True)
+    process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
+    conductivity = models.FloatField(null=True, blank=True)
+    temperature_pt1000 = models.IntegerField(null=True, blank=True)
+    pressure = models.FloatField(null=True, blank=True)
+    temperature = models.FloatField(null=True, blank=True)
 
     fields = [
         'cryoegg_data_id',
@@ -131,13 +160,6 @@ class CryoeggData(models.Model):
         'pressure',
         'temperature'
     ]
-
-    def clean(self):
-        if self.manufacture_date > self.commission_date:
-            raise ValidationError("commission_date cannot be before manufacture_date")
-
-        if self.pressure_keller_max < self.pressure_keller_min:
-            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
 
     def __str__(self):
         return str(self.cryoegg_data_id)
@@ -154,7 +176,7 @@ class CryowurstRaw(models.Model):
         db_table = "cryowurst_raw_table"
 
     cryowurst_raw_id = models.BigAutoField(primary_key=True)
-    cryowurst_data_id = models.ForeignKey(CryowurstData, on_delete=models.CASCADE)
+    receiver_data_id = models.IntegerField()
     ingest_id = models.ForeignKey(Ingest, on_delete=models.CASCADE)
     instrument_id = models.ForeignKey(Instrument, on_delete=models.CASCADE)
     temperature_tmp117_raw = models.IntegerField()
@@ -203,13 +225,6 @@ class CryowurstRaw(models.Model):
         'packet_version',
     ]
 
-    def clean(self):
-        if self.manufacture_date > self.commission_date:
-            raise ValidationError("commission_date cannot be before manufacture_date")
-
-        if self.pressure_keller_max < self.pressure_keller_min:
-            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
-
     def __str__(self):
         return str(self.cryowurst_raw_id)
 
@@ -224,23 +239,23 @@ class CryowurstData(models.Model):
         db_table = "cryowurst_data_table"
 
     cryowurst_data_id = models.BigAutoField(primary_key=True)
-    cryowurst_raw_id = models.ForeignKey(CryowurstRaw, on_delete=models.CASCADE)
-    process_id = models.ForeignKey(Process, on_delete=models.CASCADE)
-    temperature_tmp117 = models.FloatField()
-    mag_x = models.FloatField()
-    mag_y = models.FloatField()
-    mag_z = models.FloatField()
-    accel_imu_x = models.FloatField()
-    accel_imu_y = models.FloatField()
-    accel_imu_z = models.FloatField()
-    accel_tilt_x = models.FloatField()
-    accel_tilt_y = models.FloatField()
-    accel_tilt_z = models.FloatField()
-    pitch = models.FloatField()
-    roll = models.FloatField()
-    conductivity = models.FloatField()
-    pressure = models.FloatField()
-    temperature_keller = models.FloatField()
+    cryowurst_raw = models.ForeignKey(CryowurstRaw, on_delete=models.CASCADE, null=True, blank=True)
+    process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
+    temperature_tmp117 = models.FloatField(null=True, blank=True)
+    mag_x = models.FloatField(null=True, blank=True)
+    mag_y = models.FloatField(null=True, blank=True)
+    mag_z = models.FloatField(null=True, blank=True)
+    accel_imu_x = models.FloatField(null=True, blank=True)
+    accel_imu_y = models.FloatField(null=True, blank=True)
+    accel_imu_z = models.FloatField(null=True, blank=True)
+    accel_tilt_x = models.FloatField(null=True, blank=True)
+    accel_tilt_y = models.FloatField(null=True, blank=True)
+    accel_tilt_z = models.FloatField(null=True, blank=True)
+    pitch = models.FloatField(null=True, blank=True)
+    roll = models.FloatField(null=True, blank=True)
+    conductivity = models.FloatField(null=True, blank=True)
+    pressure = models.FloatField(null=True, blank=True)
+    temperature_keller = models.FloatField(null=True, blank=True)
 
     fields = [
         'cryoegg_data_id',
@@ -263,13 +278,6 @@ class CryowurstData(models.Model):
         'temperature_keller'
     ]
 
-    def clean(self):
-        if self.manufacture_date > self.commission_date:
-            raise ValidationError("commission_date cannot be before manufacture_date")
-
-        if self.pressure_keller_max < self.pressure_keller_min:
-            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
-
     def __str__(self):
         return str(self.cryowurst_data_id)
 
@@ -285,7 +293,7 @@ class HydrobeanRaw(models.Model):
         db_table = "hydrobean_raw_table"
 
     hydrobean_raw_id = models.BigAutoField(primary_key=True)
-    hydrobean_data_id = models.ForeignKey(HydrobeanData, on_delete=models.CASCADE)
+    receiver_data_id = models.IntegerField()
     ingest_id = models.ForeignKey(Ingest, on_delete=models.CASCADE)
     instrument_id = models.ForeignKey(Instrument, on_delete=models.CASCADE)
     conductivity_raw = models.FloatField()
@@ -310,13 +318,6 @@ class HydrobeanRaw(models.Model):
         'packet_version',
     ]
 
-    def clean(self):
-        if self.manufacture_date > self.commission_date:
-            raise ValidationError("commission_date cannot be before manufacture_date")
-
-        if self.pressure_keller_max < self.pressure_keller_min:
-            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
-
     def __str__(self):
         return str(self.hydrobean_raw_id)
     
@@ -332,7 +333,7 @@ class HydrobeanData(models.Model):
 
     hydrobean_data_id = models.BigAutoField(primary_key=True)
     hydrobean_raw_id = models.ForeignKey(HydrobeanRaw, on_delete=models.CASCADE)
-    process_id = models.ForeignKey(Process, on_delete=models.CASCADE)
+    process = models.ForeignKey(Process, on_delete=models.CASCADE)
     conductivity = models.FloatField()
     pressure = models.FloatField()
     temperature = models.FloatField()
@@ -345,13 +346,6 @@ class HydrobeanData(models.Model):
         'pressure',
         'temperature'
     ]
-
-    def clean(self):
-        if self.manufacture_date > self.commission_date:
-            raise ValidationError("commission_date cannot be before manufacture_date")
-
-        if self.pressure_keller_max < self.pressure_keller_min:
-            raise ValidationError("pressure_keller_min cannot be larger than pressure_keller_max")
 
     def __str__(self):
         return str(self.hydrobean_data_id)
