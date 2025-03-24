@@ -35,7 +35,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     };
 
     const handleDateChange = (pickerId: string, date: Date) => {
-        if (pickerId = 'start-date') {
+        if (pickerId == 'start-date') {
             setStartDate(date);
         } else {
             setEndDate(date);
