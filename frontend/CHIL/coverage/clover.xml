@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<coverage generated="1741356686295" clover="3.2.0">
-  <project timestamp="1741356686295" name="All files">
-    <metrics statements="347" coveredstatements="333" conditionals="17" coveredconditionals="15" methods="9" coveredmethods="9" elements="373" coveredelements="357" complexity="0" loc="347" ncloc="347" packages="7" files="8" classes="8"/>
+<coverage generated="1742837501535" clover="3.2.0">
+  <project timestamp="1742837501535" name="All files">
+    <metrics statements="377" coveredstatements="361" conditionals="18" coveredconditionals="16" methods="9" coveredmethods="9" elements="404" coveredelements="386" complexity="0" loc="377" ncloc="377" packages="7" files="8" classes="8"/>
     <package name="assets.theme">
       <metrics statements="27" coveredstatements="27" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="colors.ts" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\assets\theme\colors.ts">
+      <file name="colors.ts" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\assets\theme\colors.ts">
         <metrics statements="27" coveredstatements="27" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -38,7 +37,7 @@
     </package>
     <package name="components.ui.box">
       <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="box.tsx" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\components\ui\box\box.tsx">
+      <file name="box.tsx" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\components\ui\box\box.tsx">
         <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -69,7 +68,7 @@
     </package>
     <package name="components.ui.button">
       <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="button.tsx" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\components\ui\button\button.tsx">
+      <file name="button.tsx" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\components\ui\button\button.tsx">
         <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -100,7 +99,7 @@
     </package>
     <package name="components.ui.text-field">
       <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="text-field.tsx" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\components\ui\text-field\text-field.tsx">
+      <file name="text-field.tsx" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\components\ui\text-field\text-field.tsx">
         <metrics statements="25" coveredstatements="25" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -130,9 +129,9 @@
       </file>
     </package>
     <package name="features.newsletter">
-      <metrics statements="151" coveredstatements="137" conditionals="12" coveredconditionals="10" methods="4" coveredmethods="4"/>
-      <file name="newsletter-page.tsx" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\features\newsletter\newsletter-page.tsx">
-        <metrics statements="151" coveredstatements="137" conditionals="12" coveredconditionals="10" methods="4" coveredmethods="4"/>
+      <metrics statements="181" coveredstatements="165" conditionals="13" coveredconditionals="11" methods="4" coveredmethods="4"/>
+      <file name="newsletter-page.tsx" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\features\newsletter\newsletter-page.tsx">
+        <metrics statements="181" coveredstatements="165" conditionals="13" coveredconditionals="11" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -146,27 +145,27 @@
         <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="15" count="9" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="16" count="9" type="stmt"/>
         <line num="17" count="9" type="stmt"/>
         <line num="18" count="9" type="stmt"/>
         <line num="19" count="9" type="stmt"/>
         <line num="20" count="9" type="stmt"/>
-        <line num="21" count="9" type="cond" truecount="1" falsecount="0"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="23" count="9" type="stmt"/>
+        <line num="21" count="9" type="stmt"/>
+        <line num="22" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="23" count="2" type="stmt"/>
         <line num="24" count="9" type="stmt"/>
-        <line num="25" count="9" type="cond" truecount="1" falsecount="0"/>
-        <line num="26" count="2" type="stmt"/>
+        <line num="25" count="9" type="stmt"/>
+        <line num="26" count="9" type="cond" truecount="1" falsecount="0"/>
         <line num="27" count="2" type="stmt"/>
         <line num="28" count="2" type="stmt"/>
         <line num="29" count="9" type="stmt"/>
-        <line num="30" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="31" count="2" type="stmt"/>
+        <line num="30" count="9" type="stmt"/>
+        <line num="31" count="9" type="cond" truecount="2" falsecount="0"/>
         <line num="32" count="2" type="stmt"/>
-        <line num="33" count="2" type="cond" truecount="1" falsecount="0"/>
-        <line num="34" count="1" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="34" count="2" type="cond" truecount="1" falsecount="0"/>
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
@@ -187,15 +186,15 @@
         <line num="52" count="1" type="stmt"/>
         <line num="53" count="1" type="stmt"/>
         <line num="54" count="1" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="56" count="1" type="stmt"/>
-        <line num="57" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="55" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
         <line num="58" count="0" type="stmt"/>
         <line num="59" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="62" count="1" type="stmt"/>
-        <line num="63" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
@@ -211,8 +210,8 @@
         <line num="76" count="1" type="stmt"/>
         <line num="77" count="2" type="stmt"/>
         <line num="78" count="9" type="stmt"/>
-        <line num="79" count="9" type="stmt"/>
-        <line num="80" count="9" type="stmt"/>
+        <line num="79" count="9" type="cond" truecount="1" falsecount="0"/>
+        <line num="80" count="4" type="stmt"/>
         <line num="81" count="9" type="stmt"/>
         <line num="82" count="9" type="stmt"/>
         <line num="83" count="9" type="stmt"/>
@@ -266,7 +265,7 @@
         <line num="131" count="9" type="stmt"/>
         <line num="132" count="9" type="stmt"/>
         <line num="133" count="9" type="stmt"/>
-        <line num="134" count="9" type="cond" truecount="4" falsecount="0"/>
+        <line num="134" count="9" type="stmt"/>
         <line num="135" count="9" type="stmt"/>
         <line num="136" count="9" type="stmt"/>
         <line num="137" count="9" type="stmt"/>
@@ -282,13 +281,43 @@
         <line num="147" count="9" type="stmt"/>
         <line num="148" count="9" type="stmt"/>
         <line num="149" count="9" type="stmt"/>
-        <line num="150" count="1" type="stmt"/>
-        <line num="151" count="1" type="stmt"/>
+        <line num="150" count="9" type="stmt"/>
+        <line num="151" count="9" type="stmt"/>
+        <line num="152" count="9" type="stmt"/>
+        <line num="153" count="9" type="stmt"/>
+        <line num="154" count="9" type="cond" truecount="4" falsecount="0"/>
+        <line num="155" count="9" type="stmt"/>
+        <line num="156" count="9" type="stmt"/>
+        <line num="157" count="9" type="stmt"/>
+        <line num="158" count="9" type="stmt"/>
+        <line num="159" count="9" type="stmt"/>
+        <line num="160" count="9" type="stmt"/>
+        <line num="161" count="9" type="stmt"/>
+        <line num="162" count="9" type="stmt"/>
+        <line num="163" count="9" type="stmt"/>
+        <line num="164" count="9" type="stmt"/>
+        <line num="165" count="9" type="stmt"/>
+        <line num="166" count="9" type="stmt"/>
+        <line num="167" count="9" type="stmt"/>
+        <line num="168" count="9" type="stmt"/>
+        <line num="169" count="9" type="stmt"/>
+        <line num="170" count="9" type="stmt"/>
+        <line num="171" count="9" type="stmt"/>
+        <line num="172" count="9" type="stmt"/>
+        <line num="173" count="9" type="stmt"/>
+        <line num="174" count="9" type="stmt"/>
+        <line num="175" count="9" type="stmt"/>
+        <line num="176" count="9" type="stmt"/>
+        <line num="177" count="9" type="stmt"/>
+        <line num="178" count="9" type="stmt"/>
+        <line num="179" count="9" type="stmt"/>
+        <line num="180" count="1" type="stmt"/>
+        <line num="181" count="1" type="stmt"/>
       </file>
     </package>
     <package name="theme">
       <metrics statements="88" coveredstatements="88" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="ThemeProvider.tsx" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\theme\ThemeProvider.tsx">
+      <file name="ThemeProvider.tsx" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\theme\ThemeProvider.tsx">
         <metrics statements="18" coveredstatements="18" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -309,7 +338,7 @@
         <line num="17" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
       </file>
-      <file name="theme.ts" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\theme\theme.ts">
+      <file name="theme.ts" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\theme\theme.ts">
         <metrics statements="70" coveredstatements="70" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -385,7 +414,7 @@
     </package>
     <package name="utils">
       <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="cn.ts" path="C:\Users\c2061107\OneDrive - Cardiff University\Documents\YEAR 3\Final Year Project\Project\ltp-chil-data-processing\frontend\CHIL\src\utils\cn.ts">
+      <file name="cn.ts" path="C:\Users\joshs\OneDrive\Desktop\LTP\ltp-chil-data-processing\frontend\CHIL\src\utils\cn.ts">
         <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -395,10 +424,5 @@
         <line num="6" count="40" type="stmt"/>
       </file>
     </package>
-=======
-<coverage generated="1741178401718" clover="3.2.0">
-  <project timestamp="1741178401718" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
->>>>>>> ffac0135453fe31b99f176c4359609b37d9d14a8
   </project>
 </coverage>

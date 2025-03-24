@@ -33,7 +33,7 @@ describe('Newsletter Page', () => {
         );
 
         // Check newsltter heading and search bar are present
-        expect(screen.getByText("Our Newsletter")).toBeInTheDocument();
+        expect(screen.getByText("OUR NEWSLETTER")).toBeInTheDocument();
         expect(screen.getByLabelText("Enter your email...")).toBeInTheDocument();
     });
 
