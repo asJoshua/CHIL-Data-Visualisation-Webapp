@@ -11,8 +11,8 @@ const centerColorPicker = {
 };
 
 export const ColorPicker = (props: {
-    defaultColor: String;
-    valueOverride?: any; 
+    defaultColor: string;
+    valueOverride?: [string, string]; 
     onColorChange?: (arg0: string) => void; 
 })  => {
     const [open, setOpen] = useState(false);
@@ -43,7 +43,7 @@ export const ColorPicker = (props: {
     useEffect(() => {
         if (props.valueOverride?.[1] == '') {
             setColor(props.defaultColor as string)
-        } else if (props.valueOverride?.[0] !== undefined && props.valueOverride !== 'null') {
+        } else if (props.valueOverride?.[0] !== undefined && props.valueOverride !== undefined) {
             setColor(props.valueOverride[1]);
         }
     }, [props.valueOverride?.[0]]);

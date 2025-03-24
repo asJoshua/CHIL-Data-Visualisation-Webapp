@@ -1,22 +1,29 @@
 import { TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css'; 
 
 export const NumberSelect = (props: {
+    valueOverride?: [string, string];
     id: string; 
     label: string; 
-    onNumberChange?: (value: number | undefined) => void;
+    onNumberChange?: (value: string | undefined) => void;
 })  => {
 
-    const [numberValue, setNumberValue] = useState<number | undefined>(); 
+    const [numberValue, setNumberValue] = useState<string | undefined>(); 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value ? parseInt(event.target.value, 10) : undefined;
+        const newValue = event.target.value;
         setNumberValue(newValue);
         if (props.onNumberChange) {
             props.onNumberChange(numberValue)
         }
     };
+
+    useEffect(() => {
+        if (props.valueOverride?.[0] !== undefined && props.valueOverride !== undefined) {
+            setNumberValue(props.valueOverride[1]);
+        }
+    }, [props.valueOverride?.[0]]);
 
     return (
         <TextField 
@@ -25,6 +32,7 @@ export const NumberSelect = (props: {
             type='number' 
             variant="outlined"
             fullWidth
+            value={numberValue}
             onChange={handleChange}
             sx={{
                 '& .MuiOutlinedInput-notchedOutline': {
