@@ -66,7 +66,7 @@ const EditGraphRoot = (): React.JSX.Element => {
         handleValueChange(newScale, currentPlot, 'scale')
     }
 
-    const handleValueChange = (value: string, plot: any, valueKey: any) => {
+    const handleValueChange = (value: string, plot: string, valueKey: string) => {
         setPlotInformation((prevPlotInformation) => ({
             ...prevPlotInformation,
             [plot]: {
@@ -116,10 +116,10 @@ const EditGraphRoot = (): React.JSX.Element => {
                         </Grid>
                         <Grid container spacing={1} alignContent='center'>
                             <Grid>
-                                <Button variant='contained' size='large'>CANCEL</Button>
+                                <Button  variant='contained' size='large'>CANCEL</Button>
                             </Grid>
                             <Grid>
-                                <Button variant='contained' size='large'>ADD</Button>
+                                <Button  variant='contained' size='large'>ADD</Button>
                             </Grid>
                         </Grid>
                     </Grid>
