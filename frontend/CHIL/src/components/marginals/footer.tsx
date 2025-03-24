@@ -16,13 +16,13 @@ const Footer = (): React.JSX.Element => {
         <BottomNavigation sx={{padding: theme.spacing(2) ,display: 'flex', justifyContent: 'space-between', backgroundColor:theme.palette.secondary.main}}>
           <Box sx={{ display: "flex", gap: 1 }}>
             <IconButton href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" sx={{ color: "#E4405F" }}>
-              <InstagramIcon sx={{color: 'white'}}/>
+              <InstagramIcon sx={{color: 'white',  transition: 'color 0.3s ease-in-out', '&:hover': { color: theme.palette.primary.light } }}/>
             </IconButton>
             <IconButton href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" sx={{ color: "#0077B5" }}>
-              <LinkedInIcon sx={{color: 'white'}}/>
+              <LinkedInIcon sx={{color: 'white', transition: 'color 0.3s ease-in-out', '&:hover': { color: theme.palette.primary.light } }}/>
             </IconButton>
             <IconButton href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" sx={{ color: "#1877F2" }}>
-              <FacebookIcon sx={{color: 'white'}}/>
+              <FacebookIcon sx={{color: 'white',transition: 'color 0.3s ease-in-out', '&:hover': { color: theme.palette.primary.light } }}/>
             </IconButton>
           </Box>
           <img src={logo} alt="CHIL Logo" style={{ height: 25 }} />
