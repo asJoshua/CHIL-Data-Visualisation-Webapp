@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css'; 
 import styles from './datePickerComp.module.css'; 
 import './datePickerOverride.css'; 
-import { Box } from '@mui/material';
 
 export const DatePickerComp = (props: {
     id: string | undefined; 
@@ -15,7 +14,7 @@ export const DatePickerComp = (props: {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const handleDateChange = (date: any) => {
+    const handleDateChange = (date: Date | null) => {
         if (date) {
             setSelectedDate(date)
         } else {
