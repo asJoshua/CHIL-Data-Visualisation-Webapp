@@ -50,7 +50,7 @@ urlpatterns = [
     path(
         '<int:receiver_id>/deployment/list/',
         ReceiverDeploymentGetAllView.as_view(),
-        name='get_all_receiver_deployment_deployments'
+        name='get_all_deployments_of_receiver'
     ),
     path(
         'deployment/get/',
