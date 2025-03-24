@@ -3,17 +3,20 @@ import { publicHeaderConfig } from '@/config/headerLinks';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar } from '@mui/material';
 import { Button } from '@/components/ui/button/button'
-import logo from '@/assets/images/CHIL-Logo.svg'
 import { theme } from '@/theme/theme';
 
-const PublicHeader = (): React.JSX.Element => {
+export type PublicHeaderProps = {
+    imageSrc?: string
+}
+
+const PublicHeader = ({imageSrc}:PublicHeaderProps): React.JSX.Element => {
 
     const navigate = useNavigate();
 
     return (
         <AppBar position="sticky">
             <Toolbar sx={{display: 'flex', justifyContent: 'space-between', backgroundColor: theme.palette.primary.main}}>
-                <img src={logo} alt="CHIL Logo" style={{ height: 25 }} />
+                <img src={imageSrc} alt="CHIL Logo" style={{ height: 25 }} />
 
                 <Box>
                     {publicHeaderConfig.map((item) => (
