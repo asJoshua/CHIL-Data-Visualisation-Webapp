@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Box } from '@/components/ui/box/box';
 import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
@@ -75,11 +75,6 @@ const Newsletter = ({ apiURL, imageSrc }: NewsletterProps) => {
             setEmail("");
         }
     };
-    
-      useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }, []);
-    
 
     return (
         <CustomThemeProvider>

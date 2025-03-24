@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@/components/ui/text-field/text-field";
 import DataTable from "@/components/ui/table/table";
@@ -30,10 +30,6 @@ const DeploymentsPage = (): React.JSX.Element => {
       value.toString().toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
 
   const handleRowClick = (id: string) => {
     navigate(`/deployments/${id}`);
