@@ -1,5 +1,5 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
-import { Grid2 as Grid, Typography, Container, Box } from '@mui/material';
+import { Box, Container, Grid2 as Grid, Typography } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
@@ -11,9 +11,9 @@ import { TextField } from '@/components/ui/text-field/text-field';
 
 const EditGraphRoot = (): React.JSX.Element => {
 
-    const [setGraphName] = useState('')
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [, setGraphName] = useState('')
+    const [, setStartDate] = useState(new Date());
+    const [, setEndDate] = useState(new Date());
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
     const [plotInformation, setPlotInformation] = useState({
@@ -100,7 +100,6 @@ const EditGraphRoot = (): React.JSX.Element => {
     }
 
     return (
-        <NumberInputProvider>
         <VariableLayout>
             <Container>
 
@@ -265,7 +264,6 @@ const EditGraphRoot = (): React.JSX.Element => {
 
             </Container>
         </VariableLayout>
-        </NumberInputProvider>
     );
 }
 

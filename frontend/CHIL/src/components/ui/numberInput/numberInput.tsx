@@ -5,13 +5,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 export const NumberSelect = (props: {
     id: string; 
     label: string; 
-    onNumberChange?: any;
+    onNumberChange?: (value: number | undefined) => void;
 })  => {
 
-    const [numberValue, setNumberValue] = useState(); 
+    const [numberValue, setNumberValue] = useState<number | undefined>(); 
 
-    const handleChange = (event: any) => {
-        setNumberValue(event.target.value);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value ? parseInt(event.target.value, 10) : undefined;
+        setNumberValue(newValue);
         if (props.onNumberChange) {
             props.onNumberChange(numberValue)
         }

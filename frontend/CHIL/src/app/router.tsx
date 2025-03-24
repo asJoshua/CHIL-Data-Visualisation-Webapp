@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useMemo } from 'react';
-
 import { paths } from '@/config/paths.ts';
 import { ProtectedRoute } from '@/components/auth/protectedRoute';
 
@@ -34,7 +33,7 @@ const createAppRouter = () => {
                         {
                             path: paths.public.deployments.edit.path, // ":id/edit"
                             lazy: async () => {
-                                const { EditGraphRoot } = await import('@/app/routes/public/editGraph/editGraph'); 
+                                const { EditGraphRoot } = await import('@/app/routes/public/editGraph'); 
                                 return { Component: EditGraphRoot };
                             }
                         },
