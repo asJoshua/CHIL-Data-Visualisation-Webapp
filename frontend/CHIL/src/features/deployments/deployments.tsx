@@ -12,6 +12,7 @@ const columns = [
   { id: "description", label: "Description", minWidth: 250, align: "left" },
   { id: "start_timestamp", label: "Start Date", minWidth: 170, align: "left" },
   { id: "end_timestamp", label: "End Date", minWidth: 170, align: "left" },
+  { id: "instrument_id", label: "Instrument ID", minWidth: 180, align: "left" },
 ];
 
 const DeploymentsPage = (): React.JSX.Element => {
@@ -27,24 +28,47 @@ const DeploymentsPage = (): React.JSX.Element => {
       withCredentials: true,
     })
      .then((response) => {
-        const formattedData = response.data.map((deployment: { deployment_id: any; description: any; start_timestamp: any; end_timestamp: any; }) => ({
+        const formattedData = response.data.map((deployment: any ) => ({
           deployment_id: `${deployment.deployment_id}`,
           description: `${deployment.description}`,
           start_timestamp: `${deployment.start_timestamp}`,
           end_timestamp: `${deployment.end_timestamp}`,
+          instrument_id: "",
         }));
-        setDeployments(formattedData);
-     })
-     .catch((error) => {
-      if (error.response) {
-        console.error("Error fetching deployments:", error.response.data);
-      } else {
-        console.error("Network error:", error.message);
-      }
-    });
+        
+      
+        const promises = formattedData.map((deployment: any) =>
+          axios({
+            method: "get",
+            url: `http://localhost:8000/chil/api/deployment/list-instrument-deployment`,
+            withCredentials: true,
+          })
+            .then((instrumentResponse) => {
+              const instrumentId = instrumentResponse.data[0]?.instrument_id || "N/A"; 
+              return { ...deployment, instrument_id: instrumentId };
+            })
+            .catch(() => {
+              return { ...deployment, instrument_id: "Error fetching" };
+            })
+        );
+
+        Promise.all(promises)
+          .then((updatedDeployments: any) => {
+            setDeployments(updatedDeployments); 
+          })
+          .catch((error) => {
+            console.error("Error fetching instruments:", error);
+          });
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.error("Error fetching deployments:", error.response.data);
+        } else {
+          console.error("Network error:", error.message);
+        }
+      });
 }, []);
 
-  // Filter deployments based on search query
   const filteredRows = deployments.filter((row) =>
     Object.values(row).some((value) =>
       (value as string).toString().toLowerCase().includes(searchQuery.toLowerCase()) // Casting value to string

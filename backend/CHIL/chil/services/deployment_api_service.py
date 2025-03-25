@@ -67,6 +67,13 @@ def deployment_get_deployment_instruments(*, deployment_id: int):
 
     return instruments
 
+
+def deployment_get_all_deployment_instrument():
+    """
+    Gets all deployments from the db
+    """
+    return DeploymentInstrument.objects.all() # pylint: disable=E1101
+
 @transaction.atomic
 def deployment_update(
     *,
