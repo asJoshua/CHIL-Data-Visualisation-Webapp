@@ -1,33 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@/components/ui/text-field/text-field";
 import DataTable from "@/components/ui/table/table";
 import CustomThemeProvider from "@/theme/ThemeProvider";
 import { Container, Typography } from "@mui/material";
 import { Box } from "@/components/ui/box/box"
+import axios from "axios";
 
 const columns = [
-  { id: "campaignId", label: "Campaign ID", minWidth: 120, align: "left" },
-  { id: "name", label: "Name", minWidth: 180, align: "left" },
+  { id: "deployment_id", label: "ID", minWidth: 180, align: "left" },
   { id: "description", label: "Description", minWidth: 250, align: "left" },
-  { id: "startDate", label: "Start Date", minWidth: 170, align: "left" },
-  { id: "endDate", label: "End Date", minWidth: 170, align: "left" },
-];
-
-const rows = [
-  { name: "Deployment 1", description: "Test description", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1234" },
-  { name: "Deployment 2", description: "Another description", startDate: "2023-05-01", endDate: "2023-11-30", campaignId: "5678" },
-  { name: "Deployment 3", description: "Test description", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "91011" },
-  { name: "Deployment 4", description: "Monitoring ice shifts", startDate: "2024-02-15", endDate: "2024-12-01", campaignId: "1213" },
+  { id: "start_timestamp", label: "Start Date", minWidth: 170, align: "left" },
+  { id: "end_timestamp", label: "End Date", minWidth: 170, align: "left" },
 ];
 
 const DeploymentsPage = (): React.JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  const filteredRows = rows.filter((row) =>
+  const [deployments, setDeployments] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: "http://localhost:8000/chil/api/deployment/list",
+      withCredentials: true,
+    })
+     .then((response) => {
+        const formattedData = response.data.map((deployment: { deployment_id: any; description: any; start_timestamp: any; end_timestamp: any; }) => ({
+          deployment_id: `${deployment.deployment_id}`,
+          description: `${deployment.description}`,
+          start_timestamp: `${deployment.start_timestamp}`,
+          end_timestamp: `${deployment.end_timestamp}`,
+        }));
+        setDeployments(formattedData);
+     })
+     .catch((error) => {
+      if (error.response) {
+        console.error("Error fetching deployments:", error.response.data);
+      } else {
+        console.error("Network error:", error.message);
+      }
+    });
+}, []);
+
+  // Filter deployments based on search query
+  const filteredRows = deployments.filter((row) =>
     Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      (value as string).toString().toLowerCase().includes(searchQuery.toLowerCase()) // Casting value to string
     )
   );
 
