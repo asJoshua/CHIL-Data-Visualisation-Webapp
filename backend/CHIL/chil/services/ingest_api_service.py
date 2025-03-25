@@ -18,7 +18,7 @@ def process_csv_data(file, data_type: str):
     # file.read() reads the file as bytes
     # .decode("utf-8") converts the bytes to a string
     # StringIO allows treating a string like a file
-    # code from https://gist.github.com/rg3915/85f1b600dd08619f76d94b7e41c3d04e
+    # code adapted from https://gist.github.com/rg3915/85f1b600dd08619f76d94b7e41c3d04e
     csv_file = StringIO(file.read().decode('utf-8'))
     reader = csv.DictReader(csv_file)
 
