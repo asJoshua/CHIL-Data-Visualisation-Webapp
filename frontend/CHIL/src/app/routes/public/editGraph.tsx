@@ -63,6 +63,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     }
 
     const handleValueChange = (value: string, plot: string, valueKey: string) => {
+        console.log(plotInformation)
         setPlotInformation((prevPlotInformation) => ({
             ...prevPlotInformation,
             [plot]: {

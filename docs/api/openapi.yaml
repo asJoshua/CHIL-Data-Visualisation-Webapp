@@ -6,19 +6,21 @@ info:
   version: 1.0.0
 
 tags:
+  - name: campaign
+    description: Everything relating to campaigns (Grouped deployments)
+  - name: deployment
+    description: Everything relating to deployments (Grouped equipment)
   - name: instrument
     description: Everything relating the instruments
   - name: receiver
     description: Everything relating to the recivers
   - name: data
     description: Get raw and processed data from all equipment types
-  - name: campaign
-    description: Everything relating to campaigns (Grouped deployments)
   - name: ingest
     description: Used by equipment to add data to the database
 
 paths:
-  /instrument/{type}:
+  /instrument:
     post:
       tags:
         - instrument
@@ -27,18 +29,6 @@ paths:
       operationId: createInstrument
       security:
         - BearerAuth: []
-      parameters:
-        - name: type
-          in: path
-          description: The type of instrument to list
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
       requestBody:
         content:
           application/json:
@@ -65,37 +55,42 @@ paths:
         404:
           description: Type not found
 
-  /instrument/{type}/list:
-    get:
+  /instrument/type:
+    post:
       tags:
         - instrument
-      summary: Lists all instruments of a specified type
-      description: Lists all instruments of a specified type
-      operationId: getAllInstruments
-      parameters:
-        - name: type
-          in: path
-          description: The type of instrument to list
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
+      summary: Creates a new instrument type
+      description: Creates a new instrument type
+      operationId: createInstrumentType
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instrument-type'
       responses:
-        200:
-          description: Success
+        201:
+          description: Created
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/instrument-list'
-        400:
+                $ref: '#/components/schemas/instrument-type'
+
+        204:
+          description: Existing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-type'
+
+        403:
+          description: Forbidden
+
+        404:
           description: Type not found
 
-  /instrument/{type}/{id}:
+  /instrument/{id}:
     get:
       tags:
         - instrument
@@ -103,17 +98,6 @@ paths:
       description: Get infomation of a specific instrument by id
       operationId: getInstrument
       parameters:
-        - name: type
-          in: path
-          description: The type of instrument
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
         - name: id
           in: path
           description: The id of the instrument
@@ -171,6 +155,8 @@ paths:
           description: Success
         400:
           description: Bad Request
+        401:
+          description: Unauthorized
         404:
           description: Type or Id not found
         409:
@@ -210,54 +196,34 @@ paths:
         404:
           description: Type or Id not found
 
-  /instrument/{type}/{id}/deployment:
+  /deployment:
     post:
       tags:
-        - instrument
-      summary: Create a new deployment for this instrument
-      description: Create a new deployment for this instrument
-      operationId: createInstrumentDeployment
+        - deployment
+      summary: Create a new deployment
+      description: Create a new deployment
+      operationId: createDeployment
       security:
         - BearerAuth: []
-      parameters:
-        - name: type
-          in: path
-          description: The type of instrument
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
-        - name: id
-          in: path
-          description: The id of the instrument
-          required: true
-          schema:
-            type: integer
-            format: int10
-            example: 1111111111
       requestBody:
         content:
             application/json:
                 schema:
-                  $ref: '#/components/schemas/instrument-deployment'
+                  $ref: '#/components/schemas/deployment'
       responses:
         201:
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instrument-deployment'
+                $ref: '#/components/schemas/deployment'
 
         204:
           description: Existing
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instrument-deployment'
+                $ref: '#/components/schemas/deployment'
 
         403:
           description: Forbidden
@@ -265,123 +231,67 @@ paths:
         404:
           description: Type not found
 
-  /instrument/{type}/{id}/deployment/list:
+  /deployment/list:
     get:
       tags:
-        - instrument
-      summary: List all deployments of this instrument
-      description: List all deployments of this instrument
-      operationId: listInstrumentDeployments
-      parameters:
-        - name: type
-          in: path
-          description: The type of instrument
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
-        - name: id
-          in: path
-          description: The id of the instrument
-          required: true
-          schema:
-            type: integer
-            format: int10
-            example: 1111111111
+        - deployment
+      summary: List all deployments
+      description: List all deployments
+      operationId: listDeployments
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instrument-deployment-list'
+                $ref: '#/components/schemas/deployment-list'
         404:
           description: Type or Id not found
 
-  /instrument/{type}/{id}/deployment/{deployment_id}:
+  /deployment/{id}:
     get:
       tags:
-        - instrument
-      summary: Get infomation by specific deployment
-      description: Get infomation by specific deployment
-      operationId: getInstrumentDeployment
+        - deployment
+      summary: Get data about a specific deployment
+      description: Get data about a specific deployment
+      operationId: listDeploymentInstruments
       parameters:
-        - name: type
-          in: path
-          description: The type of instrument
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
         - name: id
-          in: path
-          description: The id of the instrument
-          required: true
-          schema:
-            type: integer
-            format: int10
-            example: 1111111111
-        - name: deployment_id
           in: path
           description: The id of the deployment
           required: true
           schema:
             type: integer
             format: int10
+            example: 1111
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instrument-deployment'
+                $ref: '#/components/schemas/instrument-list'
         404:
-          description: Type or Id or Deployment Id not found
-
+          description: Type or Id not found
 
     put:
       tags:
-        - instrument
+        - deployment
       summary: Update entry by specific deployment
       description: Update entry by specific deployment
-      operationId: updateInstrumentDeployment
+      operationId: updateDeployment
       security:
         - BearerAuth: []
       parameters:
-        - name: type
-          in: path
-          description: The type of instrument
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
         - name: id
-          in: path
-          description: The id of the instrument
-          required: true
-          schema:
-            type: integer
-            format: int10
-            example: 1111111111
-        - name: deployment_id
           in: path
           description: The id of the deployment
           required: true
           schema:
             type: integer
             format: int10
+            example: 1111
+
       responses:
         200:
           description: Success
@@ -394,44 +304,53 @@ paths:
 
     delete:
       tags:
-        - instrument
+        - deployment
       summary: Delete entry by specific deployment
       description: Delete entry by specific deployment
-      operationId: deleteInstrumentDeployment
+      operationId: deleteDeployment
       security:
         - BearerAuth: []
       parameters:
-        - name: type
-          in: path
-          description: The type of instrument
-          required: true
-          schema:
-            type: string
-            enum: [
-                'cryoegg',
-                'cryowurst',
-                'hydrobean',
-              ]
         - name: id
-          in: path
-          description: The id of the instrument
-          required: true
-          schema:
-            type: integer
-            format: int10
-            example: 1111111111
-        - name: deployment_id
           in: path
           description: The id of the deployment
           required: true
           schema:
             type: integer
             format: int10
+            example: 1111
+
       responses:
         204:
           description: No Content
         404:
           description: Type or Id or Deployment Id not found
+
+  /deployment/{id}/list-instruments:
+    get:
+      tags:
+        - deployment
+      summary: List all instruments in this deployment
+      description: List all instruments in this deployment
+      operationId: listDeploymentInstruments
+      parameters:
+        - name: id
+          in: path
+          description: The id of the deployment
+          required: true
+          schema:
+            type: integer
+            format: int10
+            example: 1111
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instrument-list'
+        404:
+          description: Type or Id not found
 
   /receiver:
     post:
@@ -627,7 +546,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/instrument-deployment-list'
+                $ref: '#/components/schemas/deployment-list'
         404:
           description: Type or Id not found
 
@@ -1290,7 +1209,16 @@ components:
         oneOf:
           - $ref: '#/components/schemas/instrument'
 
-    instrument-deployment:
+    instrument-type:
+      type: object
+      properties:
+        instrument_type_id:
+          type: integer
+          format: int10
+        instrument_name:
+          type: string
+
+    deployment:
       type: object
       properties:
         deployment_id:
@@ -1299,14 +1227,6 @@ components:
         description:
           type: string
           example: Info about this specific deployment
-        campaign_id:
-          type: integer
-          format: int10
-          example: 1
-        instrument_id:
-          type: integer
-          format: int10
-          example: 1111111111
         start_timestamp:
           type: string
           example: 1970-00-00 00:00:00
@@ -1314,12 +1234,12 @@ components:
           type: string
           example: 1970-00-00 00:00:00
 
-    instrument-deployment-list:
+    deployment-list:
       type: array
       items:
         type: object
         oneOf:
-          - $ref: '#/components/schemas/instrument-deployment'
+          - $ref: '#/components/schemas/deployment'
 
     receiver:
       type: object

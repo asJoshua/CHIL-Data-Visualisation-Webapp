@@ -20,9 +20,17 @@ const paths = {
                 getHref: (id: string | number) => `/deployments/${id}/edit`
             }
         },
+        individual_deployments: {
+            path: 'deployments/:id',
+            getHref: () => '/deployments/:id'
+        },
         login: {
             path: 'login',
             getHref: () => '/login'
+        },
+        newsletter: {
+            path: 'newsletter',
+            getHref: () => '/newsletter'
         },
     },
     collaborator: {
