@@ -24,7 +24,6 @@ export const NumberSelect = (props: {
     };
 
     useEffect(() => {
-        console.log(props.valueOverride)
         if (props.valueOverride?.[0] !== undefined && props.valueOverride !== undefined) {
             setNumberValue(props.valueOverride[1]);
         }
