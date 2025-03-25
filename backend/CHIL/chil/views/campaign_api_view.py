@@ -98,16 +98,10 @@ class CampaginListAll(APIView):
     def get(self, request):
         """Retrieve all campaigns"""
 
-        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
-
-        if not auth_result:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
         response = campaign_list_all()
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         serializer = CampaignSerializer(response, many=True)
-        serializer.is_valid(raise_exception=True)
 
         return Response(status=status.HTTP_200_OK, data=serializer.data)
