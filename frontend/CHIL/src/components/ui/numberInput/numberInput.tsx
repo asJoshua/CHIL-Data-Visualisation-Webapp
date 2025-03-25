@@ -6,20 +6,25 @@ export const NumberSelect = (props: {
     valueOverride?: [string, string];
     id: string; 
     label: string; 
-    onNumberChange?: (value: string | undefined) => void;
+    onNumberChange?: (value: string) => void;
 })  => {
 
-    const [numberValue, setNumberValue] = useState<string | undefined>(); 
+    const [numberValue, setNumberValue] = useState<string>(); 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value;
-        setNumberValue(newValue);
-        if (props.onNumberChange) {
-            props.onNumberChange(numberValue)
+        setNumberValue(event.target.value);
+        if (!props.onNumberChange) {
+            return 
+        }
+        if (!numberValue) {
+            props.onNumberChange('')
+        } else {
+            props.onNumberChange(event.target.value)
         }
     };
 
     useEffect(() => {
+        console.log(props.valueOverride)
         if (props.valueOverride?.[0] !== undefined && props.valueOverride !== undefined) {
             setNumberValue(props.valueOverride[1]);
         }
