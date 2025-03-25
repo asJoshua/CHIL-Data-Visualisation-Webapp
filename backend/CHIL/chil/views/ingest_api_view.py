@@ -22,7 +22,7 @@ class IngestCsvData(APIView):
         auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
 
         if not auth_result:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response("unauthorized access", status=status.HTTP_401_UNAUTHORIZED)
 
         # Extracts type and file from the request. Key = type and other key = file
         # Use a drop down with file type: cryoegg or cryowurst
@@ -42,5 +42,5 @@ class IngestCsvData(APIView):
             return Response("file uploaded", status=status.HTTP_201_CREATED)
 
         except:
-            return Response("error, not a csv file", status=status.HTTP_400_BAD_REQUEST)
+            return Response("error", status=status.HTTP_400_BAD_REQUEST)
 

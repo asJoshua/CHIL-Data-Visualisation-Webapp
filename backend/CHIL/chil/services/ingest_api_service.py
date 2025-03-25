@@ -15,7 +15,11 @@ def process_csv_data(file, data_type: str):
     """
     Processes the CSV file
     """
-    csv_file = StringIO(file.read().decode("utf-8"))
+    # file.read() reads the file as bytes
+    # .decode("utf-8") converts the bytes to a string
+    # StringIo allows treating a string like a file
+    # code from https://gist.github.com/rg3915/85f1b600dd08619f76d94b7e41c3d04e
+    csv_file = StringIO(file.read().decode("utf-8")) 
     reader = csv.DictReader(csv_file)
 
     if data_type == 'cryoegg':
@@ -38,6 +42,7 @@ def process_cryoegg_data(reader):
             temperature_pt1000 = int(float(row['temperature_logger_C']))
             pressure = float(row['pressure_mBar'])
             temperature = float(row['temperature_C'])
+            receiver_voltage = float(row['voltage_logger_V'])
 
             # Create new CryoeggData entry
             cryoegg_entry = CryoeggData(
@@ -45,6 +50,7 @@ def process_cryoegg_data(reader):
                 temperature_pt1000=temperature_pt1000,
                 pressure=pressure,
                 temperature=temperature,
+                receiver_voltage = receiver_voltage
             )
 
             cryoegg_entry.full_clean()

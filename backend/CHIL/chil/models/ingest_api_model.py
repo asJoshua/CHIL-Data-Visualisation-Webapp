@@ -150,6 +150,7 @@ class CryoeggData(models.Model):
     temperature_pt1000 = models.IntegerField(null=True, blank=True)
     pressure = models.FloatField(null=True, blank=True)
     temperature = models.FloatField(null=True, blank=True)
+    receiver_voltage = models.FloatField(null=True, blank=True)
 
     fields = [
         'cryoegg_data_id',
@@ -158,7 +159,8 @@ class CryoeggData(models.Model):
         'conductivity',
         'temperature_pt1000',
         'pressure',
-        'temperature'
+        'temperature',
+        'receiver_voltage'
     ]
 
     def __str__(self):
