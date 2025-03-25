@@ -54,7 +54,7 @@ class Ingest(models.Model):
 
     def clean(self):
         if self.received_timestamp > now():
-            raise ValidationError({"received_timestamp": "Received timestamp cannot be in the future."})
+            raise ValidationError("Received timestamp cannot be in the future.")
 
     def __str__(self):
         return str(self.ingest_id)
@@ -131,7 +131,7 @@ class CryoeggRaw(models.Model):
     ]
 
     def __str__(self):
-        return str(self.cryoegg_raw_id)
+        return str(self.cryoegg_raw_id) # pylint: disable=no-member
 
 
 class CryoeggData(models.Model):
@@ -166,8 +166,8 @@ class CryoeggData(models.Model):
     def __str__(self):
         return str(self.cryoegg_data_id)
 
-    
-# Cryowurst Models  
+
+# Cryowurst Models
 class CryowurstRaw(models.Model):
     """
     Represents cryowurst raw data.
@@ -322,7 +322,7 @@ class HydrobeanRaw(models.Model):
 
     def __str__(self):
         return str(self.hydrobean_raw_id)
-    
+
 
 class HydrobeanData(models.Model):
     """
@@ -351,5 +351,3 @@ class HydrobeanData(models.Model):
 
     def __str__(self):
         return str(self.hydrobean_data_id)
-
-

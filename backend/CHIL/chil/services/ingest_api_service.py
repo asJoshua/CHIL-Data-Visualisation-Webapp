@@ -24,12 +24,13 @@ def process_csv_data(file, data_type: str):
 
     if data_type == 'cryoegg':
         return process_cryoegg_data(reader)
-    elif data_type == 'cryowurst':
-        return process_cryowurst_data(reader)
-    else:
-        raise ValueError(f"Invalid data type: {data_type}")
 
-transaction.atomic
+    if data_type == 'cryowurst':
+        return process_cryowurst_data(reader)
+
+    raise ValueError(f"Invalid data type: {data_type}")
+
+@transaction.atomic
 def process_cryoegg_data(reader):
     """
     Processes Cryoegg data from the CSV file and saves it into the database.
@@ -55,16 +56,16 @@ def process_cryoegg_data(reader):
 
             cryoegg_entry.full_clean()
             processed_data.append(cryoegg_entry)
-        
+
         except ValueError as e:
             print(f"Skipping row due to error: {e}. Row data: {row}")
             continue
 
-    CryoeggData.objects.bulk_create(processed_data)
+    CryoeggData.objects.bulk_create(processed_data) # pylint: disable=no-member
 
     return len(processed_data)
 
-def process_cryowurst_data(reader):
+def process_cryowurst_data(reader): # pylint: disable=too-many-locals
     """
     Processes Cryowurst data from the CSV file.
     """
@@ -87,7 +88,7 @@ def process_cryowurst_data(reader):
             conductivity = float(row['ec'])
             pressure = float(row['pressure'])
             temperature_keller = float(row['keller_temp'])
-        
+
         # Create new CryowurstData entry
             cryowurst_entry = CryowurstData(
                 temperature_tmp117=temperature_tmp117,
@@ -114,7 +115,6 @@ def process_cryowurst_data(reader):
             print(f"Skipping row due to error: {e}. Row data: {row}")
             continue
 
-    CryowurstData.objects.bulk_create(processed_data)
+    CryowurstData.objects.bulk_create(processed_data) # pylint: disable=no-member
 
     return len(processed_data)
-

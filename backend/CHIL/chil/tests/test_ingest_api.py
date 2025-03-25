@@ -4,11 +4,11 @@
 from io import BytesIO
 from django.test import TestCase
 from ..services.ingest_api_service import (
-    process_csv_data, 
+    process_csv_data,
 )
 
 from ..models.ingest_api_model import (
-    CryoeggData, 
+    CryoeggData,
     CryowurstData
 )
 
@@ -23,7 +23,8 @@ class IngestServiceTestCase(TestCase):
         """
         # Mock CSV data for cryoegg and cryowurst
         self.cryoegg_csv = BytesIO(
-            b"conductivity_raw_V,temperature_logger_C,pressure_mBar,temperature_C,voltage_logger_V\n"
+            b"conductivity_raw_V,temperature_logger_C,pressure_mBar,"
+            b"temperature_C,voltage_logger_V\n"
             b"1.23,25.6,1000,22.5,5.0\n"
             b"2.34,26.7,1100,23.5,5.5\n"
         )
@@ -42,7 +43,7 @@ class IngestServiceTestCase(TestCase):
         processed_count = process_csv_data(self.cryoegg_csv, 'cryoegg')
 
         self.assertEqual(processed_count, 2)
-        self.assertEqual(CryoeggData.objects.count(), 2)
+        self.assertEqual(CryoeggData.objects.count(), 2) # pylint: disable=no-member
 
     def test_process_csv_data_valid_cryowurst(self):
         """
@@ -51,4 +52,4 @@ class IngestServiceTestCase(TestCase):
         processed_count = process_csv_data(self.cryowurst_csv, 'cryowurst')
 
         self.assertEqual(processed_count, 2)
-        self.assertEqual(CryowurstData.objects.count(), 2)
+        self.assertEqual(CryowurstData.objects.count(), 2) # pylint: disable=no-member

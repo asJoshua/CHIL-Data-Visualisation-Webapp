@@ -19,6 +19,11 @@ class IngestCsvData(APIView):
     """
 
     def post(self, request):
+        """
+        Handles CSV uploads
+
+        - checks authentication
+        """
         auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
 
         if not auth_result:
@@ -41,6 +46,5 @@ class IngestCsvData(APIView):
 
             return Response("file uploaded", status=status.HTTP_201_CREATED)
 
-        except:
-            return Response("error", status=status.HTTP_400_BAD_REQUEST)
-
+        except ValueError as ve:
+            return Response(f"error: {ve}", status=status.HTTP_400_BAD_REQUEST)

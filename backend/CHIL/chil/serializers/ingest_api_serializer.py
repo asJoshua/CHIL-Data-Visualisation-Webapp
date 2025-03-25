@@ -8,7 +8,7 @@ from ..models.ingest_api_model import (
     CryowurstData,
     HydrobeanData
 )
-    
+
 class CryoeggSerializer(serializers.ModelSerializer):
     """
     Serializer for cryoegg processed data
