@@ -18,60 +18,53 @@ const columns = [
 const DeploymentsPage = (): React.JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const [deployments, setDeployments] = useState<any[]>([]);
+  const [instrumentDeployments, setInstrumentDeployments] = useState<any[]>([]);
 
-  const [deployments, setDeployments] = useState([]);
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: "http://localhost:8000/chil/api/deployment/list",
-      withCredentials: true,
-    })
-     .then((response) => {
-        const formattedData = response.data.map((deployment: any ) => ({
-          deployment_id: `${deployment.deployment_id}`,
-          description: `${deployment.description}`,
-          start_timestamp: `${deployment.start_timestamp}`,
-          end_timestamp: `${deployment.end_timestamp}`,
-          instrument_id: "",
-        }));
-        
-      
-        const promises = formattedData.map((deployment: any) =>
-          axios({
-            method: "get",
-            url: `http://localhost:8000/chil/api/deployment/list-instrument-deployment`,
-            withCredentials: true,
-          })
-            .then((instrumentResponse) => {
-              const instrumentId = instrumentResponse.data[0]?.instrument_id || "N/A"; 
-              return { ...deployment, instrument_id: instrumentId };
-            })
-            .catch(() => {
-              return { ...deployment, instrument_id: "Error fetching" };
-            })
-        );
+    const fetchData = async () => {
+      try {
+        // Fetch all deployments
+        const deploymentResponse = await axios({
+          method: "get",
+          url: "http://localhost:8000/chil/api/deployment/list",
+          withCredentials: true,
+        });
 
-        Promise.all(promises)
-          .then((updatedDeployments: any) => {
-            setDeployments(updatedDeployments); 
-          })
-          .catch((error) => {
-            console.error("Error fetching instruments:", error);
-          });
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.error("Error fetching deployments:", error.response.data);
-        } else {
-          console.error("Network error:", error.message);
-        }
-      });
-}, []);
+        // Fetch all instrument deployments
+        const instrumentResponse = await axios({
+          method: "get",
+          url: "http://localhost:8000/chil/api/deployment/list-instrument-deployment",
+          withCredentials: true,
+        });
 
-  const filteredRows = deployments.filter((row) =>
+        setDeployments(deploymentResponse.data);
+        setInstrumentDeployments(instrumentResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const mergedData = deployments.map((deployment) => {
+    const matchedInstruments = instrumentDeployments
+      .filter((inst) => inst.deployment_id === deployment.deployment_id)
+      .map((inst) => inst.instrument_id);
+
+    return {
+      ...deployment,
+      instrument_id: matchedInstruments.length > 0 ? matchedInstruments.join(", ") : "None",
+    };
+  });
+
+  const filteredRows = mergedData.filter((row) =>
     Object.values(row).some((value) =>
-      (value as string).toString().toLowerCase().includes(searchQuery.toLowerCase()) // Casting value to string
+      typeof value === "string" || typeof value === "number"
+        ? value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        : false
     )
   );
 

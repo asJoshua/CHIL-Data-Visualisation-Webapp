@@ -145,20 +145,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='DeploymentInstrument',
-            fields=[
-                ('deployment_id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('description', models.TextField()),
-                ('start_timestamp', models.DateField()),
-                ('end_timestamp', models.DateField()),
-                ('campaign', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='CHIL.campaign')),
-                ('instrument', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='CHIL.instrument')),
-            ],
-            options={
-                'db_table': 'instrument_deployment_table',
-            },
-        ),
-        migrations.CreateModel(
             name='CryowurstRaw',
             fields=[
                 ('cryowurst_raw_id', models.BigAutoField(primary_key=True, serialize=False)),
