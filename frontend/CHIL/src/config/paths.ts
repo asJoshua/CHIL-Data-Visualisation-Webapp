@@ -33,7 +33,11 @@ const paths = {
         test: {
             path: 'test',
             getHref: () => '/test',
-        }
+        },
+        upload: {
+            path: 'upload-csv',
+            getHref: () => '/upload-csv'
+        },
     },
     admin: {
         root: {
@@ -43,8 +47,13 @@ const paths = {
         test: {
             path: 'test',
             getHref: () => '/test',
-        }
+        },
+        upload: {
+            path: 'upload-csv',
+            getHref: () => '/upload-csv'
+        },
     },
+    
 }
 
 export { paths };
