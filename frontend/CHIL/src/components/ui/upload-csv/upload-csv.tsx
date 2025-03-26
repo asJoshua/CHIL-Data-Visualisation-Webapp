@@ -34,6 +34,7 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
 
     const handleFileUpload = async (event: any) => {
         event.preventDefault();
+        console.log("Form submitted");  // Debug line
     
         if (!file) {
             setError(true);
@@ -45,6 +46,8 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
             setError(false);
             setErrorMessage("");
             setIsUploading(true);
+
+            console.time("FileUploadTime");
 
             const formData = new FormData();
             formData.append("file", file);
@@ -58,6 +61,8 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                     }
                 }, 
             );
+
+            console.log('Response:', response);  // Debug line
 
                 if (response.status === 200 || response.status === 201) {
                     setSuccess(true);
@@ -82,6 +87,7 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                 }
             } finally {
                 setIsUploading(false)
+                console.timeEnd("FileUploadTime")
             }
         }
     };
@@ -97,21 +103,23 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                     maxWidth: '30%' 
                 }}>
                     <form onSubmit={handleFileUpload}>
+                        {/* File input */}
                         <Box sx={{ marginBottom: '1rem' }}>
                             <input 
                                 type='file' 
                                 accept='.csv' 
                                 onChange={handleFileChange} 
                                 id="file-upload"
-                                style={{ display: 'none'}}
+                                style={{ display: 'none'}}  // Hide the default input
                             />
-
+                            {/* Make the button act as a file input */}
                             <Box sx={{display: "flex", alignItems: "center"}}>
                             <label htmlFor="file-upload">
                                 <Tooltip title="Browse CSV files...">
                                     <UploadFileIcon fontSize='large' sx={{cursor: "pointer", "&:hover": {color: "#3c5364"}}}/>
                                 </Tooltip>
                             </label>
+
                             <Typography 
                                 color="text" 
                                 sx={{ 
@@ -119,11 +127,12 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                                     alignItems: "center", 
                                     padding: "6px 16px", 
                                     background: "#fff", 
-                                    color: file ? "black" : "transparent",
-                                    width: "100%",
-                                    borderRadius: "4px",
+                                    color: file ? "black" : "transparent", // Hide text if no file
+                                    width: "100%", // Ensures consistent size
+                                    borderRadius: "4px", // Optional for styling
                                     marginLeft: "4px"
                                 }}>
+
                                 {file ? file.name : "No file selected"}
                             </Typography>
                             </Box>
@@ -159,7 +168,9 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                             >
                                 {isUploading ? 'Uploading...' : 'Upload File'}
                             </Button>
+
                             {isUploading && <CircularProgress size={24} sx={{ marginLeft: '10px' }} />}
+
                         </Box>
 
                         <Box sx={{ display: "flex", justifyContent: "center", marginTop: '1rem' }}>
