@@ -48,4 +48,3 @@ class IngestCsvData(APIView):
 
         except ValueError as ve:
             return Response(f"error: {ve}", status=status.HTTP_400_BAD_REQUEST)
-
