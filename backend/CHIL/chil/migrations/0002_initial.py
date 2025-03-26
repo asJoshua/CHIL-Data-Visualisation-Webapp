@@ -42,6 +42,20 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='DeploymentInstrument',
+            fields=[
+                ('deployment_id', models.BigAutoField(primary_key=True, serialize=False)),
+                ('description', models.TextField()),
+                ('campaign_id', models.BigIntegerField()),
+                ('instrument_id', models.BigIntegerField()),
+                ('start_timestamp', models.DateField()),
+                ('end_timestamp', models.DateField()),
+            ],
+            options={
+                'db_table': 'instrument_deployment_table',
+            },
+        ),
+        migrations.CreateModel(
             name='InstrumentType',
             fields=[
                 ('instrument_type_id', models.BigAutoField(primary_key=True, serialize=False)),
