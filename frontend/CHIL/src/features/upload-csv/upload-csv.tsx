@@ -8,6 +8,8 @@ import ListIcon from '@mui/icons-material/List';
 import Tooltip from '@mui/material/Tooltip';
 import axios from 'axios';
 
+// added in features for now, also added in components. When needed to be used on a different
+// page e.g., on the actual graph prage - just remove the path and routes for the url /admin/upload-csv
 export type UploadCsvProps = {
     apiURL: string
 }
