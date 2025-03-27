@@ -1101,33 +1101,6 @@ paths:
         404:
           description: Id not found
 
-  /campaign/{id}/receiver-deployments:
-    get:
-      tags:
-        - campaign
-      summary: Get all receiver deployment id's in a specific campaign
-      description: Get all receiver deployment id's in a specific campaign
-      operationId: getReceiverDeploymentsInCampaign
-      parameters:
-        - in: path
-          name: Id
-          required: true
-          schema:
-            type: integer
-            format: int10
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: integer
-                  format: int10
-        404:
-          description: Id not found
-
   /ingest/lingomo:
     post:
       tags:

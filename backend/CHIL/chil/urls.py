@@ -6,8 +6,11 @@ from django.urls import include, path
 
 urlpatterns = [
     path('auth/', include('chil.all_urls.auth')),
+    path('api/campaign/', include('chil.all_urls.api_campaign')),
     path('api/instrument/', include('chil.all_urls.api_instrument')),
     path('api/ingest/', include('chil.all_urls.api_ingest')),
+    path('api/receiver/', include('chil.all_urls.api_receiver')),
     path('api/deployment/', include('chil.all_urls.api_deployment')),
-    path('newsletter/', include('chil.all_urls.newsletter'))
+    path('api/campaign/', include('chil.all_urls.api_campaign')),
+    path('newsletter/', include('chil.all_urls.newsletter')),
 ]
