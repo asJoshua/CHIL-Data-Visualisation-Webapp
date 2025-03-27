@@ -5,10 +5,23 @@ All the buisness logic for the Cryoegg and Cryowurst models
 import csv
 from io import StringIO
 from django.db import transaction
+from datetime import datetime
 from ..models.ingest_api_model import (
     CryoeggData,
     CryowurstData,
 )
+
+def parse_timestamp(ts):
+    """
+    Tries multiple timestamp formats to parse date correctly.
+    """
+    formats = ["%d/%m/%Y %H:%M", "%Y-%m-%d %H:%M:%S"]
+    for fmt in formats:
+        try:
+            return datetime.strptime(ts, fmt).timestamp()
+        except ValueError:
+            continue
+    raise ValueError(f"Unrecognized timestamp format: {ts}")
 
 @transaction.atomic
 def process_csv_data(file, data_type: str):
@@ -39,6 +52,7 @@ def process_cryoegg_data(reader):
 
     for row in reader:
         try:
+            timestamp = datetime.fromtimestamp(parse_timestamp(row['timestamp']))        
             conductivity = float(row['conductivity_raw_V'])
             temperature_pt1000 = int(float(row['temperature_logger_C']))
             pressure = float(row['pressure_mBar'])
@@ -47,6 +61,7 @@ def process_cryoegg_data(reader):
 
             # Create new CryoeggData entry
             cryoegg_entry = CryoeggData(
+                timestamp=timestamp,
                 conductivity=conductivity,
                 temperature_pt1000=temperature_pt1000,
                 pressure=pressure,
@@ -73,6 +88,7 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
 
     for row in reader:
         try:
+            timestamp = datetime.fromtimestamp(parse_timestamp(row['time']))         
             temperature_tmp117 = float(row['tmp_temp'])
             mag_x = float(row['mag_x'])
             mag_y = float(row['mag_y'])
@@ -91,6 +107,7 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
 
         # Create new CryowurstData entry
             cryowurst_entry = CryowurstData(
+                timestamp=timestamp,
                 temperature_tmp117=temperature_tmp117,
                 mag_x=mag_x,
                 mag_y=mag_y,
