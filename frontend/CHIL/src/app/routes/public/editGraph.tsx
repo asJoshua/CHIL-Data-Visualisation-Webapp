@@ -11,9 +11,9 @@ import { TextField } from '@/components/ui/text-field/text-field';
 
 const EditGraphRoot = (): React.JSX.Element => {
 
-    const [graphName, setGraphName] = useState('')
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [, setGraphName] = useState('')
+    const [, setStartDate] = useState(new Date());
+    const [, setEndDate] = useState(new Date());
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
     const [plotInformation, setPlotInformation] = useState({
@@ -55,15 +55,15 @@ const EditGraphRoot = (): React.JSX.Element => {
     }
 
     const handleMeasurementChange = (newMeasurement: string) => {
-        handleValueChange(newMeasurement, currentPlot, 'measurement') 
+        handleValueChange(newMeasurement, currentPlot, 'measurement');
     }
 
     const handleColorChange = (newColor: string) => {
-        handleValueChange(newColor, currentPlot, 'color')
+        handleValueChange(newColor, currentPlot, 'color');
     }
 
-    const handleScaleChange = (newScale: string) => {
-        handleValueChange(newScale, currentPlot, 'scale')
+    const handleScaleChange = (scale: string) => {
+        handleValueChange(scale, currentPlot, 'scale');
     }
 
     const handleValueChange = (value: string, plot: string, valueKey: string) => {
@@ -234,7 +234,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                                     <ColorPicker
                                         onColorChange={handleColorChange}
                                         defaultColor='#AABBCC'
-                                        valueOverride={[currentPlot, plotInformation[currentPlot].measurement]}
+                                        valueOverride={[currentPlot, plotInformation[currentPlot].color]}
                                     />
                                 </Grid>
                             </Grid>
@@ -251,6 +251,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                                         id="scale"
                                         label="Scale"
                                         onNumberChange={handleScaleChange}
+                                        valueOverride={[currentPlot, plotInformation[currentPlot].scale]}
                                     />
                                 </Grid>
                             </Grid>

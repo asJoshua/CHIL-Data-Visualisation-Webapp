@@ -13,11 +13,11 @@ const paths = {
             getHref: () => '/deployments',
             view: { 
                 path: ':id',
-                getHref: (id: any) => `/deployments/${id}`
+                getHref: (id: string | number) => `/deployments/${id}`
             },
             edit: { 
                 path: ':id/edit',
-                getHref: (id: any) => `/deployments/${id}/edit`
+                getHref: (id: string | number) => `/deployments/${id}/edit`
             }
         },
         individual_deployments: {

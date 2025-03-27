@@ -14,7 +14,7 @@ export const DatePickerComp = (props: {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const handleDateChange = (date: any) => {
+    const handleDateChange = (date: Date | null) => {
         if (date) {
             setSelectedDate(date)
         } else {

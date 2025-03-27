@@ -3,12 +3,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 export const DropDownSelect = (props: {
-    valueOverride?: any;
+    valueOverride?: [string, string];
     onSelectChange?: (selectedOption: string) => void;
     labelText: string | undefined;
     selectId: string | undefined;
     labelId: string | undefined;
-    options: any; 
+    options: { value: string | number; label: string; }[]; 
     selectLabel: string | undefined; 
 })  => {
 
@@ -22,7 +22,7 @@ export const DropDownSelect = (props: {
     };
 
     useEffect(() => {
-        if (props.valueOverride?.[0] !== undefined && props.valueOverride !== 'null') {
+        if (props.valueOverride?.[0] !== undefined && props.valueOverride !== undefined) {
             setSelectedOption(props.valueOverride[1] as string);
         }
     }, [props.valueOverride?.[0]]);
@@ -39,17 +39,17 @@ export const DropDownSelect = (props: {
                 onChange={handleChange}
                 sx={{
                     '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'black', // Change border color
+                        borderColor: 'black',
                     },
                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'black', // Change hover border color
+                        borderColor: 'black',
                     },
                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: 'black', // Change focused border color
+                        borderColor: 'black',
                     },
-                    backgroundColor: 'white', // Default background color
+                    backgroundColor: 'white', 
                     '&:hover': {
-                        backgroundColor: '#CFDFE3', // Hover background color
+                        backgroundColor: '#CFDFE3',
                     },
                 }}
             >
