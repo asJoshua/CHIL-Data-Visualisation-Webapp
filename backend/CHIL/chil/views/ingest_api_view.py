@@ -39,7 +39,7 @@ class IngestCsvData(APIView):
         file = request.FILES.get('file')
 
         if not file:
-            return Response("error, no file uploaded", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "no file uploaded"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             process_csv_data(file, data_type)
