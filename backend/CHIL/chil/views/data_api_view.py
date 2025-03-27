@@ -1,122 +1,162 @@
-"""
-Views for the Deployment API endpoints endpoints
-"""
-
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from ..utils import (
-    authenticate_by_group
+from ..services.data_api_service import (
+    cryoegg_raw_get_by_id,
+    cryowurst_raw_get_by_id,
+    cryoegg_get_by_id,
+    cryowurst_get_by_id,
+    cryoegg_raw_get_by_campaign_id,
+    cryowurst_raw_get_by_campaign_id,
+    cryoegg_get_by_campaign_id,
+    cryowurst_get_by_campaign_id,
+    cryoegg_raw_get_by_instrument,
+    cryowurst_raw_get_by_instrument,
+    cryoegg_get_by_instrument,
+    cryowurst_get_by_instrument,
 )
 
-from ..serializers.deployment_api_serializer import (
-    CryoeggSerializer,
-    CryowurstSerializer
-)
-
-from ..services.deployment_api_service import (
-    deployment_create,
-    deployment_get_by_id,
-    deployment_get_all,
-    deployment_update,
-    deployment_delete,
-    deployment_get_deployment_instruments
-)
-
-class DeploymentCreateView(APIView):
+class CryoeggRawGetByIdView(APIView):
     """
-    Create deployment endpoint
-    """
-
-    def post(self, request):
-        """Create a new deployment"""
-
-        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
-
-        if not auth_result:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-        serializer = DeploymentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        deployment_create(**serializer.validated_data)
-
-        return Response(status=status.HTTP_201_CREATED)
-
-class DeploymentGetView(APIView):
-    """
-    Get Deployment by id
+    Get CryoeggRaw by id
     """
 
     def get(self, request):
-        """Gets a deployment by id"""
-        response = deployment_get_by_id(deployment_id=request.data['id'])
+        response = cryoegg_raw_get_by_id(id=request.data['id'])
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        return Response(status=status.HTTP_200_OK, data=response[0])
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
-class DeploymentGetAllView(APIView):
+class CryowurstRawGetByIdView(APIView):
     """
-    Get all Deployments
+    Get CryowurstRaw by id
     """
 
-    def get(self, _):
-        """Gets all deployments"""
-        response = deployment_get_all()
-
+    def get(self, request):
+        response = cryowurst_raw_get_by_id(id=request.data['id'])
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        data = list(response.values())
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
-        return Response(data, status=status.HTTP_200_OK)
-
-class DeploymentGetDeploymentInstrumentsView(APIView):
+class CryoeggGetByIdView(APIView):
     """
-    Gets all the instruments of a deployment from the db
+    Get CryoeggData by id
     """
 
-    def get(self, _, deployment_id):
-        """Gets all the instruments of a deployment from the db"""
-        response = deployment_get_deployment_instruments(deployment_id=deployment_id)
+    def get(self, request):
+        response = cryoegg_get_by_id(id=request.data['id'])
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        return Response(status=status.HTTP_200_OK, data=response[0])
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
-class DeploymentUpdateView(APIView):
+class CryowurstGetByIdView(APIView):
     """
-    Update Deployment by id
-    """
-
-    def put(self, request):
-        """Updates a deployment by id"""
-
-        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
-
-        if not auth_result:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-        deployment_update(deployment_id=request.data['id'], data=request.data)
-
-        return Response(status=status.HTTP_200_OK)
-
-class DeploymentDeleteView(APIView):
-    """
-    Delete deployment by id
+    Get CryowurstData by id
     """
 
-    def delete(self, request):
-        """Deletes a deployment by id"""
-
-        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
-
-        if not auth_result:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-        if not deployment_delete(deployment_id=request.data['id']):
+    def get(self, request):
+        response = cryowurst_get_by_id(id=request.data['id'])
+        if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryoeggRawGetByCampaignIdView(APIView):
+    """
+    Get CryoeggRaw by campaign id
+    """
+
+    def get(self, request):
+        response = cryoegg_raw_get_by_campaign_id(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryowurstRawGetByCampaignIdView(APIView):
+    """
+    Get CryowurstRaw by campaign id
+    """
+
+    def get(self, request):
+        response = cryowurst_raw_get_by_campaign_id(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryoeggGetByCampaignIdView(APIView):
+    """
+    Get CryoeggData by campaign id
+    """
+
+    def get(self, request):
+        response = cryoegg_get_by_campaign_id(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryowurstGetByCampaignIdView(APIView):
+    """
+    Get CryowurstData by campaign id
+    """
+
+    def get(self, request):
+        response = cryowurst_get_by_campaign_id(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryoeggRawGetByInstrumentView(APIView):
+    """
+    Get CryoeggRaw by instrument id
+    """
+
+    def get(self, request):
+        response = cryoegg_raw_get_by_instrument(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryowurstRawGetByInstrumentView(APIView):
+    """
+    Get CryowurstRaw by instrument id
+    """
+
+    def get(self, request):
+        response = cryowurst_raw_get_by_instrument(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryoeggGetByInstrumentView(APIView):
+    """
+    Get CryoeggData by instrument id
+    """
+
+    def get(self, request):
+        response = cryoegg_get_by_instrument(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
+
+class CryowurstGetByInstrumentView(APIView):
+    """
+    Get CryowurstData by instrument id
+    """
+
+    def get(self, request):
+        response = cryowurst_get_by_instrument(id=request.data['id'])
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_200_OK, data=list(response.values()))
