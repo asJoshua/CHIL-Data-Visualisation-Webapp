@@ -8,8 +8,6 @@ import ListIcon from '@mui/icons-material/List';
 import Tooltip from '@mui/material/Tooltip';
 import axios from 'axios';
 
-// added in features for now, also added in components. When needed to be used on a different
-// page e.g., on the actual graph prage - just remove the path and routes for the url /admin/upload-csv
 export type UploadCsvProps = {
     apiURL: string
 }
@@ -39,7 +37,8 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
     
         if (!file) {
             setError(true);
-            setErrorMessage("PLEASE SELECT A FILE FIRST!");
+            setErrorMessage("Please select a file first!");
+            setSuccess(false);
             return;
         } 
         
@@ -63,7 +62,8 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
 
                 if (response.status === 201) {
                     setSuccess(true);
-                    setSuccessMessage("FILE UPLOADED!");
+                    setSuccessMessage("File uploaded!");
+                    setError(false)
                 }else {
                     setSuccess(false);
                     setError(true);
@@ -76,10 +76,12 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                         setError(true);
                     } else if (error.response?.status === 500){
                         setError(true)
-                        setErrorMessage("FILE TYPE DOES NOT MATCH DATA TYPE!")
+                        setErrorMessage("File type does not match data type!")
+                        setSuccess(false)
                     } else if (error.response?.status === 401){
                         setError(true)
-                        setErrorMessage("SESSION EXPIRED, PLEASE LOGOUT AND LOGIN AGAIN.")
+                        setErrorMessage("Session expired, please logout and login again")
+                        setSuccess(false)
                     }
                 }
             } finally {
@@ -91,11 +93,7 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
     return (
         <CustomThemeProvider>
                 <Box sx={{
-                    backgroundColor: "primary.light", 
-                    padding: '1rem', 
-                    borderRadius: '8px', 
-                    boxShadow: 3, 
-                    width: '100%',
+                    width: '80%',
                     maxWidth: '30%' 
                 }}>
                     <form onSubmit={handleFileUpload}>
@@ -111,7 +109,11 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                             <Box sx={{display: "flex", alignItems: "center"}}>
                             <label htmlFor="file-upload">
                                 <Tooltip title="Browse CSV files...">
-                                    <UploadFileIcon fontSize='large' sx={{cursor: "pointer", "&:hover": {color: "#3c5364"}}}/>
+                                    <UploadFileIcon fontSize='large' sx={{
+                                        color: "primary.main", 
+                                        cursor: "pointer", 
+                                        "&:hover": {color: "#E0E0E0"
+                                        }}}/>
                                 </Tooltip>
                             </label>
                             <Typography 
@@ -124,7 +126,9 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                                     color: file ? "black" : "transparent",
                                     width: "100%",
                                     borderRadius: "4px",
-                                    marginLeft: "4px"
+                                    marginLeft: "4px",
+                                    border: "1.5px solid",
+                                    borderColor: "primary.main"
                                 }}>
                                 {file ? file.name : "No file selected"}
                             </Typography>
@@ -132,7 +136,7 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                         </Box>
 
                         <Box sx={{ marginBottom: '1rem', display: "flex" }}>
-                            <ListIcon fontSize='large'/>
+                            <ListIcon sx={{color: "primary.main"}} fontSize='large'/>
                                     <select 
                                         onChange={handleTypeChange} 
                                         value={type} 
@@ -143,6 +147,8 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                                             backgroundColor: '#fff', 
                                             color: "black",
                                             marginLeft: "4px", 
+                                            border: "1.5px solid",
+                                            borderColor: "primary.main",
                                             borderRadius: "4px",
                                             cursor: "pointer",
                                         }}>
@@ -165,10 +171,9 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                         </Box>
 
                         <Box sx={{ display: "flex", justifyContent: "center", marginTop: '1rem' }}>
-                            {success && <Typography color="#fff">{successMessage}</Typography>}
+                            {success && <Typography color="green">{successMessage}</Typography>}
                             {error && <Typography sx={{
-                                fontWeight: "bold", 
-                                color: "#fff",
+                                color: "red",
                                 textAlign: "center" 
                                 }}>
                                     {errorMessage}</Typography>}

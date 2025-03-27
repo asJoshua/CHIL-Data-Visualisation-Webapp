@@ -59,6 +59,13 @@ const createAppRouter = () => {
                         return { Component: TestRoot };
                     }
                 },
+                {
+                    path: paths.admin.upload.path,
+                    lazy: async () => {
+                        const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
+                        return { Component: UploadCsvRoot };
+                    }
+                },
             ]
         },
         {
@@ -76,7 +83,7 @@ const createAppRouter = () => {
                 {
                     path: paths.admin.upload.path,
                     lazy: async () => {
-                        const { UploadCsvRoot } = await import('@/app/routes/public/upload-csv.tsx');
+                        const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
                         return { Component: UploadCsvRoot };
                     }
                 },

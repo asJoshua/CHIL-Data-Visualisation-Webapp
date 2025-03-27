@@ -1,6 +1,5 @@
 const publicHeaderConfig = [
     ['Home', '/home'],
-    ['Regions', '/regions'],
     ['Deployments', '/deployments'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/about'],
@@ -9,8 +8,8 @@ const publicHeaderConfig = [
 
 const adminHeaderConfig = [
     ['Home', '/home'],
-    ['Regions', '/regions'],
     ['Deployments', '/deployments'],
+    ['Upload', '/admin/upload'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/about'],
     ['Contact Us', '/contact'],
@@ -18,8 +17,8 @@ const adminHeaderConfig = [
 
 const collaboratorHeaderConfig = [
     ['Home', '/home'],
-    ['Regions', '/regions'],
     ['Deployments', '/deployments'],
+    ['Upload', '/upload'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/about'],
     ['Contact Us', '/contact'],

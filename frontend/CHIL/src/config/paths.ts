@@ -35,8 +35,8 @@ const paths = {
             getHref: () => '/test',
         },
         upload: {
-            path: 'upload-csv',
-            getHref: () => '/upload-csv'
+            path: 'upload',
+            getHref: () => '/upload'
         },
     },
     admin: {
@@ -49,8 +49,8 @@ const paths = {
             getHref: () => '/test',
         },
         upload: {
-            path: 'upload-csv',
-            getHref: () => '/upload-csv'
+            path: 'upload',
+            getHref: () => '/upload'
         },
     },
     
