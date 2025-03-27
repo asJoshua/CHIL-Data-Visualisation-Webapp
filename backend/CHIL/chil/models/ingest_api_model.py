@@ -144,6 +144,7 @@ class CryoeggData(models.Model):
         db_table = "cryoegg_data_table"
 
     cryoegg_data_id = models.BigAutoField(primary_key=True)
+    timestamp = models.DateTimeField(null=True, blank=True)
     cryoegg_raw = models.ForeignKey(CryoeggRaw, on_delete=models.CASCADE, null=True, blank=True)
     process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
     conductivity = models.FloatField(null=True, blank=True)
@@ -241,6 +242,7 @@ class CryowurstData(models.Model):
         db_table = "cryowurst_data_table"
 
     cryowurst_data_id = models.BigAutoField(primary_key=True)
+    timestamp = models.DateTimeField(null=True, blank=True)
     cryowurst_raw = models.ForeignKey(CryowurstRaw, on_delete=models.CASCADE, null=True, blank=True)
     process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
     temperature_tmp117 = models.FloatField(null=True, blank=True)
@@ -295,6 +297,7 @@ class HydrobeanRaw(models.Model):
         db_table = "hydrobean_raw_table"
 
     hydrobean_raw_id = models.BigAutoField(primary_key=True)
+    timestamp = models.DateTimeField(null=True, blank=True)
     receiver_data_id = models.IntegerField()
     ingest_id = models.ForeignKey(Ingest, on_delete=models.CASCADE)
     instrument_id = models.ForeignKey(Instrument, on_delete=models.CASCADE)
