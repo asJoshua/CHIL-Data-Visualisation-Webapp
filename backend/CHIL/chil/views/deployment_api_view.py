@@ -85,7 +85,7 @@ class DeploymentGetDeploymentInstrumentsView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_200_OK, data=response[0])
-    
+
 class DeploymentGetAllDeploymentInstrumentsView(APIView):
     """
     Get all info from instrument_deployment table
@@ -94,10 +94,8 @@ class DeploymentGetAllDeploymentInstrumentsView(APIView):
     def get(self, _):
         """Get all info"""
         response = deployment_get_all_deployment_instrument()
-        
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
         data = list(response.values())
 
         return Response(data, status=status.HTTP_200_OK)

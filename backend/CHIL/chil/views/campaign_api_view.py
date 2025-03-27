@@ -95,7 +95,7 @@ class CampaginListAll(APIView):
     List all campaign endpoints
     """
 
-    def get(self, request):
+    def get(self):
         """Retrieve all campaigns"""
 
         response = campaign_list_all()

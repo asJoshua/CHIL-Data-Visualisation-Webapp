@@ -28,7 +28,7 @@ class DeploymentInstrumentSerializer(serializers.ModelSerializer):
     """
     Serializer for Deployment Instrument
     """
-    class Meta():
+    class Meta(): # pylint: disable=R0903, C0115
         model = DeploymentInstrument
         # fields = [
         # 'deployment_id'
@@ -40,4 +40,3 @@ class DeploymentInstrumentSerializer(serializers.ModelSerializer):
         # ]
 
     fields = DeploymentInstrument.fields
-    
