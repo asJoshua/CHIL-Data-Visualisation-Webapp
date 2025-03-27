@@ -32,7 +32,7 @@ def cryoegg_get_by_id(*, id: int):
 def cryowurst_get_by_id(*, id: int):
     """Gets a cryowurst processed entry from the db"""
 
-    query = Q(cryoegg_data_id=id)
+    query = Q(cryowurst_data_id=id)
     return CryowurstData.objects.filter(query) # pylint: disable=E1101
 
 def cryoegg_raw_get_by_campaign_id(*, id: int):
