@@ -41,7 +41,11 @@ const paths = {
         test: {
             path: 'test',
             getHref: () => '/test',
-        }
+        },
+        upload: {
+            path: 'upload',
+            getHref: () => '/upload'
+        },
     },
     admin: {
         root: {
@@ -51,8 +55,13 @@ const paths = {
         test: {
             path: 'test',
             getHref: () => '/test',
-        }
+        },
+        upload: {
+            path: 'upload',
+            getHref: () => '/upload'
+        },
     },
+    
 }
 
 export { paths };

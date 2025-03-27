@@ -1,0 +1,94 @@
+"""
+The URLS for the data endpoints in the API
+"""
+
+from django.urls import path
+from ..views.data_api_view import (
+    CryoeggRawGetByIdView,
+    CryowurstRawGetByIdView,
+    CryoeggGetByIdView,
+    CryowurstGetByIdView,
+    CryoeggRawGetByCampaignIdView,
+    CryowurstRawGetByCampaignIdView,
+    CryoeggGetByCampaignIdView,
+    CryowurstGetByCampaignIdView,
+    CryoeggRawGetByInstrumentView,
+    CryowurstRawGetByInstrumentView,
+    CryoeggGetByInstrumentView,
+    CryowurstGetByInstrumentView,
+    CryoeggGetBetweenTimestampsView,  
+    CryowurstGetBetweenTimestampsView,  
+)
+
+urlpatterns = [
+    path(
+        'cryoegg-raw/get-by-id/',
+        CryoeggRawGetByIdView.as_view(),
+        name='get_cryoegg_raw_by_id'
+    ),
+    path(
+        'cryowurst-raw/get-by-id/',
+        CryowurstRawGetByIdView.as_view(),
+        name='get_cryowurst_raw_by_id'
+    ),
+    path(
+        'cryoegg/get-by-id/',
+        CryoeggGetByIdView.as_view(),
+        name='get_cryoegg_by_id'
+    ),
+    path(
+        'cryowurst/get-by-id/',
+        CryowurstGetByIdView.as_view(),
+        name='get_cryowurst_by_id'
+    ),
+    path(
+        'cryoegg-raw/get-by-campaign/',
+        CryoeggRawGetByCampaignIdView.as_view(),
+        name='get_cryoegg_raw_by_campaign'
+    ),
+    path(
+        'cryowurst-raw/get-by-campaign/',
+        CryowurstRawGetByCampaignIdView.as_view(),
+        name='get_cryowurst_raw_by_campaign'
+    ),
+    path(
+        'cryoegg/get-by-campaign/',
+        CryoeggGetByCampaignIdView.as_view(),
+        name='get_cryoegg_by_campaign'
+    ),
+    path(
+        'cryowurst/get-by-campaign/',
+        CryowurstGetByCampaignIdView.as_view(),
+        name='get_cryowurst_by_campaign'
+    ),
+    path(
+        'cryoegg-raw/get-by-instrument/',
+        CryoeggRawGetByInstrumentView.as_view(),
+        name='get_cryoegg_raw_by_instrument'
+    ),
+    path(
+        'cryowurst-raw/get-by-instrument/',
+        CryowurstRawGetByInstrumentView.as_view(),
+        name='get_cryowurst_raw_by_instrument'
+    ),
+    path(
+        'cryoegg/get-by-instrument/',
+        CryoeggGetByInstrumentView.as_view(),
+        name='get_cryoegg_by_instrument'
+    ),
+    path(
+        'cryowurst/get-by-instrument/',
+        CryowurstGetByInstrumentView.as_view(),
+        name='get_cryowurst_by_instrument'
+    ),
+    path(
+        'cryoegg/get-between-timestamps/', 
+        CryoeggGetBetweenTimestampsView.as_view(),
+        name='get_cryoegg_between_timestamps'
+    ),
+    path(
+        'cryowurst/get-between-timestamps/',  
+        CryowurstGetBetweenTimestampsView.as_view(),
+        name='get_cryowurst_between_timestamps'
+    ),
+]
