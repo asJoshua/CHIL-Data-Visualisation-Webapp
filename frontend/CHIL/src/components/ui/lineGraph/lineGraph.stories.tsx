@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { LingGraph } from './lineGraph';
 import { Dataset, createDataset } from './datasetObject';
+import { getCsvText, parseCsvData } from './csvParser';
 
 const exampleDataset = createDataset(
   'Axis One',
@@ -24,3 +25,4 @@ export const Default: Story = {
     labels: ['A', 'B', 'C', 'D']
   }
 };
+
