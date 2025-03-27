@@ -11,6 +11,6 @@ urlpatterns = [
     path('api/ingest/', include('chil.all_urls.api_ingest')),
     path('api/receiver/', include('chil.all_urls.api_receiver')),
     path('api/deployment/', include('chil.all_urls.api_deployment')),
-    path('api/campaign/', include('chil.all_urls.api_campaign')),
+    path('api/data/', include('chil.all_urls.api_data')),
     path('newsletter/', include('chil.all_urls.newsletter')),
 ]

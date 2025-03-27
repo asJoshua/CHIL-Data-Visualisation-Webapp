@@ -100,6 +100,15 @@ def cryoegg_get_by_instrument(*, id: int):
     query = Q(cryoegg_raw__in=cryoeggRawIds)
     return CryoeggData.objects.filter(query) # pylint: disable=E1101
 
+def cryowurst_get_by_instrument(*, id: int):
+    """Gets cryoegg processed entries from the db by instrument ID"""
+
+    cryoeggRaw = CryowurstRaw.objects.filter(instrument_id=id) # pylint: disable=E1101
+    cryoeggRawIds = cryoeggRaw.values_list('cryowurst_raw', flat=True).distinct()
+
+    query = Q(cryowurst_raw__in=cryoeggRawIds)
+    return CryowurstData.objects.filter(query) # pylint: disable=E1101
+
 def cryowurst_get_by_campaign_id(*, id: int):
     """Gets cryowurst processed entries from the db by campaign ID"""
 

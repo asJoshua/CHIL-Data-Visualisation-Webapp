@@ -23,10 +23,12 @@ class CryoeggRawGetByIdView(APIView):
     """
 
     def get(self, request):
-        response = cryoegg_raw_get_by_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryoegg_raw_get_by_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryowurstRawGetByIdView(APIView):
@@ -35,10 +37,12 @@ class CryowurstRawGetByIdView(APIView):
     """
 
     def get(self, request):
-        response = cryowurst_raw_get_by_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryowurst_raw_get_by_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryoeggGetByIdView(APIView):
@@ -47,10 +51,12 @@ class CryoeggGetByIdView(APIView):
     """
 
     def get(self, request):
-        response = cryoegg_get_by_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryoegg_get_by_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryowurstGetByIdView(APIView):
@@ -59,10 +65,12 @@ class CryowurstGetByIdView(APIView):
     """
 
     def get(self, request):
-        response = cryowurst_get_by_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryowurst_get_by_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryoeggRawGetByCampaignIdView(APIView):
@@ -71,10 +79,12 @@ class CryoeggRawGetByCampaignIdView(APIView):
     """
 
     def get(self, request):
-        response = cryoegg_raw_get_by_campaign_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryoegg_raw_get_by_campaign_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryowurstRawGetByCampaignIdView(APIView):
@@ -83,10 +93,12 @@ class CryowurstRawGetByCampaignIdView(APIView):
     """
 
     def get(self, request):
-        response = cryowurst_raw_get_by_campaign_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryowurst_raw_get_by_campaign_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryoeggGetByCampaignIdView(APIView):
@@ -95,10 +107,12 @@ class CryoeggGetByCampaignIdView(APIView):
     """
 
     def get(self, request):
-        response = cryoegg_get_by_campaign_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryoegg_get_by_campaign_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryowurstGetByCampaignIdView(APIView):
@@ -107,10 +121,12 @@ class CryowurstGetByCampaignIdView(APIView):
     """
 
     def get(self, request):
-        response = cryowurst_get_by_campaign_id(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryowurst_get_by_campaign_id(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryoeggRawGetByInstrumentView(APIView):
@@ -119,10 +135,12 @@ class CryoeggRawGetByInstrumentView(APIView):
     """
 
     def get(self, request):
-        response = cryoegg_raw_get_by_instrument(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryoegg_raw_get_by_instrument(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryowurstRawGetByInstrumentView(APIView):
@@ -131,10 +149,12 @@ class CryowurstRawGetByInstrumentView(APIView):
     """
 
     def get(self, request):
-        response = cryowurst_raw_get_by_instrument(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryowurst_raw_get_by_instrument(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryoeggGetByInstrumentView(APIView):
@@ -143,10 +163,12 @@ class CryoeggGetByInstrumentView(APIView):
     """
 
     def get(self, request):
-        response = cryoegg_get_by_instrument(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryoegg_get_by_instrument(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
 
 class CryowurstGetByInstrumentView(APIView):
@@ -155,8 +177,10 @@ class CryowurstGetByInstrumentView(APIView):
     """
 
     def get(self, request):
-        response = cryowurst_get_by_instrument(id=request.data['id'])
+        id_value = request.query_params.get('id')
+        if id_value is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "Missing 'id' parameter"})
+        response = cryowurst_get_by_instrument(id=id_value)
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
