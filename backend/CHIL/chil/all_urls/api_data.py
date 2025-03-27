@@ -16,6 +16,8 @@ from ..views.data_api_view import (
     CryowurstRawGetByInstrumentView,
     CryoeggGetByInstrumentView,
     CryowurstGetByInstrumentView,
+    CryoeggGetBetweenTimestampsView,  
+    CryowurstGetBetweenTimestampsView,  
 )
 
 urlpatterns = [
@@ -78,5 +80,15 @@ urlpatterns = [
         'cryowurst/get-by-instrument/',
         CryowurstGetByInstrumentView.as_view(),
         name='get_cryowurst_by_instrument'
+    ),
+    path(
+        'cryoegg/get-between-timestamps/', 
+        CryoeggGetBetweenTimestampsView.as_view(),
+        name='get_cryoegg_between_timestamps'
+    ),
+    path(
+        'cryowurst/get-between-timestamps/',  
+        CryowurstGetBetweenTimestampsView.as_view(),
+        name='get_cryowurst_between_timestamps'
     ),
 ]

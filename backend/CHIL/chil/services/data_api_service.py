@@ -117,3 +117,15 @@ def cryowurst_get_by_campaign_id(*, id: int):
 
     query = Q(cryowurst_raw__in=cryowurstRawIds)
     return CryowurstData.objects.filter(query) # pylint: disable=E1101
+
+def cryoegg_get_between_timestamps(*, start_timestamp: date, end_timestamp: date):
+    """Gets cryoegg processed entries from the db between two timestamps"""
+
+    query = Q(timestamp__range=(start_timestamp, end_timestamp))  # Assuming 'timestamp' is the field name
+    return CryoeggData.objects.filter(query)
+
+def cryowurst_get_between_timestamps(*, start_timestamp: date, end_timestamp: date):
+    """Gets cryowurst processed entries from the db between two timestamps"""
+
+    query = Q(timestamp__range=(start_timestamp, end_timestamp))  # Assuming 'timestamp' is the field name
+    return CryowurstData.objects.filter(query)
