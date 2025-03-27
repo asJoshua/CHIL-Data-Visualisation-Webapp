@@ -19,7 +19,7 @@ const [stackItems, setStackItems] = useState([]);
       withCredentials: true,
     })
       .then((response) => {
-        const formattedData = response.data.map((campaign: { image_url: any; name: any; description: any; }) => ({
+        const formattedData = response.data.map((campaign: { image_url: string; name: string; description: string; }) => ({
           imageSrc: "",
           text: `${campaign.name}: ${campaign.description}`
         }));

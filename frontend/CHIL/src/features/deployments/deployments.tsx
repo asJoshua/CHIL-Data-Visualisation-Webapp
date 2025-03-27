@@ -18,8 +18,23 @@ const columns = [
 const DeploymentsPage = (): React.JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-  const [deployments, setDeployments] = useState<any[]>([]);
-  const [instrumentDeployments, setInstrumentDeployments] = useState<any[]>([]);
+
+  type Deployment = {
+    deployment_id: string;
+    name: string,
+    description: string;
+    start_timestamp: string; 
+    end_timestamp: string; 
+  };
+  
+  type InstrumentDeployment = {
+    deployment_id: string;
+    instrument_id: number;
+  };
+
+
+  const [deployments, setDeployments] = useState<Deployment[]>([]);
+  const [instrumentDeployments, setInstrumentDeployments] = useState<InstrumentDeployment[]>([]);
 
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { LingGraph } from './lineGraph';
-import { Dataset, createDataset } from './datasetObject';
-import { getCsvText, parseCsvData } from './csvParser';
+import { createDataset } from './datasetObject';
 
 const exampleDataset = createDataset(
   'Axis One',
