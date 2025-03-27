@@ -4,8 +4,8 @@ All the buisness logic for the Cryoegg and Cryowurst models
 
 import csv
 from io import StringIO
-from django.db import transaction
 from datetime import datetime
+from django.db import transaction
 from ..models.ingest_api_model import (
     CryoeggData,
     CryowurstData,
@@ -52,7 +52,7 @@ def process_cryoegg_data(reader):
 
     for row in reader:
         try:
-            timestamp = datetime.fromtimestamp(parse_timestamp(row['timestamp']))        
+            timestamp = datetime.fromtimestamp(parse_timestamp(row['timestamp']))
             conductivity = float(row['conductivity_raw_V'])
             temperature_pt1000 = int(float(row['temperature_logger_C']))
             pressure = float(row['pressure_mBar'])
@@ -88,7 +88,7 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
 
     for row in reader:
         try:
-            timestamp = datetime.fromtimestamp(parse_timestamp(row['time']))         
+            timestamp = datetime.fromtimestamp(parse_timestamp(row['time']))
             temperature_tmp117 = float(row['tmp_temp'])
             mag_x = float(row['mag_x'])
             mag_y = float(row['mag_y'])
