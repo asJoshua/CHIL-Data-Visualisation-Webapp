@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.72% </span>
+                <span class="strong">89.54% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>137/151</span>
+                <span class='fraction'>137/153</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.72% </span>
+                <span class="strong">89.54% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>137/151</span>
+                <span class='fraction'>137/153</span>
             </div>
         
             
@@ -214,7 +214,9 @@
 <a name='L149'></a><a href='#L149'>149</a>
 <a name='L150'></a><a href='#L150'>150</a>
 <a name='L151'></a><a href='#L151'>151</a>
-<a name='L152'></a><a href='#L152'>152</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -277,6 +279,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -371,7 +375,7 @@ import { TextField } from '@/components/ui/text-field/text-field';
 import { Button } from '@/components/ui/button/button';
 import { Container, Typography } from '@mui/material';
 import CustomThemeProvider from "@/theme/ThemeProvider";
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 &nbsp;
 export type NewsletterProps = {
     apiURL: string,
@@ -427,15 +431,17 @@ const Newsletter = ( {apiURL, imageSrc}: NewsletterProps) =&gt; {
 <span class="cstat-no" title="statement not covered" >                    setEmailErrorMessage("Something went wrong, please try again.");</span>
 <span class="cstat-no" title="statement not covered" >                }</span>
 &nbsp;
-            } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error: AxiosError | any) {</span>
-<span class="cstat-no" title="statement not covered" >                if (error.response?.status === 400 &amp;&amp; error.response.data?.error === "This email is already subscribed"){</span>
-<span class="cstat-no" title="statement not covered" >                    setShowSuccess(false);</span>
-<span class="cstat-no" title="statement not covered" >                    setError(true);</span>
-<span class="cstat-no" title="statement not covered" >                    setEmailErrorMessage("This email is already subscribed")</span>
-<span class="cstat-no" title="statement not covered" >                } else if(error.response?.status === 500 &amp;&amp; error.response.data?.error === "There was an error sending the request") {</span>
-<span class="cstat-no" title="statement not covered" >                    setShowSuccess(false);</span>
-<span class="cstat-no" title="statement not covered" >                    setError(true);</span>
-<span class="cstat-no" title="statement not covered" >                    setEmailErrorMessage("There was an error sending the request");</span>
+            } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error: unknown) {</span>
+<span class="cstat-no" title="statement not covered" >                if (axios.isAxiosError(error)) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (error.response?.status === 400 &amp;&amp; error.response.data?.error === "This email is already subscribed"){</span>
+<span class="cstat-no" title="statement not covered" >                        setShowSuccess(false);</span>
+<span class="cstat-no" title="statement not covered" >                        setError(true);</span>
+<span class="cstat-no" title="statement not covered" >                        setEmailErrorMessage("This email is already subscribed")</span>
+<span class="cstat-no" title="statement not covered" >                    } else if(error.response?.status === 500 &amp;&amp; error.response.data?.error === "There was an error sending the request") {</span>
+<span class="cstat-no" title="statement not covered" >                        setShowSuccess(false);</span>
+<span class="cstat-no" title="statement not covered" >                        setError(true);</span>
+<span class="cstat-no" title="statement not covered" >                        setEmailErrorMessage("There was an error sending the request");</span>
+<span class="cstat-no" title="statement not covered" >                    }</span>
 <span class="cstat-no" title="statement not covered" >                }</span>
 <span class="cstat-no" title="statement not covered" >            }</span>
     
@@ -523,7 +529,7 @@ export { Newsletter };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-03-07T14:11:26.150Z
+                at 2025-03-27T14:30:17.835Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
