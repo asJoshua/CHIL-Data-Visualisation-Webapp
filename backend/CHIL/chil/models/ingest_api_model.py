@@ -155,6 +155,7 @@ class CryoeggData(models.Model):
 
     fields = [
         'cryoegg_data_id',
+        'timestamp',
         'cryoegg_raw_id',
         'process_id',
         'conductivity',
@@ -263,6 +264,7 @@ class CryowurstData(models.Model):
 
     fields = [
         'cryoegg_data_id',
+        'timestamp',
         'cryoegg_raw_id',
         'process_id',
         'temperature_tmp117',

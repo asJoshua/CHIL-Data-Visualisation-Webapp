@@ -1,6 +1,9 @@
 from datetime import date
 from django.db.models import Q
 from django.db import transaction
+from ..serializers.ingest_api_serializer import (
+    CryoeggSerializer
+)
 from ..models.ingest_api_model import (
     CryoeggRaw,
     CryowurstRaw,
@@ -28,6 +31,14 @@ def cryoegg_get_by_id(*, id: int):
 
     query = Q(cryoegg_data_id=id)
     return CryoeggData.objects.filter(query) # pylint: disable=E1101
+
+def cryoegg_get_all():
+    """
+    Gets all cryoegg data from the database and serializes it.
+    """
+    cryoeggs = CryoeggData.objects.all()  # Get all cryoegg data
+    serializer = CryoeggSerializer(cryoeggs, many=True)  # Serialize the data
+    return serializer.data  # Return the serialized data
 
 def cryowurst_get_by_id(*, id: int):
     """Gets a cryowurst processed entry from the db"""

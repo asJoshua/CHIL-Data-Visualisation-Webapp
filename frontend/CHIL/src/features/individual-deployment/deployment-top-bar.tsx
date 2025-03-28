@@ -13,6 +13,7 @@ const DeploymentTopBar = ({
     deployment_id
 }: DeploymentTopBarProps) => {
 
+    
     const navigate = useNavigate();
 
     return (

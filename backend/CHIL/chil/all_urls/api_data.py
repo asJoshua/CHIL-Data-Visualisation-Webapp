@@ -7,6 +7,7 @@ from ..views.data_api_view import (
     CryoeggRawGetByIdView,
     CryowurstRawGetByIdView,
     CryoeggGetByIdView,
+    CryoeggGetAllView,
     CryowurstGetByIdView,
     CryoeggRawGetByCampaignIdView,
     CryowurstRawGetByCampaignIdView,
@@ -35,6 +36,11 @@ urlpatterns = [
         'cryoegg/get-by-id/',
         CryoeggGetByIdView.as_view(),
         name='get_cryoegg_by_id'
+    ),
+    path(
+        'cryoegg/list/',
+        CryoeggGetAllView.as_view(),
+        name='get_all_cryoeggs'
     ),
     path(
         'cryowurst/get-by-id/',

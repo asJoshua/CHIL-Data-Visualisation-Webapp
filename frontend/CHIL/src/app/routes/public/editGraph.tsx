@@ -8,12 +8,20 @@ import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
 import { NumberSelect } from '@/components/ui/numberInput/numberInput';
 import { Button } from '@/components/ui/button/button';
 import { TextField } from '@/components/ui/text-field/text-field';
+import CryoeggGraph from '@/components/ui/graph-components/cryoegg-graph'
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const EditGraphRoot = (): React.JSX.Element => {
+    const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
 
-    const [, setGraphName] = useState('')
-    const [, setStartDate] = useState(new Date());
-    const [, setEndDate] = useState(new Date());
+    const [, setGraphName] = useState('');
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [stroke, setStroke] = useState('')
+    const [selectedMeasurement, setSelectedMeasurement] = useState('#AABBCC')
+
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
     const [plotInformation, setPlotInformation] = useState({
@@ -28,6 +36,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                     scale : ''
                 }
     });
+
     const [isDisabled, setisDisabled] = useState(false);
 
     const handleGraphNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,14 +61,6 @@ const EditGraphRoot = (): React.JSX.Element => {
 
     const handleInstrumentChange = (newInstrument: string) => {
         handleValueChange(newInstrument, currentPlot, 'instrument');
-    }
-
-    const handleMeasurementChange = (newMeasurement: string) => {
-        handleValueChange(newMeasurement, currentPlot, 'measurement');
-    }
-
-    const handleColorChange = (newColor: string) => {
-        handleValueChange(newColor, currentPlot, 'color');
     }
 
     const handleScaleChange = (scale: string) => {
@@ -103,6 +104,19 @@ const EditGraphRoot = (): React.JSX.Element => {
         triggerValueOverride();
     }
 
+    const handleAddClick = () => {
+        const graphData = {
+            measurement: selectedMeasurement,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            stroke: stroke
+        };
+        
+        const queryParams = new URLSearchParams(graphData).toString();
+
+        navigate(`/deployments/${id}?${queryParams}`);
+    };
+
     return (
         <VariableLayout>
             <Container>
@@ -119,7 +133,10 @@ const EditGraphRoot = (): React.JSX.Element => {
                                 <Button variant='contained' size='large'>CANCEL</Button>
                             </Grid>
                             <Grid>
-                                <Button variant='contained' size='large'>ADD</Button>
+                                <Button 
+                                    variant='contained' 
+                                    size='large'
+                                    onClick={handleAddClick}>ADD</Button>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -137,7 +154,11 @@ const EditGraphRoot = (): React.JSX.Element => {
                 <Grid container>
 
                     <Grid size={6}>
-                        Graph be here
+                        <CryoeggGraph 
+                        measurement={selectedMeasurement}
+                        startDate={startDate}
+                        endDate={endDate}
+                        stroke={stroke}/>
                     </Grid>
 
                     <Grid size={6}>
@@ -149,14 +170,14 @@ const EditGraphRoot = (): React.JSX.Element => {
                                         id={'start-date'}
                                         dateFormat='dd-MM-yyyy'
                                         placeholderText='Please select start date'
-                                        onDateChange={handleDateChange}/>
+                                        onDateChange={(id, date) => handleDateChange(id, date)}/>
                                 </Grid>
                                 <Grid size={6}>
                                     <DatePickerComp
                                         id={'end-date'}
                                         dateFormat='dd-MM-yyyy'
                                         placeholderText='Please select start date'
-                                        onDateChange={handleDateChange}/>
+                                        onDateChange={(id, date) => handleDateChange(id, date)}/>
                                 </Grid>
                             </Grid>
                         </Box>
@@ -213,12 +234,13 @@ const EditGraphRoot = (): React.JSX.Element => {
                                 <DropDownSelect 
                                     labelText="Measurement" 
                                     selectId="Measurement"
-                                    labelId="Measurement" 
+                                    labelId="Measurement"
                                     selectLabel="Measurement"
-                                    onSelectChange={handleMeasurementChange}
+                                    onSelectChange={setSelectedMeasurement}
                                     options={[
-                                        { value: 'tilt', label: 'Tilt' },
-                                        { value: 'conductivity', label: 'Conductivity' }
+                                        { value: 'conductivity', label: 'Conductivity' },
+                                        { value: 'temperature', label: 'Temperature' },
+                                        { value: 'temperature_pt1000', label: 'Temperature pt1000' },
                                     ]} 
                                     valueOverride={[currentPlot, plotInformation[currentPlot].measurement]}/>
                             </Grid>
@@ -232,7 +254,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                                 </Grid>
                                 <Grid size={6}>
                                     <ColorPicker
-                                        onColorChange={handleColorChange}
+                                        onColorChange={setStroke}
                                         defaultColor='#AABBCC'
                                         valueOverride={[currentPlot, plotInformation[currentPlot].color]}
                                     />

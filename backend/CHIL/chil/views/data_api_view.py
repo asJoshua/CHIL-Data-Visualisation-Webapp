@@ -7,6 +7,7 @@ from ..services.data_api_service import (
     cryoegg_raw_get_by_id,
     cryowurst_raw_get_by_id,
     cryoegg_get_by_id,
+    cryoegg_get_all,
     cryowurst_get_by_id,
     cryoegg_raw_get_by_campaign_id,
     cryowurst_raw_get_by_campaign_id,
@@ -61,6 +62,21 @@ class CryoeggGetByIdView(APIView):
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
+    
+class CryoeggGetAllView(APIView):
+    """
+    Get all Cryoeggs
+    """
+
+    def get(self, _):
+        """Gets all cryoeggs"""
+        response = cryoegg_get_all()
+
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        data = list(response)
+        return Response(data, status=status.HTTP_200_OK)
 
 class CryowurstGetByIdView(APIView):
     """
