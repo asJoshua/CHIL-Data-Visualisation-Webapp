@@ -1,7 +1,7 @@
 import React from 'react';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import { Newsletter } from '@/features/newsletter/newsletter-page';
-import imagePlaceholder from "@/assets/images/BgICe.jpg";
+import imagePlaceholder from "@/assets/images/yukon_mike_receiver.jpg";
 
 const NewsletterRoot = (): React.JSX.Element => {
     return (

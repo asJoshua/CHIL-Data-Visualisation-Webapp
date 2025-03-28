@@ -34,7 +34,7 @@ describe('Login Form', () => {
         expect(screen.getByLabelText("Password")).toBeInTheDocument();
 
         // Check the login button is present
-        expect(screen.getByText('Login')).toBeInTheDocument();
+        expect(screen.getByText('LOGIN')).toBeInTheDocument();
     });
 
     it('shows error message when inputs are blank', () => {
@@ -47,7 +47,7 @@ describe('Login Form', () => {
         );
 
         // Click Login button
-        fireEvent.click(screen.getByText('Login'));
+        fireEvent.click(screen.getByText('Continue'));
 
         // Check both error messages are shown
         expect(screen.getAllByText("Must not be blank").length === 2);
@@ -66,7 +66,7 @@ describe('Login Form', () => {
 
 
         // Click Login button
-        fireEvent.click(screen.getByText('Login'));
+        fireEvent.click(screen.getByText('Continue'));
 
         // Check both error messages are shown
         expect(screen.getAllByText("Must not be blank").length === 2);
