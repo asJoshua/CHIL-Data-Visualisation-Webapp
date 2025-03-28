@@ -1,19 +1,23 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
 import { Box, Container, Grid2 as Grid, Typography } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
 import { NumberSelect } from '@/components/ui/numberInput/numberInput';
 import { Button } from '@/components/ui/button/button';
 import { TextField } from '@/components/ui/text-field/text-field';
+import '@/components/ui/lineGraph/lineGraph';
+import axios from 'axios';
+import { LineGraph } from '@/components/ui/lineGraph/lineGraph';
+import { createDataset, Dataset } from '@/components/ui/lineGraph/datasetObject';
 
 const EditGraphRoot = (): React.JSX.Element => {
 
-    const [, setGraphName] = useState('')
-    const [, setStartDate] = useState(new Date());
-    const [, setEndDate] = useState(new Date());
+    const [graphName, setGraphName] = useState('')
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
     const [plotInformation, setPlotInformation] = useState({
@@ -30,17 +34,83 @@ const EditGraphRoot = (): React.JSX.Element => {
     });
     const [isDisabled, setisDisabled] = useState(false);
 
+    async function fetchDataBetweenTimestampsAxios(endpoint: string, startTimestamp: string, endTimestamp: string) {
+        const jwtToken = localStorage.getItem('token'); 
+        try {
+            const response = await axios.get(`/chil/api/data/${endpoint}/`, {
+                params: {
+                    start_timestamp: startTimestamp,
+                    end_timestamp: endTimestamp
+                },
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}` // Add the Authorization header
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.warn(error)
+        }
+    }
+
     const handleGraphNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setGraphName(e.target.value);
     };
 
+
+    const [graphData, setGraphData] = useState<any[]>();
+    const [dateLabels, setDateLabels] = useState<any[]>([]);
+
+    const [dataSet, setDataSet] = useState<Dataset>(
+        createDataset('Axis name',
+            [],
+            'rgb(255, 99, 132)',
+            'rgb(255, 99, 132)')
+    );
+ 
     const handleDateChange = (pickerId: string, date: Date) => {
-        if (pickerId == 'start-date') {
-            setStartDate(date);
+        const startChange = pickerId == 'start-date';
+        if (startChange) {
+          setStartDate(date);
         } else {
-            setEndDate(date);
+          setEndDate(date);
         }
-    }
+      
+        if (plotInformation[currentPlot].instrument == '') {
+          return;
+        }
+      
+        async function fetchData(startChange: boolean) {
+          try {
+            const cryowurstData = await fetchDataBetweenTimestampsAxios(
+              plotInformation[currentPlot].instrument + "/get-between-timestamps",
+              startChange ? date.toISOString() : startDate.toISOString(),
+              !startChange ? date.toISOString() : endDate.toISOString()
+            );
+            setGraphData(cryowurstData);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        fetchData(startChange);
+
+    };
+      
+    useEffect(() => {
+        if (graphData) {
+          const filteredData: any[] = [];
+          const newDateLabels: any[] = [];
+          graphData.forEach(row => {
+            newDateLabels.push(row.timestamp); 
+            filteredData.push(row[plotInformation[currentPlot].measurement]);
+          });
+          setDateLabels(newDateLabels); 
+          const newDataSet = createDataset('Axis name',
+            filteredData,
+            'rgb(255, 99, 132)',
+            'rgb(255, 99, 132)');
+          setDataSet(newDataSet); 
+        }
+    }, [graphData, plotInformation, currentPlot, startDate, endDate]);
 
     const handlePlotChange = () => {
         if (currentPlot == 'plotOne') {
@@ -137,7 +207,8 @@ const EditGraphRoot = (): React.JSX.Element => {
                 <Grid container>
 
                     <Grid size={6}>
-                        Graph be here
+                        {/* Graph */}
+                        <LineGraph titleText={graphName} datasets={[dataSet]} labels={dateLabels}/>
                     </Grid>
 
                     <Grid size={6}>
@@ -216,10 +287,13 @@ const EditGraphRoot = (): React.JSX.Element => {
                                     labelId="Measurement" 
                                     selectLabel="Measurement"
                                     onSelectChange={handleMeasurementChange}
-                                    options={[
-                                        { value: 'tilt', label: 'Tilt' },
-                                        { value: 'conductivity', label: 'Conductivity' }
-                                    ]} 
+                                    options = {[
+                                          { value: 'conductivity', label: 'Conductivity' },
+                                          { value: 'temperature_pt1000', label: 'Temperature PT1000' },
+                                          { value: 'pressure', label: 'Pressure' },
+                                          { value: 'temperature', label: 'Temperature' },
+                                          { value: 'receiver_voltage', label: 'Receiver Voltage' },
+                                    ]}
                                     valueOverride={[currentPlot, plotInformation[currentPlot].measurement]}/>
                             </Grid>
                         </Box>

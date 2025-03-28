@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LingGraph } from './lineGraph';
-import { Dataset, createDataset } from './datasetObject';
-import { getCsvText, parseCsvData } from './csvParser';
+import { LineGraph } from './lineGraph';
+import { createDataset } from './datasetObject';
 
 const exampleDataset = createDataset(
   'Axis One',
@@ -11,8 +10,8 @@ const exampleDataset = createDataset(
 )
 
 const meta = {
-  component: LingGraph,
-} satisfies Meta<typeof LingGraph>;
+  component: LineGraph,
+} satisfies Meta<typeof LineGraph>;
 
 export default meta;
 
@@ -25,4 +24,3 @@ export const Default: Story = {
     labels: ['A', 'B', 'C', 'D']
   }
 };
-

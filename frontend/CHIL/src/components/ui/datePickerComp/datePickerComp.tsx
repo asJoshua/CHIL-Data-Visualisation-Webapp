@@ -14,14 +14,14 @@ export const DatePickerComp = (props: {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const handleDateChange = (date: Date | null) => {
+    const handleDateChange = (date: Date) => {
         if (date) {
             setSelectedDate(date)
         } else {
             setSelectedDate(new Date())
         }
         if (props.onDateChange && props.id) {
-            props.onDateChange(props.id, selectedDate);
+            props.onDateChange(props.id, date);
         }
     };
 

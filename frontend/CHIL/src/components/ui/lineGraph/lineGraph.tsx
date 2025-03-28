@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export const LingGraph = (props: {
+export const LineGraph = (props: {
     titleText: string;
     datasets: Dataset[];
     labels: string[]; 
@@ -30,27 +30,26 @@ export const LingGraph = (props: {
     const labels = props.labels;
 
     const options = {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top' as const,
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top' as const,
+          },
+          title: {
+            display: true,
+            text: props.titleText,
+          },
         },
-        title: {
-          display: true,
-          text: props.titleText,
-        },
-      },
+        
     };
 
     const data = {
-      labels,
-      datasets: props.datasets
-    };
+        labels,
+        datasets: props.datasets
+      };
 
     return (
-      <div>
         <Line options={options} data={data} />
-      </div>
     );
 }
 
