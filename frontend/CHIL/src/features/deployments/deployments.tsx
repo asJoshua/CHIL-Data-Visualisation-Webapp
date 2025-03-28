@@ -32,30 +32,44 @@ const DeploymentsPage = (): React.JSX.Element => {
     instrument_id: number;
   };
 
+  type MergedData = {
+    instrument_id: string; 
+    deployment_id: string; 
+    name: string; 
+    description: string; 
+    start_timestamp: string; 
+    end_timestamp: string;
+  };
+
 
   const [deployments, setDeployments] = useState<Deployment[]>([]);
   const [instrumentDeployments, setInstrumentDeployments] = useState<InstrumentDeployment[]>([]);
+  const [mergedData, setMergedData] = useState<MergedData[]>([])
+  const [filteredRows, setFilteredRows] = useState<MergedData[]>([])
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch all deployments
-        const deploymentResponse = await axios({
+        axios({
           method: "get",
-          url: "http://localhost:8000/chil/api/deployment/list",
+          url: "chil/api/deployment/list",
           withCredentials: true,
-        });
+        })
+         .then((deploymentResponse) => {
+           setDeployments(deploymentResponse.data);
+         })
 
         // Fetch all instrument deployments
-        const instrumentResponse = await axios({
+        axios({
           method: "get",
-          url: "http://localhost:8000/chil/api/deployment/list-instrument-deployment",
+          url: "chil/api/deployment/list-instrument-deployment",
           withCredentials: true,
-        });
-
-        setDeployments(deploymentResponse.data);
-        setInstrumentDeployments(instrumentResponse.data);
+        })
+         .then((instrumentResponse) => {
+          setInstrumentDeployments(instrumentResponse.data);
+         })
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -64,25 +78,34 @@ const DeploymentsPage = (): React.JSX.Element => {
     fetchData();
   }, []);
 
-  const mergedData = deployments.map((deployment) => {
-    const matchedInstruments = instrumentDeployments
-      .filter((inst) => inst.deployment_id === deployment.deployment_id)
-      .map((inst) => inst.instrument_id);
+  useEffect(() => {
+    if (deployments.length === 0) {
+      return;
+    }
+    setMergedData(deployments.map((deployment) => {
+      const matchedInstruments = instrumentDeployments
+        .filter((inst) => inst.deployment_id === deployment.deployment_id)
+        .map((inst) => inst.instrument_id);
+  
+      return {
+        ...deployment,
+        instrument_id: matchedInstruments.length > 0 ? matchedInstruments.join(", ") : "None",
+      };
+    }))
+  }, [deployments]);
+  
 
-    return {
-      ...deployment,
-      instrument_id: matchedInstruments.length > 0 ? matchedInstruments.join(", ") : "None",
-    };
-  });
+  useEffect(() => {
+    setFilteredRows(mergedData.filter((row) =>
+      Object.values(row).some((value) =>
+        typeof value === "string" || typeof value === "number"
+          ? value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+          : false
+      )
+    ));
+  }, [mergedData]);
 
-  const filteredRows = mergedData.filter((row) =>
-    Object.values(row).some((value) =>
-      typeof value === "string" || typeof value === "number"
-        ? value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-        : false
-    )
-  );
-
+    
   const handleRowClick = (id: string) => {
     console.log("Navigating to:", `/deployments/${id}`);
     navigate(`/deployments/${id}`);
