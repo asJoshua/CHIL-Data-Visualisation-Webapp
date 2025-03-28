@@ -10,6 +10,8 @@ import '@testing-library/jest-dom';
 
 const mockNavigate = jest.fn();
 
+const mockImage = "CHIL-Logo.svg"
+
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as object),
   useNavigate: () => mockNavigate,
@@ -25,7 +27,7 @@ describe('Public Header', () => {
         render(
             <MemoryRouter>
                 <AuthProvider>
-                    <PublicHeader />
+                    <PublicHeader imageSrc={mockImage}/>
                 </AuthProvider>
             </MemoryRouter>
         );
