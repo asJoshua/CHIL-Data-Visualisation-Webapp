@@ -1,7 +1,7 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
 import { Box, Container, Grid2 as Grid, Typography } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
@@ -17,7 +17,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
 
-    const [, setGraphName] = useState('');
+    const [graphName, setGraphName] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [stroke, setStroke] = useState('#AABBCC');
@@ -108,6 +108,7 @@ const EditGraphRoot = (): React.JSX.Element => {
 
     const createGraph = async (graphData: {
         url_id: string;
+        graph_name: string,
         measurement: string;
         start_date: string;
         end_date: string;
@@ -132,17 +133,13 @@ const EditGraphRoot = (): React.JSX.Element => {
     const handleAddClick = async () => {
         const graphData = {
             url_id: id || '',
+            graph_name: graphName,
             measurement: selectedMeasurement,
             start_date: startDate.toISOString(),
             end_date: endDate.toISOString(),
             stroke: stroke
         };
-
-        const response = await createGraph(graphData);
-
-        if (response) {
-            navigate(`/deployments/${id}`);
-        }
+        await createGraph(graphData);
     };
 
     return (
@@ -153,18 +150,21 @@ const EditGraphRoot = (): React.JSX.Element => {
                     <Grid container justifyContent="space-between">
                         <Grid container alignContent='center'>
                             <Typography variant="h2" color='textSecondary' sx={{ textAlign: 'center', marginBottom: 0 }}>
-                                Depoy-TEST
+                                Deployment-{id}
                             </Typography>
                         </Grid>
                         <Grid container spacing={1} alignContent='center'>
                             <Grid>
-                                <Button variant='contained' size='large'>CANCEL</Button>
+                                <Button 
+                                    onClick={()=> {navigate(`/deployments/${id}`)}}
+                                    variant='contained' 
+                                    size='large'>CANCEL</Button>
                             </Grid>
                             <Grid>
                                 <Button 
                                     variant='contained' 
                                     size='large'
-                                    onClick={handleAddClick}>ADD</Button>
+                                    onClick={() => {handleAddClick(); navigate(`/deployments/${id}`)}}>ADD</Button>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -186,6 +186,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                         padding={1}
                     >
                         <CryoeggGraph 
+                        graphName={graphName}
                         measurement={selectedMeasurement}
                         startDate={startDate}
                         endDate={endDate}
@@ -201,7 +202,8 @@ const EditGraphRoot = (): React.JSX.Element => {
                                         id={'start-date'}
                                         dateFormat='dd-MM-yyyy'
                                         placeholderText='Please select start date'
-                                        onDateChange={(id, date) => handleDateChange(id, date)}/>
+                                        onDateChange={(id, date) => handleDateChange(id, date)}
+                                        />
                                 </Grid>
                                 <Grid size={6}>
                                     <DatePickerComp

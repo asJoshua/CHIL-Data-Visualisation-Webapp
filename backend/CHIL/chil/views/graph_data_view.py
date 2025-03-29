@@ -8,7 +8,8 @@ from ..serializers.graph_data_serializer import (
 
 from ..services.graph_data_service import (
     cryoegg_graph_get_all,
-    cryoegg_graph_create
+    cryoegg_graph_create,
+    cryoegg_graph_delete
 )
 
 
@@ -29,7 +30,7 @@ class GetCryoeggDataGraphView(APIView):
         serializer = GraphDataSerializer(graphs, many=True)
         return Response(status=status.HTTP_200_OK, data=serializer.data)   
      
-class CryoeggGraphCreate(APIView):
+class CryoeggGraphCreateView(APIView):
     """
     Create graph endpoint
     """
@@ -51,3 +52,23 @@ class CryoeggGraphCreate(APIView):
         cryoegg_graph_create(**serializer.validated_data)
 
         return Response(status=status.HTTP_201_CREATED)
+    
+
+class CryoeggGraphDeleteView(APIView):
+    """
+    Delete cryoegg graph by id
+    """
+
+    def delete(self, request, cryoegg_graph_id):
+        """Deletes a cryoegg graphs data by id"""
+
+        # auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
+
+        # if not auth_result:
+        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        if not cryoegg_graph_delete(cryoegg_graph_id=cryoegg_graph_id):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

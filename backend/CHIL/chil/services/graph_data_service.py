@@ -19,6 +19,7 @@ def cryoegg_graph_create( # pylint: disable=R0913
     *,
 
     url_id: str,
+    graph_name: str,
     measurement: str,
     start_date: str,
     end_date: str,
@@ -31,6 +32,7 @@ def cryoegg_graph_create( # pylint: disable=R0913
 
     cryoegg_graph = CryoeggGraph(
        url_id=url_id,
+       graph_name=graph_name,
        measurement=measurement,
        start_date=start_date,
        end_date=end_date,
@@ -40,3 +42,23 @@ def cryoegg_graph_create( # pylint: disable=R0913
     cryoegg_graph.save()
 
     return cryoegg_graph
+
+@transaction.atomic
+def cryoegg_graph_delete(
+    *,
+    cryoegg_graph_id: int
+) -> bool:
+    """
+    Deletes a cryoegg graph entry from the db by id
+    """
+
+    query = Q(cryoegg_graph_id=cryoegg_graph_id)
+    cryoeggGraph = CryoeggGraph.objects.filter(query) # pylint: disable=E1101
+
+    if len(cryoeggGraph) == 0:
+        return False
+
+    print(cryoeggGraph)
+
+    cryoeggGraph.delete()
+    return True

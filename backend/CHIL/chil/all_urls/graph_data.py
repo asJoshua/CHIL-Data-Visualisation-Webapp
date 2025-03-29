@@ -5,7 +5,8 @@ The URLS for newsletter sign-up
 from django.urls import path
 from ..views.graph_data_view import (
     GetCryoeggDataGraphView,
-    CryoeggGraphCreate
+    CryoeggGraphCreateView,
+    CryoeggGraphDeleteView
 )
 
 urlpatterns = [
@@ -14,9 +15,14 @@ urlpatterns = [
         GetCryoeggDataGraphView.as_view(),
         name="cryoegg_data"
     ),
-     path(
+    path(
         'cryoegg/create/', 
-        CryoeggGraphCreate.as_view(),
+        CryoeggGraphCreateView.as_view(),
         name="cryoegg_create"
+    ),
+    path(
+        'cryoegg/delete/<int:cryoegg_graph_id>/', 
+        CryoeggGraphDeleteView.as_view(),
+        name="cryoegg_delete"
     ),
 ]

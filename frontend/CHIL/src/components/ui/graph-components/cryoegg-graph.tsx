@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } f
 import axios from "axios";
 
 interface CryoeggGraphProps {
+  graphName: string,
   measurement: string,
   startDate: Date,
   endDate: Date,

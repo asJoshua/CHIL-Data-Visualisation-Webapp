@@ -15,6 +15,7 @@ class CryoeggGraph(models.Model):
 
     cryoegg_graph_id = models.BigAutoField(primary_key=True)
     url_id = models.CharField(max_length=100,null=True, blank=True)
+    graph_name = models.TextField(null=True, blank=True)
     measurement = models.CharField(max_length=100, help_text="Measurement type")
     start_date = models.DateTimeField(help_text="Start date of the measurement")
     end_date = models.DateTimeField(help_text="End date of the measurement")
@@ -22,6 +23,7 @@ class CryoeggGraph(models.Model):
 
     fields = [
         'cryoegg_graph_id',
+        'graph_name',
         'url_id',
         'measurement',
         'start_date',

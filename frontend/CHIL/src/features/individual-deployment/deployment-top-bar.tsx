@@ -1,6 +1,5 @@
 import { Box } from "@/components/ui/box/box";
 import { Button } from "@/components/ui/button/button";
-import { Divider } from "@/components/ui/divider/divider";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { theme } from "@/theme/theme"

@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const CollapsibleGraphContainer = () => {
-    const [graphs, setGraphs] = useState<unknown[]>([]);  // State is unknown[]
+    const [graphs, setGraphs] = useState<any[]>([]);  // State is unknown[]
 
     const { id } = useParams<{ id: string }>();
 
@@ -39,21 +39,27 @@ const CollapsibleGraphContainer = () => {
                 console.error("Error fetching graphs:", error);
             }
         };
-
         if (id) {
             fetchGraphs();
         }
     }, [id]);
 
-    // Narrow the type to Graph by checking properties
-    const isGraph = (graph: unknown): graph is { cryoegg_graph_id: string; measurement: string; start_date: string | Date; end_date: string | Date; stroke: string } => {
-        return (graph as any).cryoegg_graph_id !== undefined && (graph as any).measurement !== undefined;
-    };
-
+    const deleteGraph = async (graphId: any) => {
+        try {
+          const response = await axios.delete(`chil/graph/cryoegg/delete/${graphId}/`);
+      
+          console.log("Graph deleted successfully:", response);
+          
+          setGraphs((prevGraphs) => prevGraphs.filter((graph) => graph.cryoegg_graph_id !== graphId));
+      
+        } catch (error) {
+          console.error("Error deleting graph:", error);
+        }
+      };
+      
     return (
         <div>
             {graphs.map((graph) => {
-                if (!isGraph(graph)) return null;  // Filter out invalid graph data
                 return (
                     <Accordion key={graph.cryoegg_graph_id} className="size-full mb-4">
                         <AccordionSummary expandIcon={<ArrowDropDownIcon />} id={`panel-${graph.cryoegg_graph_id}-header`}>
@@ -71,8 +77,8 @@ const CollapsibleGraphContainer = () => {
                                     <IconButton>
                                         <EditIcon />
                                     </IconButton>
-                                    <IconButton>
-                                        <DeleteIcon />
+                                    <IconButton onClick={() => deleteGraph(graph.cryoegg_graph_id)}>
+                                        <DeleteIcon/>
                                     </IconButton>
                                 </Box>
                             </Box>
