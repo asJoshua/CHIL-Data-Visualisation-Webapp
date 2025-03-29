@@ -8,7 +8,6 @@ import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
 import { NumberSelect } from '@/components/ui/numberInput/numberInput';
 import { Button } from '@/components/ui/button/button';
 import { TextField } from '@/components/ui/text-field/text-field';
-import '@/components/ui/lineGraph/lineGraph';
 import axios from 'axios';
 import { LineGraph } from '@/components/ui/lineGraph/lineGraph';
 import { createDataset, Dataset } from '@/components/ui/lineGraph/datasetObject';

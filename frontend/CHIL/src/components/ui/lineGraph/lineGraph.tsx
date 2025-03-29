@@ -10,6 +10,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Dataset } from './datasetObject';
+import { parseISO } from 'date-fns'
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +28,13 @@ export const LineGraph = (props: {
     labels: string[]; 
 }) => {
 
-    const labels = props.labels;
+      const dateObjects = props.labels.map(ts => {
+        const parsedDate = parseISO(ts);
+        console.log("Parsed Date:", parsedDate); // Log each parsed date
+        console.log("Is Date Object:", parsedDate instanceof Date); // Confirm it's a Date object
+        return parsedDate;
+    });
+    const labels = dateObjects;
 
     const options = {
         responsive: true,
@@ -40,16 +47,20 @@ export const LineGraph = (props: {
             text: props.titleText,
           },
         },
-        
+        // scales: {
+        //   x: {
+        //     type: 'time',
+        //   },
+        // },
     };
 
     const data = {
         labels,
         datasets: props.datasets
-      };
+    };
 
     return (
-        <Line options={options} data={data} />
+        <Line key={JSON.stringify(data) + JSON.stringify(options)} options={options} data={data} />
     );
 }
 
