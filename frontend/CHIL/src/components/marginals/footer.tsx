@@ -17,8 +17,8 @@ const Footer = (): React.JSX.Element => {
         <BottomNavigation sx={{padding: theme.spacing(2) ,display: 'flex', justifyContent: 'space-between', backgroundColor:theme.palette.secondary.main}}>
           <LogoDev sx={{color: '#fff'}}/>
           <Box>
-            {footerConfig.map((item) => (
-              <Button sx={{color: theme.palette.text.primary, fontWeight: 300}} key={item[0]} onClick={() => {navigate(item[1])}}>
+            {footerConfig.map((item, index) => (
+              <Button sx={{color: theme.palette.text.primary, fontWeight: 300}} key={`${item[0]}-${index}`} onClick={() => {navigate(item[1])}}>
               {item[0]}
           </Button>
             ))}
