@@ -11,6 +11,7 @@ import { TextField } from '@/components/ui/text-field/text-field';
 import CryoeggGraph from '@/components/ui/graph-components/cryoegg-graph'
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const EditGraphRoot = (): React.JSX.Element => {
     const navigate = useNavigate();
@@ -104,17 +105,43 @@ const EditGraphRoot = (): React.JSX.Element => {
         triggerValueOverride();
     }
 
-    const handleAddClick = () => {
+    const createGraph = async (graphData: {
+        url_id: string;
+        measurement: string;
+        start_date: string;
+        end_date: string;
+        stroke: string;
+    }) => {
+        try {
+            const response = await axios.post('chil/graph/cryoegg/create/', graphData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status === 201) {
+                console.log("Graph created successfully!");
+                return response.data;
+            }
+        } catch (error) {
+            console.error("Error creating graph:", error);
+        }
+    };
+
+    const handleAddClick = async () => {
         const graphData = {
+            url_id: id || '',
             measurement: selectedMeasurement,
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
+            start_date: startDate.toISOString(),
+            end_date: endDate.toISOString(),
             stroke: stroke
         };
-        
-        const queryParams = new URLSearchParams(graphData).toString();
 
-        navigate(`/deployments/${id}?${queryParams}`);
+        const response = await createGraph(graphData);
+
+        if (response) {
+            navigate(`/deployments/${id}`);
+        }
     };
 
     return (

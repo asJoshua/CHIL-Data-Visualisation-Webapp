@@ -21,7 +21,6 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
                     <DeploymentTopBar deployment_id={Number(id)}/>
                     <Box className='flex flex-col gap-y-4 flex-wrap justify-center content-center'>
                         <CollapsibleGraphContainer></CollapsibleGraphContainer>
-                        <CollapsibleGraphContainer></CollapsibleGraphContainer>
                     </Box>
                 </Box>
             </VariableLayout>

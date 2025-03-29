@@ -86,7 +86,7 @@ const CryoeggGraph: React.FC<CryoeggGraphProps> = ({ measurement, startDate, end
           label={{
             value: "Time",
             position: "insideBottomRight",
-            offset: 0,
+            offset: -10,
             fontSize: 14,
           }}// Format ticks
         />
@@ -95,7 +95,7 @@ const CryoeggGraph: React.FC<CryoeggGraphProps> = ({ measurement, startDate, end
           value: measurement, // Use dynamic measurement name for the Y-axis label
           angle: -90,
           position: "center",
-          offset: 10,
+          offset: -30,
           fontSize: 14,
         }}/>
         <Tooltip />
