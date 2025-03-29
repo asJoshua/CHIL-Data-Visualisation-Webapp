@@ -15,8 +15,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const CollapsibleGraphContainer = () => {
-    const [graphs, setGraphs] = useState<any[]>([]);  // State is unknown[]
-
+    const [graphs, setGraphs] = useState<any[]>([]);
     const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
@@ -24,7 +23,7 @@ const CollapsibleGraphContainer = () => {
             try {
                 if (id) {
                     const response = await axios.get(`chil/graph/cryoegg/data/?url_id=${id}`);
-                    const uniqueGraphs = response.data as unknown[]; // Still 'unknown' type
+                    const uniqueGraphs = response.data as unknown[];
                     const seenGraphIds = new Set<string>();
 
                     uniqueGraphs.forEach((graph: any) => {
@@ -33,7 +32,7 @@ const CollapsibleGraphContainer = () => {
                         }
                     });
 
-                    setGraphs(uniqueGraphs); // Update the state
+                    setGraphs(uniqueGraphs);
                 }
             } catch (error) {
                 console.error("Error fetching graphs:", error);
@@ -45,17 +44,17 @@ const CollapsibleGraphContainer = () => {
     }, [id]);
 
     const deleteGraph = async (graphId: any) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this graph?")
+        if(isConfirmed){
         try {
           const response = await axios.delete(`chil/graph/cryoegg/delete/${graphId}/`);
-      
           console.log("Graph deleted successfully:", response);
-          
           setGraphs((prevGraphs) => prevGraphs.filter((graph) => graph.cryoegg_graph_id !== graphId));
-      
         } catch (error) {
           console.error("Error deleting graph:", error);
         }
       };
+    }
       
     return (
         <div>
@@ -65,7 +64,9 @@ const CollapsibleGraphContainer = () => {
                         <AccordionSummary expandIcon={<ArrowDropDownIcon />} id={`panel-${graph.cryoegg_graph_id}-header`}>
                             <Box className="flex flex-row align-middle justify-between size-full">
                                 <Typography color='black' component="span" align="center">
-                                    {graph.measurement} ({new Date(graph.start_date).toLocaleDateString()} to {new Date(graph.end_date).toLocaleDateString()})
+                                    {graph.graph_name && graph.graph_name !== '' ? graph.graph_name: 
+                                        `${graph.measurement} (${new Date(graph.start_date).toLocaleDateString()} 
+                                        to ${new Date(graph.end_date).toLocaleDateString()}`}
                                 </Typography>
                                 <Box>
                                     <IconButton>
@@ -85,6 +86,7 @@ const CollapsibleGraphContainer = () => {
                         </AccordionSummary>
                         <AccordionDetails>
                             <CryoeggGraph
+                                graphName={graph.graph_name}
                                 measurement={graph.measurement}
                                 startDate={new Date(graph.start_date)}
                                 endDate={new Date(graph.end_date)}

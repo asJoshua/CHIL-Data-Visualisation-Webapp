@@ -51,7 +51,7 @@ const CryoeggGraph: React.FC<CryoeggGraphProps> = ({ measurement, startDate, end
     };    
   
     fetchData();
-  }, [measurement, startDate, endDate, stroke]); // Re
+  }, [measurement, startDate, endDate, stroke]);
 
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -76,7 +76,7 @@ const CryoeggGraph: React.FC<CryoeggGraphProps> = ({ measurement, startDate, end
           angle: -90,
           position: "center",
           fontSize: 16,
-          dx: -15,
+          dx: -20,
           fill: "black"
         }}/>
         <Tooltip 

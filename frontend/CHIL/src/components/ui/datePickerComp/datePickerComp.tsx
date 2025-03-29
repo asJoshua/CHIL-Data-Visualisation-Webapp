@@ -15,13 +15,15 @@ export const DatePickerComp = (props: {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     const handleDateChange = (date: Date | null) => {
-        if (date) {
-            setSelectedDate(date)
+        const newDate = date || new Date();
+        
+        if (newDate) {
+            setSelectedDate(newDate)
         } else {
             setSelectedDate(new Date())
         }
         if (props.onDateChange && props.id) {
-            props.onDateChange(props.id, selectedDate);
+            props.onDateChange(props.id, newDate);
         }
     };
 

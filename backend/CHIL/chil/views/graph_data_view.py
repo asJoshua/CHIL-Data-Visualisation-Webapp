@@ -2,6 +2,10 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from ..utils import (
+    authenticate_by_group
+)
+
 from ..serializers.graph_data_serializer import (
     GraphDataSerializer
 )
@@ -37,11 +41,11 @@ class CryoeggGraphCreateView(APIView):
     def post(self, request):
         """Create a new graph"""
 
-        # auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
+        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
 
-        # if not auth_result:
-        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
-        # Check if the 'url_id' is present before validating the data
+        if not auth_result:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         if not request.data.get("url_id"):
             return Response(status=status.HTTP_400_BAD_REQUEST, 
                             data={"error": "'url_id' is required"})
@@ -62,10 +66,10 @@ class CryoeggGraphDeleteView(APIView):
     def delete(self, request, cryoegg_graph_id):
         """Deletes a cryoegg graphs data by id"""
 
-        # auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
+        auth_result = authenticate_by_group(request, ['admin', 'collaborator'])
 
-        # if not auth_result:
-        #     return Response(status=status.HTTP_401_UNAUTHORIZED)
+        if not auth_result:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         if not cryoegg_graph_delete(cryoegg_graph_id=cryoegg_graph_id):
             return Response(status=status.HTTP_404_NOT_FOUND)

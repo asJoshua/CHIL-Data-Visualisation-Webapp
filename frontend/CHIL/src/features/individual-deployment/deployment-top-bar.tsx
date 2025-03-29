@@ -28,7 +28,7 @@ const DeploymentTopBar = ({
                     variant='contained'
                     size='large'
                     color='primary'
-                    onClick={() => {navigate(`/deployments/${deployment_id}/edit`)}}
+                    onClick={() => {navigate(`/admin/deployments/${deployment_id}/edit`)}}
                 >
                     Add Graph
                 </Button>

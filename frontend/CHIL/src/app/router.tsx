@@ -34,13 +34,6 @@ const createAppRouter = () => {
                             }
                         },
                         {
-                            path: paths.public.deployments.edit.path, // ":id/edit"
-                            lazy: async () => {
-                                const { EditGraphRoot } = await import('@/app/routes/public/editGraph'); 
-                                return { Component: EditGraphRoot };
-                            }
-                        },
-                        {
                             path: "",
                             lazy: async () => {
                                 const { DeploymentsRoot } = await import('@/app/routes/public/deployments.tsx');
@@ -77,6 +70,13 @@ const createAppRouter = () => {
                         return { Component: UploadCsvRoot };
                     }
                 },
+                {
+                    path: paths.admin.edit.path, // ":id/edit"
+                    lazy: async () => {
+                        const { EditGraphRoot } = await import('@/app/routes/admin/editGraph.tsx'); 
+                        return { Component: EditGraphRoot };
+                    }
+                },
             ]
         },
         {
@@ -96,6 +96,13 @@ const createAppRouter = () => {
                     lazy: async () => {
                         const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
                         return { Component: UploadCsvRoot };
+                    }
+                },
+                {
+                    path: paths.admin.edit.path, // ":id/edit"
+                    lazy: async () => {
+                        const { EditGraphRoot } = await import('@/app/routes/admin/editGraph'); 
+                        return { Component: EditGraphRoot };
                     }
                 },
             ]

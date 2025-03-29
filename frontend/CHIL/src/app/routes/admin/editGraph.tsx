@@ -27,7 +27,9 @@ const EditGraphRoot = (): React.JSX.Element => {
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
     const [plotInformation, setPlotInformation] = useState({
-        plotOne : { instrument : '',
+        plotOne : { 
+                    startDate : new Date(),
+                    instrument : '',
                     measurement : '',
                     color : '',
                     scale : ''
@@ -46,7 +48,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     };
 
     const handleDateChange = (pickerId: string, date: Date) => {
-        if (pickerId == 'start-date') {
+        if (pickerId === 'start-date') {
             setStartDate(date);
         } else {
             setEndDate(date);
@@ -97,6 +99,8 @@ const EditGraphRoot = (): React.JSX.Element => {
         setPlotInformation((prevPlotInformation) => ({
             ...prevPlotInformation,
             [currentPlot]: {
+                ...prevPlotInformation[currentPlot],
+                startDate : new Date(),
                 instrument : '',
                 measurement : '',
                 color : '',
@@ -274,6 +278,8 @@ const EditGraphRoot = (): React.JSX.Element => {
                                         { value: 'conductivity', label: 'Conductivity' },
                                         { value: 'temperature', label: 'Temperature' },
                                         { value: 'temperature_pt1000', label: 'Temperature pt1000' },
+                                        { value: 'pressure', label: 'Pressure'},
+                                        { value: 'receiver_voltage', label: 'Receiver Voltage'},
                                     ]} 
                                     valueOverride={[currentPlot, plotInformation[currentPlot].measurement]}/>
                             </Grid>
@@ -316,7 +322,11 @@ const EditGraphRoot = (): React.JSX.Element => {
                         {/* Reset Plot */}
                         <Box mb={1}>
                             <Grid container direction='row-reverse'>
-                                <Button variant='contained' size='large' fullWidth onClick={handlePlotReset}>Reset Plot</Button>
+                                <Button 
+                                    variant='contained' 
+                                    size='large' 
+                                    fullWidth 
+                                    onClick={handlePlotReset}>Reset Plot</Button>
                             </Grid>
                         </Box>
                         
