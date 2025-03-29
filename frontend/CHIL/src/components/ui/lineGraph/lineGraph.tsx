@@ -28,10 +28,8 @@ export const LineGraph = (props: {
     labels: string[]; 
 }) => {
 
-      const dateObjects = props.labels.map(ts => {
+    const dateObjects = props.labels.map(ts => {
         const parsedDate = parseISO(ts);
-        console.log("Parsed Date:", parsedDate); // Log each parsed date
-        console.log("Is Date Object:", parsedDate instanceof Date); // Confirm it's a Date object
         return parsedDate;
     });
     const labels = dateObjects;
@@ -47,11 +45,11 @@ export const LineGraph = (props: {
             text: props.titleText,
           },
         },
-        // scales: {
-        //   x: {
-        //     type: 'time',
-        //   },
-        // },
+        scales: {
+          x: {
+            type: 'time',
+          },
+        },
     };
 
     const data = {

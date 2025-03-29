@@ -14,163 +14,143 @@ import { createDataset, Dataset } from '@/components/ui/lineGraph/datasetObject'
 
 const EditGraphRoot = (): React.JSX.Element => {
 
-    const [graphName, setGraphName] = useState('')
+    const [graphName, setGraphName] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
     const [plotInformation, setPlotInformation] = useState({
-        plotOne : { instrument : '',
-                    measurement : '',
-                    color : '',
-                    scale : ''
-                },
-        plotTwo : { instrument : '',
-                    measurement : '',
-                    color : '',
-                    scale : ''
-                }
+      plotOne: { instrument: '', measurement: '', color: '', scale: '' },
+      plotTwo: { instrument: '', measurement: '', color: '', scale: '' }
     });
     const [isDisabled, setisDisabled] = useState(false);
-
-    async function fetchDataBetweenTimestampsAxios(endpoint: string, startTimestamp: string, endTimestamp: string) {
-        const jwtToken = localStorage.getItem('token'); 
-        try {
-            const response = await axios.get(`/chil/api/data/${endpoint}/`, {
-                params: {
-                    start_timestamp: startTimestamp,
-                    end_timestamp: endTimestamp
-                },
-                headers: {
-                    'Authorization': `Bearer ${jwtToken}` // Add the Authorization header
-                }
-            });
-            return response.data;
-        } catch (error) {
-            console.warn(error)
-        }
-    }
-
-    const handleGraphNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setGraphName(e.target.value);
-    };
-
-
     const [graphData, setGraphData] = useState<any[]>();
     const [dateLabels, setDateLabels] = useState<any[]>([]);
-
-    const [dataSet, setDataSet] = useState<Dataset>(
-        createDataset('Axis name',
-            [],
-            'rgb(255, 99, 132)',
-            'rgb(255, 99, 132)')
-    );
- 
+    const [dataSet, setDataSet] = useState<Dataset>(createDataset('Axis name', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)'));
+  
+    async function fetchDataBetweenTimestampsAxios(endpoint: string, startTimestamp: string, endTimestamp: string) {
+      const jwtToken = localStorage.getItem('token');
+      try {
+        const response = await axios.get(`/chil/api/data/${endpoint}/`, {
+          params: { start_timestamp: startTimestamp, end_timestamp: endTimestamp },
+          headers: { 'Authorization': `Bearer ${jwtToken}` }
+        });
+        return response.data;
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  
+    const handleGraphNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setGraphName(e.target.value);
+    };
+  
     const handleDateChange = (pickerId: string, date: Date) => {
-        const startChange = pickerId == 'start-date';
-        if (startChange) {
-          setStartDate(date);
-        } else {
-          setEndDate(date);
+      const startChange = pickerId == 'start-date';
+      if (startChange) {
+        setStartDate(date);
+      } else {
+        setEndDate(date);
+      }
+  
+      if (plotInformation[currentPlot].instrument == '') {
+        return;
+      }
+  
+      async function fetchData(startChange: boolean) {
+        try {
+          const cryowurstData = await fetchDataBetweenTimestampsAxios(
+            plotInformation[currentPlot].instrument + "/get-between-timestamps",
+            startChange ? date.toISOString() : startDate.toISOString(),
+            !startChange ? date.toISOString() : endDate.toISOString()
+          );
+          setGraphData(cryowurstData);
+        } catch (error) {
+          console.log(error);
         }
-      
-        if (plotInformation[currentPlot].instrument == '') {
-          return;
-        }
-      
-        async function fetchData(startChange: boolean) {
-          try {
-            const cryowurstData = await fetchDataBetweenTimestampsAxios(
-              plotInformation[currentPlot].instrument + "/get-between-timestamps",
-              startChange ? date.toISOString() : startDate.toISOString(),
-              !startChange ? date.toISOString() : endDate.toISOString()
-            );
-            setGraphData(cryowurstData);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        fetchData(startChange);
-
+      }
+      fetchData(startChange);
     };
-      
+  
     useEffect(() => {
-        if (graphData) {
-          const filteredData: any[] = [];
-          const newDateLabels: any[] = [];
-          graphData.forEach(row => {
-            newDateLabels.push(row.timestamp); 
-            filteredData.push(row[plotInformation[currentPlot].measurement]);
-          });
-          setDateLabels(newDateLabels); 
-          const newDataSet = createDataset('Axis name',
-            filteredData,
-            'rgb(255, 99, 132)',
-            'rgb(255, 99, 132)');
-          setDataSet(newDataSet); 
-        }
+      if (graphData) {
+        const filteredData: any[] = [];
+        const newDateLabels: any[] = [];
+        graphData.forEach(row => {
+          newDateLabels.push(row.timestamp);
+          filteredData.push(row[plotInformation[currentPlot].measurement]);
+        });
+        setDateLabels([...newDateLabels]); // Changed: Create a new array
+        const newDataSet = createDataset('Axis name',
+          [...filteredData], // Changed: Create a new array
+          'rgb(255, 99, 132)',
+          'rgb(255, 99, 132)');
+        setDataSet(newDataSet);
+      }
     }, [graphData, plotInformation, currentPlot, startDate, endDate]);
-
+  
     const handlePlotChange = () => {
-        if (currentPlot == 'plotOne') {
-            setCurrentPlot('plotTwo')
-        } else {
-            setCurrentPlot('plotOne')
-        }
-    }
-
-    const handleInstrumentChange = (newInstrument: string) => {
-        handleValueChange(newInstrument, currentPlot, 'instrument');
-    }
-
-    const handleMeasurementChange = (newMeasurement: string) => {
-        handleValueChange(newMeasurement, currentPlot, 'measurement');
-    }
-
-    const handleColorChange = (newColor: string) => {
-        handleValueChange(newColor, currentPlot, 'color');
-    }
-
-    const handleScaleChange = (scale: string) => {
-        handleValueChange(scale, currentPlot, 'scale');
-    }
-
-    const handleValueChange = (value: string, plot: string, valueKey: string) => {
-        setPlotInformation((prevPlotInformation) => ({
-            ...prevPlotInformation,
-            [plot]: {
-                ...prevPlotInformation.plotOne,
-                [valueKey]: value,
-            },
-        }));
-    }
-
-    const disabledDivStyle = {
-        pointerEvents: 'none',
-        opacity: 0.5,
+      setCurrentPlot(prevCurrentPlot => prevCurrentPlot === 'plotOne' ? 'plotTwo' : 'plotOne'); // Changed: Functional update
     };
-
+  
+    const handleInstrumentChange = (newInstrument: string) => {
+      handleValueChange(newInstrument, currentPlot, 'instrument');
+    };
+  
+    const handleMeasurementChange = (newMeasurement: string) => {
+      handleValueChange(newMeasurement, currentPlot, 'measurement');
+    };
+  
+    const handleColorChange = (newColor: string) => {
+      handleValueChange(newColor, currentPlot, 'color');
+    };
+  
+    const handleScaleChange = (scale: string) => {
+      handleValueChange(scale, currentPlot, 'scale');
+    };
+  
+    const handleValueChange = (value: string, plot: string, valueKey: string) => {
+      setPlotInformation(prevPlotInformation => {
+        const updatedPlotData = {
+          ...prevPlotInformation[plot], // Changed: Spread the current plot
+          [valueKey]: value,
+        };
+        return {
+          ...prevPlotInformation,
+          [plot]: updatedPlotData, // Changed: Spread the updated plot data
+        };
+      });
+    };
+  
+    const disabledDivStyle = {
+      pointerEvents: 'none',
+      opacity: 0.5,
+    };
+  
     const triggerValueOverride = async () => {
-        setisDisabled(true);
-        const tempCurrentPlot = currentPlot;
-        await setCurrentPlot('plotOne');
-        await setCurrentPlot('plotTwo');
-        setCurrentPlot(tempCurrentPlot);
-        setisDisabled(false);
-    }
-
+      setisDisabled(true);
+      const tempCurrentPlot = currentPlot;
+      await setCurrentPlot('plotOne');
+      await setCurrentPlot('plotTwo');
+      setCurrentPlot(tempCurrentPlot);
+      setisDisabled(false);
+    };
+  
     const handlePlotReset = async () => {
-        setPlotInformation((prevPlotInformation) => ({
-            ...prevPlotInformation,
-            [currentPlot]: {
-                instrument : '',
-                measurement : '',
-                color : '',
-                scale : ''
-            },
-        }));
-        triggerValueOverride();
-    }
+      setPlotInformation(prevPlotInformation => {
+        const resetPlotData = {
+          instrument: '',
+          measurement: '',
+          color: '',
+          scale: '',
+        };
+        return {
+          ...prevPlotInformation,
+          [currentPlot]: resetPlotData, // Changed: Spread the reset plot data
+        };
+      });
+      triggerValueOverride();
+    };
 
     return (
         <VariableLayout>
