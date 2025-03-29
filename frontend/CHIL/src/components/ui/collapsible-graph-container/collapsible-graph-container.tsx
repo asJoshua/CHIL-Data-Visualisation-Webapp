@@ -52,10 +52,10 @@ const CollapsibleGraphContainer = () => {
 
     return (
         <div>
-            {graphs.map((graph, index) => {
+            {graphs.map((graph) => {
                 if (!isGraph(graph)) return null;  // Filter out invalid graph data
                 return (
-                    <Accordion key={graph.cryoegg_graph_id} className="size-full">
+                    <Accordion key={graph.cryoegg_graph_id} className="size-full mb-4">
                         <AccordionSummary expandIcon={<ArrowDropDownIcon />} id={`panel-${graph.cryoegg_graph_id}-header`}>
                             <Box className="flex flex-row align-middle justify-between size-full">
                                 <Typography color='black' component="span" align="center">

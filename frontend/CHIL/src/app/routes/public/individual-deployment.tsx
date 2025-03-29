@@ -11,21 +11,21 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
     const { id } = useParams<'id'>();
 
     if (!Number(id)) {
-        return (<>Id not valid</>)
+        return <div>Id not valid</div>;
     }
 
     return (
         <ThemeProvider theme={theme}>
-            <VariableLayout>
-                <Box className='flex flex-col gap-y-4 flex-wrap justify-center px-80 py-10'>
-                    <DeploymentTopBar deployment_id={Number(id)}/>
-                    <Box className='flex flex-col gap-y-4 flex-wrap justify-center content-center'>
-                        <CollapsibleGraphContainer></CollapsibleGraphContainer>
+            <VariableLayout className="flex flex-col min-h-screen">
+                <Box className="flex flex-col flex-grow gap-y-4 px-80 py-10"> 
+                    <DeploymentTopBar deployment_id={Number(id)} />
+                    <Box className="flex flex-col gap-y-4">
+                        <CollapsibleGraphContainer />
                     </Box>
                 </Box>
             </VariableLayout>
         </ThemeProvider>
     );
-}
+};
 
 export { IndividualDeploymentsRoot };

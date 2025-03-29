@@ -23,7 +23,7 @@ const DeploymentTopBar = ({
                     variant="h2"
                     style={{ color: theme.palette.text.secondary, fontWeight: "400" }}
                 >
-                    Deployment: {deployment_id}
+                    Graphs for deployment ID: {deployment_id}
                 </Typography>
                 <Button
                     variant='contained'
@@ -33,11 +33,6 @@ const DeploymentTopBar = ({
                 >
                     Add Graph
                 </Button>
-            </Box>
-            <Box>
-                <Divider/>
-                    <p>Description here</p>
-                <Divider/>
             </Box>
         </Box>
     )

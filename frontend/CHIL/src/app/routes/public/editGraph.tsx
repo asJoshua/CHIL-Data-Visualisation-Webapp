@@ -20,8 +20,9 @@ const EditGraphRoot = (): React.JSX.Element => {
     const [, setGraphName] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [stroke, setStroke] = useState('')
-    const [selectedMeasurement, setSelectedMeasurement] = useState('#AABBCC')
+    const [stroke, setStroke] = useState('#AABBCC');
+    
+    const [selectedMeasurement, setSelectedMeasurement] = useState('');
 
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
@@ -180,7 +181,10 @@ const EditGraphRoot = (): React.JSX.Element => {
 
                 <Grid container>
 
-                    <Grid size={6}>
+                    <Grid 
+                        size={6}
+                        padding={1}
+                    >
                         <CryoeggGraph 
                         measurement={selectedMeasurement}
                         startDate={startDate}
