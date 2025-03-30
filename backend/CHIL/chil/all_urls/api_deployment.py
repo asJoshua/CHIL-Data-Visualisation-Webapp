@@ -45,7 +45,7 @@ urlpatterns = [
         name='get_all_deployment_instruments_by_id'
     ),
     path(
-        'list-instrument-deployment/',
+        'listinstrumentdeployment/',
         DeploymentGetAllDeploymentInstrumentsView.as_view(),
         name='deployment_get_all_deployment_instrument'
     )

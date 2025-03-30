@@ -55,7 +55,6 @@ const DeploymentsPage = (): React.JSX.Element => {
         axios({
           method: "get",
           url: "chil/api/deployment/list",
-          withCredentials: true,
         })
          .then((deploymentResponse) => {
            setDeployments(deploymentResponse.data);
@@ -64,8 +63,7 @@ const DeploymentsPage = (): React.JSX.Element => {
         // Fetch all instrument deployments
         axios({
           method: "get",
-          url: "chil/api/deployment/list-instrument-deployment",
-          withCredentials: true,
+          url: "chil/api/deployment/listinstrumentdeployment",
         })
          .then((instrumentResponse) => {
           setInstrumentDeployments(instrumentResponse.data);
