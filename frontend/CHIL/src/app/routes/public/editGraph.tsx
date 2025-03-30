@@ -10,7 +10,6 @@ import React, {
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
-import { NumberSelect } from '@/components/ui/numberInput/numberInput';
 import { TextField } from '@/components/ui/text-field/text-field';
 import axios from 'axios';
 import { LineGraph } from '@/components/ui/lineGraph/lineGraph';
@@ -20,12 +19,12 @@ const EditGraphRoot = (): React.JSX.Element => {
   const [graphName, setGraphName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [selectedInstrument, setSelectedInstrument] = useState(''); // New state
+  const [selectedInstrument, setSelectedInstrument] = useState('');
   type PlotName = 'plotOne' | 'plotTwo';
   const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
   const [plotInformation, setPlotInformation] = useState({
-    plotOne: { measurement: '', color: '', scale: '', yAxisID: 'y', show: true },
-    plotTwo: { measurement: '', color: '', scale: '', yAxisID: 'y2', show: false },
+    plotOne: { measurement: '', color: '', yAxisID: 'y', show: true },
+    plotTwo: { measurement: '', color: '', yAxisID: 'y2', show: false },
   });
   const [isDisabled, setisDisabled] = useState(false);
   const [graphData, setGraphData] = useState<any[]>();
@@ -175,20 +174,6 @@ const EditGraphRoot = (): React.JSX.Element => {
     }));
   }, [currentPlot]);
 
-  const handleScaleChange = useCallback((scale: string) => {
-    setPlotInformation((prevPlotInformation) => ({
-      ...prevPlotInformation,
-      [currentPlot]: { ...prevPlotInformation[currentPlot], scale: scale },
-    }));
-  }, [currentPlot]);
-
-  const handleValueChange = useCallback((value: string, plot: string, valueKey: string) => {
-    setPlotInformation((prevPlotInformation) => ({
-      ...prevPlotInformation,
-      [plot]: { ...prevPlotInformation[plot], [valueKey]: value },
-    }));
-  }, []);
-
   const disabledDivStyle = useMemo(() => {
     return {
       pointerEvents: 'none',
@@ -208,7 +193,7 @@ const EditGraphRoot = (): React.JSX.Element => {
   const handlePlotReset = useCallback(async () => {
     setPlotInformation((prevPlotInformation) => ({
       ...prevPlotInformation,
-      [currentPlot]: { measurement: '', color: '', scale: '', yAxisID: 'y', show: true },
+      [currentPlot]: { measurement: '', color: '', yAxisID: 'y', show: true },
     }));
     triggerValueOverride();
   }, [currentPlot]);
@@ -280,24 +265,6 @@ const EditGraphRoot = (): React.JSX.Element => {
                 </Grid>
               </Grid>
             </Box>
-            
-            {/* Instrument Select */}
-            <Box mb={1}>
-              <Grid container>
-                <DropDownSelect
-                  labelText="Instrument"
-                  selectId="Instrument"
-                  labelId="Instrument"
-                  selectLabel="Instrument"
-                  onSelectChange={handleInstrumentChange}
-                  options={[
-                    { value: 'cryowurst', label: 'Cryowurst' },
-                    { value: 'cryoegg', label: 'Cryoegg' },
-                  ]}
-                  valueOverride={['Instrument', selectedInstrument]} // Use selectedInstrument
-                />
-              </Grid>
-            </Box>
 
             {/* Plot select */}
             <Box mb={1}>
@@ -327,6 +294,24 @@ const EditGraphRoot = (): React.JSX.Element => {
               </Grid>
             </Box>
 
+            {/* Instrument Select */}
+            <Box mb={1}>
+              <Grid container>
+                <DropDownSelect
+                  labelText="Instrument"
+                  selectId="Instrument"
+                  labelId="Instrument"
+                  selectLabel="Instrument"
+                  onSelectChange={handleInstrumentChange}
+                  options={[
+                    { value: 'cryowurst', label: 'Cryowurst' },
+                    { value: 'cryoegg', label: 'Cryoegg' },
+                  ]}
+                  valueOverride={['Instrument', selectedInstrument]}
+                />
+              </Grid>
+            </Box>
+
             {/* Measurement Select */}
             <Box mb={1}>
               <Grid container>
@@ -353,23 +338,6 @@ const EditGraphRoot = (): React.JSX.Element => {
                     onColorChange={handleColorChange}
                     defaultColor="#AABBCC"
                     valueOverride={[currentPlot, plotInformation[currentPlot].color]}
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-
-            {/* Scale select */}
-            <Box mb={1}>
-              <Grid container>
-                <Grid size={6} alignContent="center">
-                  <p>Scale</p>
-                </Grid>
-                <Grid size={6}>
-                  <NumberSelect
-                    id="scale"
-                    label="Scale"
-                    onNumberChange={handleScaleChange}
-                    valueOverride={[currentPlot, plotInformation[currentPlot].scale]}
                   />
                 </Grid>
               </Grid>
