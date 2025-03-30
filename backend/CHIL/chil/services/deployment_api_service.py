@@ -48,15 +48,16 @@ def deployment_get_by_id(*, deployment_id: int, user_id: int):
     Gets a deployment entry from the db
     """
 
-    query = Q(deployment_id_id=deployment_id)
+    access_query = Q(deployment_id_id=deployment_id)
 
-    if DeploymentAccess.objects.filter(query).exists():
+    if DeploymentAccess.objects.filter(access_query).exists():
         # Access controls are in use
         auth_query = Q(deployment_id_id=deployment_id, user_id_id=user_id)
         if not DeploymentAccess.objects.filter(auth_query).exists():
             # Doesn't have access
             return
 
+    query = Q(deployment_id=deployment_id)    
     return Deployment.objects.filter(query) # pylint: disable=E1101
 
 def deployment_get_all(user_id: int):
