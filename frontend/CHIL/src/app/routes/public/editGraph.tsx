@@ -23,8 +23,8 @@ const EditGraphRoot = (): React.JSX.Element => {
   type PlotName = 'plotOne' | 'plotTwo';
   const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
   const [plotInformation, setPlotInformation] = useState({
-    plotOne: { measurement: '', color: '', yAxisID: 'y', show: true },
-    plotTwo: { measurement: '', color: '', yAxisID: 'y2', show: false },
+    plotOne: { measurement: '', color: '', yAxisID: 'y', show: true, axisLabel: 'Plot 1' }, // Added axisLabel
+    plotTwo: { measurement: '', color: '', yAxisID: 'y2', show: false, axisLabel: 'Plot 2' }, // Added axisLabel
   });
   const [isDisabled, setisDisabled] = useState(false);
   const [graphData, setGraphData] = useState<any[]>();
@@ -128,6 +128,7 @@ const EditGraphRoot = (): React.JSX.Element => {
           borderColor: plotInformation.plotOne.color,
           backgroundColor: plotInformation.plotOne.color,
           show: true,
+          label: plotInformation.plotOne.axisLabel, // Use axisLabel
         },
         {
           ...dataSets[1],
@@ -135,6 +136,7 @@ const EditGraphRoot = (): React.JSX.Element => {
           borderColor: plotInformation.plotTwo.color,
           backgroundColor: plotInformation.plotTwo.color,
           show: plotInformation.plotTwo.show,
+          label: plotInformation.plotTwo.axisLabel, // Use axisLabel
         },
       ]);
     }
@@ -174,6 +176,13 @@ const EditGraphRoot = (): React.JSX.Element => {
     }));
   }, [currentPlot]);
 
+  const handleAxisLabelChange = useCallback((newLabel: string) => {
+    setPlotInformation((prevPlotInformation) => ({
+      ...prevPlotInformation,
+      [currentPlot]: { ...prevPlotInformation[currentPlot], axisLabel: newLabel },
+    }));
+  }, [currentPlot]);
+
   const disabledDivStyle = useMemo(() => {
     return {
       pointerEvents: 'none',
@@ -193,7 +202,7 @@ const EditGraphRoot = (): React.JSX.Element => {
   const handlePlotReset = useCallback(async () => {
     setPlotInformation((prevPlotInformation) => ({
       ...prevPlotInformation,
-      [currentPlot]: { measurement: '', color: '', yAxisID: 'y', show: true },
+      [currentPlot]: { measurement: '', color: '', yAxisID: 'y', show: true, axisLabel: 'Plot 1' },
     }));
     triggerValueOverride();
   }, [currentPlot]);
@@ -266,6 +275,24 @@ const EditGraphRoot = (): React.JSX.Element => {
               </Grid>
             </Box>
 
+            {/* Instrument Select */}
+            <Box mb={1}>
+              <Grid container>
+                <DropDownSelect
+                  labelText="Instrument"
+                  selectId="Instrument"
+                  labelId="Instrument"
+                  selectLabel="Instrument"
+                  onSelectChange={handleInstrumentChange}
+                  options={[
+                    { value: 'cryowurst', label: 'Cryowurst' },
+                    { value: 'cryoegg', label: 'Cryoegg' },
+                  ]}
+                  valueOverride={['Instrument', selectedInstrument]}
+                />
+              </Grid>
+            </Box>
+
             {/* Plot select */}
             <Box mb={1}>
               <Grid container spacing={1}>
@@ -291,24 +318,6 @@ const EditGraphRoot = (): React.JSX.Element => {
                     Plot 2
                   </Button>
                 </Grid>
-              </Grid>
-            </Box>
-
-            {/* Instrument Select */}
-            <Box mb={1}>
-              <Grid container>
-                <DropDownSelect
-                  labelText="Instrument"
-                  selectId="Instrument"
-                  labelId="Instrument"
-                  selectLabel="Instrument"
-                  onSelectChange={handleInstrumentChange}
-                  options={[
-                    { value: 'cryowurst', label: 'Cryowurst' },
-                    { value: 'cryoegg', label: 'Cryoegg' },
-                  ]}
-                  valueOverride={['Instrument', selectedInstrument]}
-                />
               </Grid>
             </Box>
 
@@ -338,6 +347,25 @@ const EditGraphRoot = (): React.JSX.Element => {
                     onColorChange={handleColorChange}
                     defaultColor="#AABBCC"
                     valueOverride={[currentPlot, plotInformation[currentPlot].color]}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+
+            {/* Axis Label Select */}
+            <Box mb={1}>
+              <Grid container>
+                <Grid size={6} alignContent="center">
+                  <p>Axis Label</p>
+                </Grid>
+                <Grid size={6}>
+                  <TextField
+                    id={`axis-label-${currentPlot}`}
+                    label="Axis Label"
+                    variant="outlined"
+                    fullWidth
+                    value={plotInformation[currentPlot].axisLabel}
+                    onChange={(e) => handleAxisLabelChange(e.target.value)}
                   />
                 </Grid>
               </Grid>
