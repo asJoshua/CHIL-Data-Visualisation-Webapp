@@ -53,14 +53,10 @@ const paths = {
             getHref: () => '/upload'
         },
     },
-<<<<<<< HEAD
     notFound: {  
         path: '*',
         getHref: () => '*'
     }
-=======
-    
->>>>>>> main
 }
 
 export { paths };
