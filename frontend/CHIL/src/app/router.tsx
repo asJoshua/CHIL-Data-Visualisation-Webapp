@@ -56,14 +56,6 @@ const createAppRouter = () => {
                         return { Component: NewsletterRoot };
                     }
                 },
-                {
-                    path: paths.public.hardcodedGraph.path,
-                    lazy: async () => {
-                        const { HardcodedGraphContent } = await import('@/app/routes/public/testLineGraph.tsx');
-                        return { Component: HardcodedGraphContent };
-                    },  
-                          
-                },
             ]
         },
         {

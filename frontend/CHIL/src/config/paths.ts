@@ -32,10 +32,6 @@ const paths = {
             path: 'newsletter',
             getHref: () => '/newsletter'
         },
-        hardcodedGraph: { // Added hardcodedGraph
-            path: 'hardcoded-graph',
-            getHref: () => '/hardcoded-graph',
-        },
     },
     collaborator: {
         root: {
