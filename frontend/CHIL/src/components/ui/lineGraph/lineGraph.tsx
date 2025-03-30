@@ -68,6 +68,11 @@ export const LineGraph = (props: {
         beginAtZero: false,
       },
     },
+    elements: { 
+      line: {
+        borderWidth: 0, 
+      },
+    },
   }), [props.titleText]);
 
   const data: ChartData<'line'> = useMemo(() => ({

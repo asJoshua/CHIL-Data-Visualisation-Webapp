@@ -39,7 +39,23 @@ const EditGraphRoot = (): React.JSX.Element => {
     { value: 'temperature', label: 'Temperature' },
     { value: 'receiver_voltage', label: 'Receiver Voltage' },
   ]
-  const cryowurstOptions = []
+  const cryowurstOptions = [
+    { value: 'temperature_tmp117', label: 'Temperature TMP117' },
+    { value: 'mag_x', label: 'Magnetometer X' },
+    { value: 'mag_y', label: 'Magnetometer Y' },
+    { value: 'mag_z', label: 'Magnetometer Z' },
+    { value: 'accel_imu_x', label: 'Accelerometer IMU X' },
+    { value: 'accel_imu_y', label: 'Accelerometer IMU Y' },
+    { value: 'accel_imu_z', label: 'Accelerometer IMU Z' },
+    { value: 'accel_tilt_x', label: 'Accelerometer Tilt X' },
+    { value: 'accel_tilt_y', label: 'Accelerometer Tilt Y' },
+    { value: 'accel_tilt_z', label: 'Accelerometer Tilt Z' },
+    { value: 'pitch', label: 'Pitch' },
+    { value: 'roll', label: 'Roll' },
+    { value: 'conductivity', label: 'Conductivity' },
+    { value: 'pressure', label: 'Pressure' },
+    { value: 'temperature_keller', label: 'Temperature Keller' }
+]
 
   const fetchDataBetweenTimestampsAxios = useCallback(
     async (endpoint: string, startTimestamp: string, endTimestamp: string) => {
@@ -118,8 +134,8 @@ const EditGraphRoot = (): React.JSX.Element => {
         createDataset(
           'Axis name',
           filteredData,
-          'rgb(255, 99, 132)',
-          'rgb(255, 99, 132)'
+          plotInformation[currentPlot].color,
+          plotInformation[currentPlot].color
         )
       );
     }
@@ -170,13 +186,11 @@ const EditGraphRoot = (): React.JSX.Element => {
 
   const triggerValueOverride = useCallback(async () => {
     setisDisabled(true);
-    
     const tempCurrentPlot = currentPlot;
     await setCurrentPlot('plotOne');
     await setCurrentPlot('plotTwo');
     setCurrentPlot(tempCurrentPlot);
     setisDisabled(false);
-
   }, [currentPlot]);
 
   const handlePlotReset = useCallback(async () => {
@@ -186,6 +200,16 @@ const EditGraphRoot = (): React.JSX.Element => {
     }));
     triggerValueOverride();
   }, [currentPlot, triggerValueOverride]);
+
+  const measurementOptions = useMemo(() => {
+    if (plotInformation[currentPlot].instrument === 'cryowurst') {
+      return cryowurstOptions;
+    } else if (plotInformation[currentPlot].instrument === 'cryoegg') {
+      return cryoeggOptions;
+    } else {
+      return [];
+    }
+  }, [plotInformation[currentPlot].instrument, currentPlot]);
 
   return (
     <VariableLayout>
@@ -318,13 +342,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                     labelId="Measurement"
                     selectLabel="Measurement"
                     onSelectChange={handleMeasurementChange}
-                    options={[
-                      { value: 'conductivity', label: 'Conductivity' },
-                      { value: 'temperature_pt1000', label: 'Temperature PT1000',},
-                      { value: 'pressure', label: 'Pressure' },
-                      { value: 'temperature', label: 'Temperature' },
-                      { value: 'receiver_voltage', label: 'Receiver Voltage' },
-                    ]}
+                    options={measurementOptions}
                     valueOverride={[
                       currentPlot,
                       plotInformation[currentPlot].measurement,
