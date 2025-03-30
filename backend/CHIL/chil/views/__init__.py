@@ -16,6 +16,14 @@ from .instrument_api_view import (
     InstrumentDeleteView
 )
 
+from .campaign_api_view import (
+    CampaignCreateView,
+    CampaignGetView,
+    CampaignUpdateView,
+    CampaignDeleteView,
+    CampaginListAll
+)
+
 __all__ = [
     'CookieTokenObtainPairView',
     'CookieTokenRefreshView',
@@ -24,5 +32,10 @@ __all__ = [
     'InstrumentCreateView',
     'InstrumentGetView',
     'InstrumentUpdateView',
-    'InstrumentDeleteView'
+    'InstrumentDeleteView',
+    'CampaignCreateView',
+    'CampaignGetView',
+    'CampaignUpdateView',
+    'CampaignDeleteView',
+    'CampaginListAll'
 ]

@@ -1,5 +1,5 @@
 """
-Views for the Instrument API endpoints endpoints
+Views for the Instrument API endpoints
 """
 
 from rest_framework import status
