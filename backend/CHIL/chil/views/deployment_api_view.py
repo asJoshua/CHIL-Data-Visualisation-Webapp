@@ -61,9 +61,10 @@ class DeploymentGetAllView(APIView):
     Get all Deployments
     """
 
-    def get(self, _):
+    def get(self, request):
         """Gets all deployments"""
-        response = deployment_get_all()
+        print("Name:", request.user.id)
+        response = deployment_get_all(request.user.id)
 
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
