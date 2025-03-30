@@ -47,42 +47,39 @@ def cryowurst_get_by_id(*, paramId: int):
 def cryoegg_raw_get_by_campaign_id(*, paramId: int):
     """Gets a cryoegg raw entry from the db by campaign paramId"""
 
-    Deployment_instruments = DeploymentInstrument.objects.filter(
-        campaign=paramId
-    )  # pylint: disable=E1101
-    instrumentIds = Deployment_instruments.values_list(
+    # pylint: disable=E1101
+    deployment_instruments = DeploymentInstrument.objects.filter(campaign=paramId)
+    instrument_ids = deployment_instruments.values_list(
         "instrument", flat=True
     ).distinct()
 
-    query = Q(instrument_id__in=instrumentIds)
+    query = Q(instrument_id__in=instrument_ids)
     return CryoeggRaw.objects.filter(query)  # pylint: disable=E1101
 
 
 def cryowurst_raw_get_by_campaign_id(*, paramId: int):
     """Gets a cryowurst raw entry from the db by campaign paramId"""
 
-    Deployment_instruments = DeploymentInstrument.objects.filter(
-        campaign=paramId
-    )  # pylint: disable=E1101
-    instrumentIds = Deployment_instruments.values_list(
+    # pylint: disable=E1101
+    deployment_instruments = DeploymentInstrument.objects.filter(campaign=paramId)  #
+    instrument_ids = deployment_instruments.values_list(
         "instrument", flat=True
     ).distinct()
 
-    query = Q(instrument_id__in=instrumentIds)
+    query = Q(instrument_id__in=instrument_ids)
     return CryowurstRaw.objects.filter(query)  # pylint: disable=E1101
 
 
 def cryoegg_get_by_campaign_id(*, paramId: int):
     """Gets cryoegg processed entries from the db by campaign paramId"""
 
-    Deployment_instruments = DeploymentInstrument.objects.filter(
-        campaign=paramId
-    )  # pylint: disable=E1101
-    instrumentIds = Deployment_instruments.values_list(
+    # pylint: disable=E1101
+    deployment_instruments = DeploymentInstrument.objects.filter(campaign=paramId)
+    instrument_ids = deployment_instruments.values_list(
         "instrument", flat=True
     ).distinct()
 
-    query = Q(instrument_id__in=instrumentIds)
+    query = Q(instrument_id__in=instrument_ids)
     cryoegg_raw = CryoeggRaw.objects.filter(query)  # pylint: disable=E1101
     cryoegg_raw_ids = cryoegg_raw.values_list("cryoegg_raw", flat=True).distinct()
 
@@ -93,18 +90,17 @@ def cryoegg_get_by_campaign_id(*, paramId: int):
 def cryowurst_get_by_campaign_id(*, paramId: int):
     """Gets cryowurst processed entries from the db by campaign paramId"""
 
-    Deployment_instruments = DeploymentInstrument.objects.filter(
-        campaign=paramId
-    )  # pylint: disable=E1101
-    instrumentIds = Deployment_instruments.values_list(
+    # pylint: disable=E1101
+    deployment_instruments = DeploymentInstrument.objects.filter(campaign=paramId)
+    instrument_ids = deployment_instruments.values_list(
         "instrument", flat=True
     ).distinct()
 
-    query = Q(instrument_id__in=instrumentIds)
-    cryowurstRaw = CryowurstRaw.objects.filter(query)  # pylint: disable=E1101
-    cryowurstRawIds = cryowurstRaw.values_list("cryoegg_raw", flat=True).distinct()
+    query = Q(instrument_id__in=instrument_ids)
+    cryowurst_raw = CryowurstRaw.objects.filter(query)  # pylint: disable=E1101
+    cryowurst_raw_ids = cryowurst_raw.values_list("cryoegg_raw", flat=True).distinct()
 
-    query = Q(cryowurst_raw__in=cryowurstRawIds)
+    query = Q(cryowurst_raw__in=cryowurst_raw_ids)
     return CryowurstData.objects.filter(query)  # pylint: disable=E1101
 
 
@@ -125,9 +121,8 @@ def cryowurst_raw_get_by_instrument(*, paramId: int):
 def cryoegg_get_by_instrument(*, paramId: int):
     """Gets cryoegg processed entries from the db by instrument paramId"""
 
-    cryoegg_raw = CryoeggRaw.objects.filter(
-        instrument_id=paramId
-    )  # pylint: disable=E1101
+    # pylint: disable=E1101
+    cryoegg_raw = CryoeggRaw.objects.filter(instrument_id=paramId)
     cryoegg_raw_ids = cryoegg_raw.values_list("cryoegg_raw", flat=True).distinct()
 
     query = Q(cryoegg_raw__in=cryoegg_raw_ids)
@@ -137,9 +132,8 @@ def cryoegg_get_by_instrument(*, paramId: int):
 def cryowurst_get_by_instrument(*, paramId: int):
     """Gets cryoegg processed entries from the db by instrument paramId"""
 
-    cryoegg_raw = CryowurstRaw.objects.filter(
-        instrument_id=paramId
-    )  # pylint: disable=E1101
+    # pylint: disable=E1101
+    cryoegg_raw = CryowurstRaw.objects.filter(instrument_id=paramId)
     cryoegg_raw_ids = cryoegg_raw.values_list("cryowurst_raw", flat=True).distinct()
 
     query = Q(cryowurst_raw__in=cryoegg_raw_ids)
