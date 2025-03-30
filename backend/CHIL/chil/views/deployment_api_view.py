@@ -51,20 +51,26 @@ class DeploymentGetView(APIView):
 
     def get(self, request):
         """Gets a deployment by id"""
-        response = deployment_get_by_id(deployment_id=request.data['id'])
+        response = deployment_get_by_id(deployment_id=request.data['id'], user_id=request.user.id)
+
+        if response is None:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        return Response(status=status.HTTP_200_OK, data=response[0])
+        print(response)
+        return Response(status=status.HTTP_200_OK, data=response.values())
 
 class DeploymentGetAllView(APIView):
     """
     Get all Deployments
     """
 
-    def get(self, _):
+    def get(self, request):
         """Gets all deployments"""
-        response = deployment_get_all()
+        print("Name:", request.user.id)
+        response = deployment_get_all(request.user.id)
 
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
