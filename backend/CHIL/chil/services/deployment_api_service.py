@@ -50,14 +50,14 @@ def deployment_get_by_id(*, deployment_id: int, user_id: int):
 
     access_query = Q(deployment_id_id=deployment_id)
 
-    if DeploymentAccess.objects.filter(access_query).exists():
+    if DeploymentAccess.objects.filter(access_query).exists(): # pylint: disable=E1101
         # Access controls are in use
         auth_query = Q(deployment_id_id=deployment_id, user_id_id=user_id)
-        if not DeploymentAccess.objects.filter(auth_query).exists():
+        if not DeploymentAccess.objects.filter(auth_query).exists(): # pylint: disable=E1101
             # Doesn't have access
-            return
+            return None
 
-    query = Q(deployment_id=deployment_id)    
+    query = Q(deployment_id=deployment_id)
     return Deployment.objects.filter(query) # pylint: disable=E1101
 
 def deployment_get_all(user_id: int):
@@ -65,13 +65,16 @@ def deployment_get_all(user_id: int):
     Gets all deployments from the db
     """
 
-    public = Deployment.objects.exclude(deployment_id__in=DeploymentAccess.objects.values('deployment_id_id'))
-    if user_id == None:
+    public = Deployment.objects.exclude( # pylint: disable=E1101
+        deployment_id__in=DeploymentAccess.objects.values('deployment_id_id')) # pylint: disable=E1101
+    if user_id is None:
         # User is not logged in
         return public
 
     auth_query = Q(user_id_id=user_id)
-    allowed = Deployment.objects.filter(deployment_id__in=DeploymentAccess.objects.filter(auth_query).values('deployment_id_id'))
+    allowed = Deployment.objects.filter( # pylint: disable=E1101
+        deployment_id__in=DeploymentAccess.objects.filter(auth_query) # pylint: disable=E1101
+            .values('deployment_id_id'))
     return public.union(allowed) # pylint: disable=E1101
 
 def deployment_get_deployment_instruments(*, deployment_id: int):

@@ -11,7 +11,7 @@ class DeploymentAccess(models.Model):
     Represents the access each collaborator has with deployments
     """
 
-    class Meta:
+    class Meta: # pylint: disable=R0903
         """Override settings"""
         db_table = "deployment_access_table"
 

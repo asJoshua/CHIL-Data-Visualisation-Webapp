@@ -52,7 +52,7 @@ class DeploymentGetView(APIView):
         """Gets a deployment by id"""
         response = deployment_get_by_id(deployment_id=request.data['id'], user_id=request.user.id)
 
-        if response == None:
+        if response is None:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         if len(response) == 0:
