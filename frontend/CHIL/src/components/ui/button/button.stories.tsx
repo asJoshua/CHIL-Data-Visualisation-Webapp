@@ -21,3 +21,13 @@ export const defaultButton: Story = {
         children: [<p>Button</p>],
     }
 }
+
+export const fullWidthButton: Story = {
+    args: {
+        variant: "contained",
+        size: "large",
+        color: "primary",
+        children: [<p>Button</p>],
+        fullWidth: true
+    }
+}
