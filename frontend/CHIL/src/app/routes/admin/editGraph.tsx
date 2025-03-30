@@ -203,6 +203,7 @@ const EditGraphRoot = (): React.JSX.Element => {
             end_date: endDate.toISOString(),
             stroke: stroke
         };
+    
         await createGraph(graphData);
     };
 
