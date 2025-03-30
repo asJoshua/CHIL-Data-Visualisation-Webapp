@@ -14,6 +14,10 @@ import { TextField } from '@/components/ui/text-field/text-field';
 import axios from 'axios';
 import { LineGraph } from '@/components/ui/lineGraph/lineGraph';
 import { createDataset, Dataset } from '@/components/ui/lineGraph/datasetObject';
+import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate()
 
 const EditGraphRoot = (): React.JSX.Element => {
   const [graphName, setGraphName] = useState('');
@@ -23,16 +27,16 @@ const EditGraphRoot = (): React.JSX.Element => {
   type PlotName = 'plotOne' | 'plotTwo';
   const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
   const [plotInformation, setPlotInformation] = useState({
-    plotOne: { measurement: '', color: '', yAxisID: 'y', show: true, axisLabel: 'Plot 1' }, // Added axisLabel
-    plotTwo: { measurement: '', color: '', yAxisID: 'y2', show: false, axisLabel: 'Plot 2' }, // Added axisLabel
+    plotOne: { measurement: '', color: '', yAxisID: 'y', show: true, axisLabel: 'Plot 1' }, 
+    plotTwo: { measurement: '', color: '', yAxisID: 'y2', show: false, axisLabel: 'Plot 2' }, 
   });
-  const [isDisabled, setisDisabled] = useState(false);
   const [graphData, setGraphData] = useState<any[]>();
   const [dateLabels, setDateLabels] = useState<any[]>([]);
   const [dataSets, setDataSets] = useState<Dataset[]>([
     createDataset('Plot 1', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'y', true),
     createDataset('Plot 2', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'y2', false),
   ]);
+  const { id } = useParams()
   const cryoeggOptions = [
     { value: 'conductivity', label: 'Conductivity' },
     { value: 'temperature_pt1000', label: 'Temperature PT1000' },
@@ -183,20 +187,13 @@ const EditGraphRoot = (): React.JSX.Element => {
     }));
   }, [currentPlot]);
 
-  const disabledDivStyle = useMemo(() => {
-    return {
-      pointerEvents: 'none',
-      opacity: 0.5,
-    };
-  }, []);
+  
 
   const triggerValueOverride = useCallback(async () => {
-    setisDisabled(true);
     const tempCurrentPlot = currentPlot;
     await setCurrentPlot('plotOne');
     await setCurrentPlot('plotTwo');
     setCurrentPlot(tempCurrentPlot);
-    setisDisabled(false);
   }, [currentPlot]);
 
   const handlePlotReset = useCallback(async () => {
@@ -217,6 +214,29 @@ const EditGraphRoot = (): React.JSX.Element => {
     }
   }, [selectedInstrument]);
 
+  const goToDeployments = () => {navigate('/deployments' + id)}
+
+  const saveGraphConfig = () => {
+      const graphId = uuidv4();
+      const graphConfig = {
+        id: graphId,
+        deploymentId: id,
+        graphName,
+        startDate: startDate ? startDate.toISOString() : null,
+        endDate: endDate ? endDate.toISOString() : null,
+        selectedInstrument,
+        plotInformation,
+        dataSets: dataSets.map((dataset) => ({
+          ...dataset,
+          data: [...dataset.data],
+        })),
+        dateLabels: [...dateLabels],
+      };
+      const jsonString = JSON.stringify(graphConfig);
+      localStorage.setItem(`graph-${graphId}`, jsonString);
+      goToDeployments();
+  };
+
   return (
     <VariableLayout>
       <Container>
@@ -229,12 +249,12 @@ const EditGraphRoot = (): React.JSX.Element => {
             </Grid>
             <Grid container spacing={1} alignContent="center">
               <Grid>
-                <Button variant="contained" size="large">
+                <Button variant="contained" size="large" onClick={goToDeployments}>
                   CANCEL
                 </Button>
               </Grid>
               <Grid>
-                <Button variant="contained" size="large">
+                <Button variant="contained" size="large" onClick={saveGraphConfig}>
                   ADD
                 </Button>
               </Grid>

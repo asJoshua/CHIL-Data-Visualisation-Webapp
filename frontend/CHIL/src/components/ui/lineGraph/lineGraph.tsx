@@ -1,15 +1,19 @@
 import {
+  Align,
   CategoryScale,
+  ChartData,
   Chart as ChartJS,
+  ChartOptions,
+  Color,
+  FontSpec,
   Legend,
   LinearScale,
+  LinearScaleOptions,
   LineElement,
   PointElement,
+  TimeScale,
   Title,
   Tooltip,
-  ChartData,
-  ChartOptions,
-  TimeScale,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Dataset } from './datasetObject';
@@ -29,6 +33,10 @@ ChartJS.register(
   TimeScale
 );
 
+interface YAxesScales {
+  y: Partial<LinearScaleOptions> & { type: 'linear' }; // Partial here
+  y2?: Partial<LinearScaleOptions> & { type: 'linear' }; // Partial here
+}
 export const LineGraph = (props: {
   titleText: string;
   datasets: Dataset[];
@@ -39,26 +47,34 @@ export const LineGraph = (props: {
   }, [props.labels.join(',')]);
 
   const options: ChartOptions<'line'> = useMemo(() => {
-    const yAxes = {
+    const yAxes: YAxesScales =  {
       y: {
-        type: 'linear',
+        type: 'linear', 
         position: 'left',
         beginAtZero: false,
         title: {
           display: true,
           text: 'Y-Axis 1',
+          align: 'center' as Align, // Add align
+          color: 'black' as Color, // Add color
+          font: { size: 12 } as FontSpec, //Add font
+          padding: 5, // Add padding
         },
       },
     };
 
     if (props.datasets.length > 1) {
-      yAxes['y2'] = {
+      yAxes.y2 = {
         type: 'linear',
         position: 'right',
         beginAtZero: false,
         title: {
           display: true,
           text: 'Y-Axis 2',
+          align: 'center' as Align, // Add align
+          color: 'black' as Color, // Add color
+          font: { size: 12 } as FontSpec, //Add font
+          padding: 5, // Add padding
         },
         grid: {
           drawOnChartArea: false,
@@ -97,11 +113,6 @@ export const LineGraph = (props: {
       elements: {
         line: {
           borderWidth: 0,
-        },
-      },
-      datasets: {
-        line: {
-          show: true,
         },
       },
     };

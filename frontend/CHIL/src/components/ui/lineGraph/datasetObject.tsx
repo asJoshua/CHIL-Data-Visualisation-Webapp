@@ -4,6 +4,7 @@ export interface Dataset {
     borderColor: string;
     backgroundColor: string;
     yAxisID?: string;
+    show?: boolean;
   }
   
   export function createDataset(
@@ -11,7 +12,8 @@ export interface Dataset {
     data: number[],
     borderColor: string,
     backgroundColor: string,
-    yAxisID: string
+    yAxisID: string,
+    show?: boolean 
   ): Dataset {
     return {
       label: axisLabel,
@@ -19,5 +21,6 @@ export interface Dataset {
       borderColor: borderColor,
       backgroundColor: backgroundColor,
       yAxisID: yAxisID,
+      show: show, 
     };
   }
