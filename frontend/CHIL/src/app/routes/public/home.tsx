@@ -6,12 +6,14 @@ import { DirectionStack } from "@/components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/theme/theme";
 import { Container, Typography } from "@mui/material";
-import imagePlaceholder from "@/assets/images/BgICe.jpg";
+import imagePlaceholder from "@/assets/images/datalogger.jpg";
+import imagePlaceholder2 from "@/assets/images/greenland_receiver_1.jpg";
+import imagePlaceholder3 from "@/assets/images/greenland_walking.jpg";
 
 // Define content for the stack
 const stackItems = [
   {
-    imageSrc: imagePlaceholder,
+    imageSrc: imagePlaceholder2,
     text: "Deployment in the Arctic region for climate monitoring.",
   },
   {
@@ -19,7 +21,7 @@ const stackItems = [
     text: "Our instruments in action on remote glaciers.",
   },
   {
-    imageSrc: imagePlaceholder,
+    imageSrc: imagePlaceholder3,
     text: "Hydrological equipment deployed for river studies.",
   },
 ];

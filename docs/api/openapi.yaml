@@ -1101,33 +1101,6 @@ paths:
         404:
           description: Id not found
 
-  /campaign/{id}/receiver-deployments:
-    get:
-      tags:
-        - campaign
-      summary: Get all receiver deployment id's in a specific campaign
-      description: Get all receiver deployment id's in a specific campaign
-      operationId: getReceiverDeploymentsInCampaign
-      parameters:
-        - in: path
-          name: Id
-          required: true
-          schema:
-            type: integer
-            format: int10
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: integer
-                  format: int10
-        404:
-          description: Id not found
-
   /ingest/lingomo:
     post:
       tags:
@@ -1157,6 +1130,40 @@ paths:
                 $ref: '#/components/schemas/lingomo'
         403:
           description: Forbidden
+
+  /ingest/csv:
+    post:
+      tags:
+        - ingest
+      summary: Insert CSV data (Cryoegg / Cryowurst)
+      description: Insert data from equipment in CSV fromat (Cryoegg / Cryowurst)
+      operationId: postIngestCsvData
+      security:
+        - EquipmentApiKeyAuth: []
+      requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [cryoegg, cryowurst]
+              file:
+                type: string
+                format: binary
+            required:
+              - type
+              - file
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request, invalid input or missing file/type
+        403:
+          description: forbidden
+        500:
+          description: Internal server error
 
 components:
   securitySchemes:

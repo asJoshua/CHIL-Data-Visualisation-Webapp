@@ -7,6 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import { CustomJWTPayload } from "@/components/auth/protectedRoute"
 import { useAuth } from '@/components/auth/authenticationProvider';
+import { Typography } from '@mui/material';
 
 export type LoginFormProps = {
     tokenURI: string,
@@ -115,16 +116,29 @@ const LoginForm = ({
 
     return (
         <Box
-            sx={{width: '20vw', height: '50vh'}}
+            sx={{width: 'auto', 
+                height: 'auto',
+                padding: 5, 
+                borderRadius: "12px", 
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", 
+                backgroundColor: "white",
+                animation: "fadeIn 0.5s ease-in-out"
+            }}
         >
             <form className='flex flex-col gap-y-4 flex-wrap justify-center'>
-                <h1 className='text-3xl font-bold text-center'>LOGIN</h1>
+                <Typography variant='h2' sx={{textAlign: 'center'}}>LOGIN</Typography>
                 <TextField
                     variant='outlined'
                     label='Username'
                     error={showUsernameError}
                     helperText={showUsernameError ? usernameErrorMessage : "" }
                     onChange={handleUsernameChange}
+                    sx={{
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": { borderColor: "black" }, 
+                            "&:hover fieldset": { borderColor: "black" }, 
+                            "&.Mui-focused fieldset": { borderColor: "black" }
+                        } }}
                     />
                 <TextField
                     variant='outlined'
@@ -133,14 +147,20 @@ const LoginForm = ({
                     error={showPasswordError}
                     helperText={showPasswordError ? passwordErrorMessage : "" }
                     onChange={handlePasswordChange}
+                    sx={{
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": { borderColor: "black" }, 
+                            "&:hover fieldset": { borderColor: "black" }, 
+                            "&.Mui-focused fieldset": { borderColor: "black" }
+                        } }}
                     />
                 <Button
                     variant='contained'
-                    size='small'
+                    size='large'
                     color='primary'
                     onClick={handleLogin}
                     >
-                    Login
+                    Continue
                 </Button>
             </form>
         </Box>
