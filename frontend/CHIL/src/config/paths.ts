@@ -24,6 +24,10 @@ const paths = {
             path: 'newsletter',
             getHref: () => '/newsletter'
         },
+        ContactUs: { 
+            path: 'ContactUs',
+            getHref: () => '/contactUs'
+        }
     },
     collaborator: {
         root: {

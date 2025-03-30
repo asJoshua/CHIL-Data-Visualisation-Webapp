@@ -45,6 +45,13 @@ const createAppRouter = () => {
                         return { Component: NewsletterRoot };
                     }
                 },
+                {
+                    path: paths.public.ContactUs.path,
+                    lazy: async () => {
+                        const { ContactUsRoot } = await import('@/app/routes/public/contact-us.tsx');
+                        return { Component: ContactUsRoot };
+                    }
+                }
             ]
         },
         {
