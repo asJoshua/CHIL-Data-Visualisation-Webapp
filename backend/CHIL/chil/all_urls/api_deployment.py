@@ -49,4 +49,3 @@ urlpatterns = [
         name='get_all_deployment_instruments_by_id'
     ),
 ]
-

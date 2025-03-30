@@ -17,8 +17,8 @@ from ..views.data_api_view import (
     CryowurstRawGetByInstrumentView,
     CryoeggGetByInstrumentView,
     CryowurstGetByInstrumentView,
-    CryoeggGetBetweenTimestampsView,  
-    CryowurstGetBetweenTimestampsView,  
+    CryoeggGetBetweenTimestampsView,
+    CryowurstGetBetweenTimestampsView,
     CryowurstGetAllView,
     CryowurstGetByUidView
 )

@@ -1,3 +1,6 @@
+"""
+Graph data views
+"""
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -27,17 +30,20 @@ class GetCryoeggDataGraphView(APIView):
     """
 
     def get(self, request):
+        """Get Cryoegg graph data by id """
         url_id = request.query_params.get('url_id')  # Extract 'url_id' from query params
         if not url_id:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "'url_id' parameter is required"})
+            return Response(status=status.HTTP_400_BAD_REQUEST,
+                            data={"error": "'url_id' parameter is required"})
 
         graphs = cryoegg_graph_get_all(url_id=url_id)  # Pass 'url_id' to the service
         if not graphs:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "No graphs found for this url_id"})
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data={"error": "No graphs found for this url_id"})
 
         serializer = CryoeggGraphDataSerializer(graphs, many=True)
-        return Response(status=status.HTTP_200_OK, data=serializer.data)   
-     
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
 class CryoeggGraphCreateView(APIView):
     """
     Create graph endpoint
@@ -51,7 +57,7 @@ class CryoeggGraphCreateView(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         if not request.data.get("url_id"):
-            return Response(status=status.HTTP_400_BAD_REQUEST, 
+            return Response(status=status.HTTP_400_BAD_REQUEST,
                             data={"error": "'url_id' is required"})
 
         serializer = CryoeggGraphDataSerializer(data=request.data)
@@ -60,7 +66,7 @@ class CryoeggGraphCreateView(APIView):
         cryoegg_graph_create(**serializer.validated_data)
 
         return Response(status=status.HTTP_201_CREATED)
-    
+
 
 class CryoeggGraphDeleteView(APIView):
     """
@@ -79,7 +85,7 @@ class CryoeggGraphDeleteView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 class GetCryowurstDataGraphView(APIView):
     """
@@ -87,17 +93,20 @@ class GetCryowurstDataGraphView(APIView):
     """
 
     def get(self, request):
+        """Get Cryowurst graph data by id"""
         url_id = request.query_params.get('url_id')  # Extract 'url_id' from query params
         if not url_id:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "'url_id' parameter is required"})
+            return Response(status=status.HTTP_400_BAD_REQUEST,
+                            data={"error": "'url_id' parameter is required"})
 
         graphs = cryowurst_graph_get_all(url_id=url_id)  # Pass 'url_id' to the service
         if not graphs:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={"error": "No graphs found for this url_id"})
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data={"error": "No graphs found for this url_id"})
 
         serializer = CryowurstGraphDataSerializer(graphs, many=True)
-        return Response(status=status.HTTP_200_OK, data=serializer.data)   
-     
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
 class CryowurstGraphCreateView(APIView):
     """
     Create graph endpoint
@@ -111,7 +120,7 @@ class CryowurstGraphCreateView(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         if not request.data.get("url_id"):
-            return Response(status=status.HTTP_400_BAD_REQUEST, 
+            return Response(status=status.HTTP_400_BAD_REQUEST,
                             data={"error": "'url_id' is required"})
 
         serializer = CryowurstGraphDataSerializer(data=request.data)
@@ -120,7 +129,7 @@ class CryowurstGraphCreateView(APIView):
         cryowurst_graph_create(**serializer.validated_data)
 
         return Response(status=status.HTTP_201_CREATED)
-    
+
 
 class CryowurstGraphDeleteView(APIView):
     """
@@ -135,8 +144,7 @@ class CryowurstGraphDeleteView(APIView):
         if not auth_result:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-        if not cryowurst_graph_delete(cryoegg_graph_id=cryowurst_graph_id):
+        if not cryowurst_graph_delete(cryowurst_graph_id=cryowurst_graph_id):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-

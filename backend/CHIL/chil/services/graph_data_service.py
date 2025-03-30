@@ -2,7 +2,6 @@
 All the buisness logic for the graph model
 """
 
-from datetime import date
 from django.db.models import Q
 from django.db import transaction
 from ..models.graph_data_model import (
@@ -13,7 +12,7 @@ from ..models.graph_data_model import (
 def cryoegg_graph_get_all(*, url_id: int):
     """Gets a cryoegg graph data from the db"""
 
-    return CryoeggGraph.objects.filter(url_id=url_id)
+    return CryoeggGraph.objects.filter(url_id=url_id)# pylint: disable=no-member
 
 @transaction.atomic
 def cryoegg_graph_create( # pylint: disable=R0913
@@ -54,26 +53,27 @@ def cryoegg_graph_delete(
     """
 
     query = Q(cryoegg_graph_id=cryoegg_graph_id)
-    cryoeggGraph = CryoeggGraph.objects.filter(query) # pylint: disable=E1101
+    cryoegg_graph = CryoeggGraph.objects.filter(query) # pylint: disable=E1101
 
-    if len(cryoeggGraph) == 0:
+    if len(cryoegg_graph) == 0:
         return False
 
-    print(cryoeggGraph)
+    print(cryoegg_graph)
 
-    cryoeggGraph.delete()
+    cryoegg_graph.delete()
     return True
 
 def cryowurst_graph_get_all(*, url_id: int):
     """Gets a cryowurst graph data from the db"""
 
-    return CryowurstGraph.objects.filter(url_id=url_id)
+    return CryowurstGraph.objects.filter(url_id=url_id)# pylint: disable=no-member
 
 @transaction.atomic
 def cryowurst_graph_create( # pylint: disable=R0913
     *,
 
     url_id: str,
+    unique_id: str,
     graph_name: str,
     measurement: str,
     start_date: str,
@@ -87,6 +87,7 @@ def cryowurst_graph_create( # pylint: disable=R0913
 
     cryowurst_graph = CryowurstGraph(
        url_id=url_id,
+       unique_id=unique_id,
        graph_name=graph_name,
        measurement=measurement,
        start_date=start_date,
@@ -108,12 +109,12 @@ def cryowurst_graph_delete(
     """
 
     query = Q(cryowurst_graph_id=cryowurst_graph_id)
-    cryowurstGraph = CryowurstGraph.objects.filter(query) # pylint: disable=E1101
+    cryowurst_graph = CryowurstGraph.objects.filter(query) # pylint: disable=E1101
 
-    if len(cryowurstGraph) == 0:
+    if len(cryowurst_graph) == 0:
         return False
 
-    print(cryowurstGraph)
+    print(cryowurst_graph)
 
-    cryowurstGraph.delete()
+    cryowurst_graph.delete()
     return True

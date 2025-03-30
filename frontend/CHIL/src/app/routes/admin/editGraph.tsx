@@ -160,6 +160,7 @@ const EditGraphRoot = (): React.JSX.Element => {
         start_date: string;
         end_date: string;
         stroke: string;
+        unique_id?: string;
     }) => {
         if ( instrument === 'cryoegg'){
             try {
@@ -201,8 +202,14 @@ const EditGraphRoot = (): React.JSX.Element => {
             measurement: selectedMeasurement,
             start_date: startDate.toISOString(),
             end_date: endDate.toISOString(),
-            stroke: stroke
+            stroke: stroke,
+            unique_id: selectedUniqueId
         };
+
+        if (instrument === 'cryowurst' && selectedUniqueId) {
+            graphData.unique_id = selectedUniqueId;
+        }
+    
     
         await createGraph(graphData);
     };

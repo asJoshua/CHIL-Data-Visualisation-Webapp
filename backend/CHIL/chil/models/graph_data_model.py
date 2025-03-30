@@ -33,7 +33,7 @@ class CryoeggGraph(models.Model):
 
     def __str__(self):
         return str(self.cryoegg_graph_id)
-    
+
 class CryowurstGraph(models.Model):
     """
     Represents all graphs from that deployment id
@@ -45,6 +45,7 @@ class CryowurstGraph(models.Model):
 
     cryowurst_graph_id = models.BigAutoField(primary_key=True)
     url_id = models.CharField(max_length=100,null=True, blank=True)
+    unique_id = models.CharField(null=True, blank=True, max_length=100)
     graph_name = models.TextField(null=True, blank=True)
     measurement = models.CharField(max_length=100, help_text="Measurement type")
     start_date = models.DateTimeField(help_text="Start date of the measurement")
@@ -53,6 +54,7 @@ class CryowurstGraph(models.Model):
 
     fields = [
         'cryowurst_graph_id',
+        'unique_id',
         'graph_name',
         'url_id',
         'measurement',
