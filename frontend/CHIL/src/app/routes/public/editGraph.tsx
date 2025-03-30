@@ -15,7 +15,6 @@ import { TextField } from '@/components/ui/text-field/text-field';
 import axios from 'axios';
 import { LineGraph } from '@/components/ui/lineGraph/lineGraph';
 import { createDataset, Dataset } from '@/components/ui/lineGraph/datasetObject';
-import { parseISO } from 'date-fns';
 
 const EditGraphRoot = (): React.JSX.Element => {
   const [graphName, setGraphName] = useState('');
@@ -33,6 +32,14 @@ const EditGraphRoot = (): React.JSX.Element => {
   const [dataSet, setDataSet] = useState<Dataset>(
     createDataset('Axis name', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)')
   );
+  const cryoeggOptions = [
+    { value: 'conductivity', label: 'Conductivity' },
+    { value: 'temperature_pt1000', label: 'Temperature PT1000',},
+    { value: 'pressure', label: 'Pressure' },
+    { value: 'temperature', label: 'Temperature' },
+    { value: 'receiver_voltage', label: 'Receiver Voltage' },
+  ]
+  const cryowurstOptions = []
 
   const fetchDataBetweenTimestampsAxios = useCallback(
     async (endpoint: string, startTimestamp: string, endTimestamp: string) => {
@@ -104,13 +111,6 @@ const EditGraphRoot = (): React.JSX.Element => {
       const filteredData = sortedData.map(
         (row) => row[plotInformation[currentPlot].measurement]
       );
-
-      // Log parsed dates for debugging
-      graphData.forEach((row) => {
-        const parsedDate = parseISO(row.timestamp);
-        console.log("Not parsed: ", row.timestamp);
-        console.log('Parsed date for logging:', parsedDate);
-      });
 
       const newDateLabels = graphData.map((row) => row.timestamp);
       setDateLabels(newDateLabels);
@@ -320,10 +320,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                     onSelectChange={handleMeasurementChange}
                     options={[
                       { value: 'conductivity', label: 'Conductivity' },
-                      {
-                        value: 'temperature_pt1000',
-                        label: 'Temperature PT1000',
-                      },
+                      { value: 'temperature_pt1000', label: 'Temperature PT1000',},
                       { value: 'pressure', label: 'Pressure' },
                       { value: 'temperature', label: 'Temperature' },
                       { value: 'receiver_voltage', label: 'Receiver Voltage' },
