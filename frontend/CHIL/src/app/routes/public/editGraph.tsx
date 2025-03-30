@@ -1,11 +1,11 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
-import { Box, Container, Grid2 as Grid, Typography, Button } from '@mui/material';
+import { Box, Button, Container, Grid2 as Grid, Typography } from '@mui/material';
 import 'react-datepicker/dist/react-datepicker.css';
 import React, {
   useCallback,
   useEffect,
-  useState,
   useMemo,
+  useState,
 } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
@@ -14,9 +14,8 @@ import { TextField } from '@/components/ui/text-field/text-field';
 import axios from 'axios';
 import { LineGraph } from '@/components/ui/lineGraph/lineGraph';
 import { createDataset, Dataset } from '@/components/ui/lineGraph/datasetObject';
-import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const EditGraphRoot = (): React.JSX.Element => {
@@ -31,8 +30,12 @@ const EditGraphRoot = (): React.JSX.Element => {
     plotOne: { measurement: '', color: '', yAxisID: 'y', show: true, axisLabel: 'Plot 1' }, 
     plotTwo: { measurement: '', color: '', yAxisID: 'y2', show: false, axisLabel: 'Plot 2' }, 
   });
-  const [graphData, setGraphData] = useState<any[]>();
-  const [dateLabels, setDateLabels] = useState<any[]>([]);
+  interface GraphDataItem {
+    timestamp: string;
+    [key: string]: number | string; // Allows dynamic keys for measurements
+  }
+  const [graphData, setGraphData] = useState<GraphDataItem[]>();
+  const [dateLabels, setDateLabels] = useState<string[]>([]);
   const [dataSets, setDataSets] = useState<Dataset[]>([
     createDataset('Plot 1', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'y', true),
     createDataset('Plot 2', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'y2', false),

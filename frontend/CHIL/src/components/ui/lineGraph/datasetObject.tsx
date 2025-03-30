@@ -1,6 +1,6 @@
 export interface Dataset {
     label: string;
-    data: number[];
+    data: (string | number)[];
     borderColor: string;
     backgroundColor: string;
     yAxisID?: string;
@@ -9,7 +9,7 @@ export interface Dataset {
   
   export function createDataset(
     axisLabel: string,
-    data: number[],
+    data: (string | number)[],
     borderColor: string,
     backgroundColor: string,
     yAxisID: string,
