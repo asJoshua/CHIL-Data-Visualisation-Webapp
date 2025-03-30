@@ -40,6 +40,12 @@ def cryoegg_get_all():
     serializer = CryoeggSerializer(cryoeggs, many=True)  # Serialize the data
     return serializer.data  # Return the serialized data
 
+def cryowurst_get_by_uid(*, uid: str):
+    """Gets a cryowurst processed entry from the db"""
+
+    query = Q(unique_id=uid)
+    return CryowurstData.objects.filter(query) # pylint: disable=E1101
+
 def cryowurst_get_by_id(*, id: int):
     """Gets a cryowurst processed entry from the db"""
 

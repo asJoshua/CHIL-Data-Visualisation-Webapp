@@ -25,6 +25,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     const [instrument, setInstrument] = useState('');
     
     const [selectedMeasurement, setSelectedMeasurement] = useState('');
+    const [selectedUniqueId, setSelectedUniqueId] = useState<string>('');
 
     type PlotName = "plotOne" | "plotTwo";
     const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
@@ -48,6 +49,10 @@ const EditGraphRoot = (): React.JSX.Element => {
     const handleGraphNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setGraphName(e.target.value);
     };
+
+    const handleUniqueIdChange = (value: string) => {
+        setSelectedUniqueId(value);
+      };
 
     const handleDateChange = (pickerId: string, date: Date) => {
         if (pickerId === 'start-date') {
@@ -106,7 +111,6 @@ const EditGraphRoot = (): React.JSX.Element => {
         }
     };
     
-
     const handleScaleChange = (scale: string) => {
         handleValueChange(scale, currentPlot, 'scale');
     }
@@ -254,6 +258,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                             stroke={stroke}/>
                         :
                         <CryowurstGraph 
+                            uniqueId={selectedUniqueId}
                             graphName={graphName}
                             measurement={selectedMeasurement}
                             startDate={startDate}
@@ -327,6 +332,24 @@ const EditGraphRoot = (): React.JSX.Element => {
                                         { value: 'cryoegg', label: 'Cryoegg' }
                                     ]} 
                                     valueOverride={[currentPlot, plotInformation[currentPlot].instrument]}/>
+
+                                    <Box mb={1}>
+                                    
+                                        <DropDownSelect
+                                        labelText="Unique ID"
+                                        selectId="unique-id"
+                                        labelId="unique-id"
+                                        selectLabel="Select Unique ID"
+                                        onSelectChange={handleUniqueIdChange}
+                                        options={[
+                                            { value: 'cf240002', label: 'Cryowurst 1' },
+                                            { value: 'cf240004', label: 'Cryowurst 2' },
+                                            { value: 'cf240007', label: 'Cryowurst 3' },
+                                            { value: 'cf240008', label: 'Cryowurst 4' }
+                                        ]}
+                                        valueOverride={[currentPlot, plotInformation[currentPlot].instrument]}
+                                        />
+                                    </Box>
                             </Grid>
                         </Box>
                         

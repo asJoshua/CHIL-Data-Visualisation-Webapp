@@ -7,17 +7,22 @@ interface CryowurstGraphProps {
   measurement: string,
   startDate: Date,
   endDate: Date,
-  stroke: string
+  stroke: string,
+  uniqueId: string,
 }
 
-const CryowurstGraph: React.FC<CryowurstGraphProps> = ({ measurement, startDate, endDate, stroke}) => {
+const CryowurstGraph: React.FC<CryowurstGraphProps> = ({ uniqueId, measurement, startDate, endDate, stroke}) => {
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const response = await axios.get(`chil/api/data/cryowurst/get-by-uid/`, {
+          params: {
+            uid: uniqueId
+          }
+        });
 
-        const response = await axios.get(`chil/api/data/cryowurst/list/`);
         console.log(response.data); // Log the API response
         const filteredData = response.data
           .map((item: any) => {
@@ -26,7 +31,7 @@ const CryowurstGraph: React.FC<CryowurstGraphProps> = ({ measurement, startDate,
     
             parsedDate = new Date(item.timestamp);
         
-            return parsedDate && !isNaN(parsedDate.getTime()) // Ensure valid date
+            return parsedDate && !isNaN(parsedDate.getTime())
               ? { timestamp: parsedDate, sensor_value: item[measurement] ?? null }
               : null;
           })
@@ -51,7 +56,7 @@ const CryowurstGraph: React.FC<CryowurstGraphProps> = ({ measurement, startDate,
     };    
   
     fetchData();
-  }, [measurement, startDate, endDate, stroke]);
+  }, [uniqueId, measurement, startDate, endDate, stroke]);
 
   return (
     <ResponsiveContainer width="100%" height={400}>

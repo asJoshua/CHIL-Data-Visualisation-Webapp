@@ -247,6 +247,7 @@ class CryowurstData(models.Model):
     cryowurst_raw = models.ForeignKey(CryowurstRaw, on_delete=models.CASCADE, null=True, blank=True)
     process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
     temperature_tmp117 = models.FloatField(null=True, blank=True)
+    unique_id = models.CharField(null=True, blank=True, max_length=100)
     mag_x = models.FloatField(null=True, blank=True)
     mag_y = models.FloatField(null=True, blank=True)
     mag_z = models.FloatField(null=True, blank=True)
@@ -269,6 +270,7 @@ class CryowurstData(models.Model):
         'process_id',
         'temperature_tmp117',
         'mag_x',
+        'unique_id',
         'mag_y',
         'mag_z',
         'accel_imu_x',

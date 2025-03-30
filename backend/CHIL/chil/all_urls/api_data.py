@@ -19,7 +19,8 @@ from ..views.data_api_view import (
     CryowurstGetByInstrumentView,
     CryoeggGetBetweenTimestampsView,  
     CryowurstGetBetweenTimestampsView,  
-    CryowurstGetAllView
+    CryowurstGetAllView,
+    CryowurstGetByUidView
 )
 
 urlpatterns = [
@@ -47,6 +48,11 @@ urlpatterns = [
         'cryowurst/get-by-id/',
         CryowurstGetByIdView.as_view(),
         name='get_cryowurst_by_id'
+    ),
+    path(
+        'cryowurst/get-by-uid/',
+        CryowurstGetByUidView.as_view(),
+        name='get_cryowurst_by_uid'
     ),
     path(
         'cryowurst/list/',
