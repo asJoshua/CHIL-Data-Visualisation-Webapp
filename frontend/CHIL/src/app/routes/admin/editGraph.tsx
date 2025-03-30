@@ -109,20 +109,6 @@ const EditGraphRoot = (): React.JSX.Element => {
             setSelectedOptionMeasurement([]);
         }
     };
-    
-    const handleScaleChange = (scale: string) => {
-        handleValueChange(scale, currentPlot, 'scale');
-    }
-
-    const handleValueChange = (value: string, plot: string, valueKey: string) => {
-        setPlotInformation((prevPlotInformation) => ({
-            ...prevPlotInformation,
-            [plot]: {
-                ...prevPlotInformation.plotOne,
-                [valueKey]: value,
-            },
-        }));
-    }
 
     const disabledDivStyle = {
         pointerEvents: 'none',
