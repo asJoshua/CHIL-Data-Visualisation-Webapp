@@ -3,13 +3,15 @@ import { adminHeaderConfig } from '@/config/headerLinks';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar } from '@mui/material';
 import { Button } from '@/components/ui/button/button';
-import { LogoDev } from '@mui/icons-material';
 import { theme } from '@/theme/theme';
 import { logout } from '../auth/logout';
 import { useAuth } from '../auth/authenticationProvider';
 
+export type AdminHeaderProps = {
+    imageSrc?: string
+}
 
-const AdminHeader = (): React.JSX.Element => {
+const AdminHeader = ({imageSrc}:AdminHeaderProps): React.JSX.Element => {
 
     const navigate = useNavigate();
     const { setToken } = useAuth();
@@ -17,7 +19,7 @@ const AdminHeader = (): React.JSX.Element => {
     return (
         <AppBar position="sticky">
             <Toolbar sx={{display: 'flex', justifyContent: 'space-between', backgroundColor: theme.palette.primary.main}}>
-                <LogoDev/>
+                <img src={imageSrc} alt="CHIL Logo" style={{ height: 25 }} />
 
                 <Box>
                     {adminHeaderConfig.map((item) => (
