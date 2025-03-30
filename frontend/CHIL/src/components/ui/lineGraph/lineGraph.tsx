@@ -38,47 +38,82 @@ export const LineGraph = (props: {
     return props.labels.map((ts) => parseISO(ts));
   }, [props.labels.join(',')]);
 
-  const options: ChartOptions<'line'> = useMemo(() => ({
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: props.titleText,
-      },
-    },
-    scales: {
-      x: {
+  const options: ChartOptions<'line'> = useMemo(() => {
+    const yAxes = {
+      y: {
+        type: 'linear',
+        position: 'left',
+        beginAtZero: false,
         title: {
           display: true,
-          text: 'Date',
+          text: 'Y-Axis 1',
         },
-        type: 'time',
-        time: {
-          unit: 'hour', // or 'minute' if you want minute-level precision
-          tooltipFormat: 'yy-MM-dd HH:mm',
-          displayFormats: {
-              hour: 'yy-MM-dd HH:mm' // Force hour:minute display
-          }
-      }
       },
-      y: {
+    };
+
+    if (props.datasets.length > 1) {
+      yAxes['y2'] = {
+        type: 'linear',
+        position: 'right',
         beginAtZero: false,
+        title: {
+          display: true,
+          text: 'Y-Axis 2',
+        },
+        grid: {
+          drawOnChartArea: false,
+        },
+      };
+    }
+
+    return {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top' as const,
+        },
+        title: {
+          display: true,
+          text: props.titleText,
+        },
       },
-    },
-    elements: { 
-      line: {
-        borderWidth: 0, 
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date',
+          },
+          type: 'time',
+          time: {
+            unit: 'hour',
+            tooltipFormat: 'yy-MM-dd HH:mm',
+            displayFormats: {
+              hour: 'yy-MM-dd HH:mm',
+            },
+          },
+        },
+        ...yAxes,
       },
-    },
-  }), [props.titleText]);
+      elements: {
+        line: {
+          borderWidth: 0,
+        },
+      },
+      datasets: {
+        line: {
+          show: true,
+        },
+      },
+    };
+  }, [props.titleText, props.datasets]);
 
   const data: ChartData<'line'> = useMemo(() => ({
     labels,
-    datasets: props.datasets,
-  }), [labels, props.datasets]); //Remove stringify.
+    datasets: props.datasets.map((dataset) => ({
+      ...dataset,
+      yAxisID: dataset.yAxisID || 'y',
+    })),
+  }), [labels, props.datasets]);
 
   return (
     <Line

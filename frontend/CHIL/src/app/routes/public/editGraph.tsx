@@ -23,22 +23,23 @@ const EditGraphRoot = (): React.JSX.Element => {
   type PlotName = 'plotOne' | 'plotTwo';
   const [currentPlot, setCurrentPlot] = useState<PlotName>('plotOne');
   const [plotInformation, setPlotInformation] = useState({
-    plotOne: { instrument: '', measurement: '', color: '', scale: '' },
-    plotTwo: { instrument: '', measurement: '', color: '', scale: '' },
+    plotOne: { instrument: '', measurement: '', color: '', scale: '', yAxisID: 'y', show: true },
+    plotTwo: { instrument: '', measurement: '', color: '', scale: '', yAxisID: 'y2', show: false },
   });
   const [isDisabled, setisDisabled] = useState(false);
   const [graphData, setGraphData] = useState<any[]>();
   const [dateLabels, setDateLabels] = useState<any[]>([]);
-  const [dataSet, setDataSet] = useState<Dataset>(
-    createDataset('Axis name', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)')
-  );
+  const [dataSets, setDataSets] = useState<Dataset[]>([
+    createDataset('Plot 1', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'y', true),
+    createDataset('Plot 2', [], 'rgb(255, 99, 132)', 'rgb(255, 99, 132)', 'y2', false),
+  ]);
   const cryoeggOptions = [
     { value: 'conductivity', label: 'Conductivity' },
-    { value: 'temperature_pt1000', label: 'Temperature PT1000',},
+    { value: 'temperature_pt1000', label: 'Temperature PT1000' },
     { value: 'pressure', label: 'Pressure' },
     { value: 'temperature', label: 'Temperature' },
     { value: 'receiver_voltage', label: 'Receiver Voltage' },
-  ]
+  ];
   const cryowurstOptions = [
     { value: 'temperature_tmp117', label: 'Temperature TMP117' },
     { value: 'mag_x', label: 'Magnetometer X' },
@@ -54,8 +55,8 @@ const EditGraphRoot = (): React.JSX.Element => {
     { value: 'roll', label: 'Roll' },
     { value: 'conductivity', label: 'Conductivity' },
     { value: 'pressure', label: 'Pressure' },
-    { value: 'temperature_keller', label: 'Temperature Keller' }
-]
+    { value: 'temperature_keller', label: 'Temperature Keller' },
+  ];
 
   const fetchDataBetweenTimestampsAxios = useCallback(
     async (endpoint: string, startTimestamp: string, endTimestamp: string) => {
@@ -65,7 +66,6 @@ const EditGraphRoot = (): React.JSX.Element => {
           params: { start_timestamp: startTimestamp, end_timestamp: endTimestamp },
           headers: { Authorization: `Bearer ${jwtToken}` },
         });
-        console.log(response.data);
         return response.data;
       } catch (error) {
         console.warn(error);
@@ -75,9 +75,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     []
   );
 
-  const handleGraphNameChange = useCallback((
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleGraphNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setGraphName(e.target.value);
   }, []);
 
@@ -110,45 +108,53 @@ const EditGraphRoot = (): React.JSX.Element => {
       };
       fetchData();
     },
-    [
-      currentPlot,
-      endDate,
-      fetchDataBetweenTimestampsAxios,
-      plotInformation,
-      startDate,
-    ]
+    [currentPlot, endDate, fetchDataBetweenTimestampsAxios, plotInformation, startDate]
   );
 
   useEffect(() => {
     if (graphData) {
-
       const sortedData = [...graphData].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
 
-      const filteredData = sortedData.map(
-        (row) => row[plotInformation[currentPlot].measurement]
-      );
+      const filteredData1 = sortedData.map((row) => row[plotInformation.plotOne.measurement]);
+      const filteredData2 = sortedData.map((row) => row[plotInformation.plotTwo.measurement]);
+      console.log(filteredData2);
 
       const newDateLabels = graphData.map((row) => row.timestamp);
       setDateLabels(newDateLabels);
-      setDataSet(
-        createDataset(
-          'Axis name',
-          filteredData,
-          plotInformation[currentPlot].color,
-          plotInformation[currentPlot].color
-        )
-      );
+
+      setDataSets([
+        {
+          ...dataSets[0],
+          data: filteredData1,
+          borderColor: plotInformation.plotOne.color,
+          backgroundColor: plotInformation.plotOne.color,
+          show: true, // Always show Plot 1
+        },
+        {
+          ...dataSets[1],
+          data: filteredData2,
+          borderColor: plotInformation.plotTwo.color,
+          backgroundColor: plotInformation.plotTwo.color,
+          show: plotInformation.plotTwo.show, // Respect plotTwo's show state
+        },
+      ]);
     }
-  }, [
-    graphData,
-    plotInformation,
-    currentPlot,
-  ]);
+  }, [graphData, plotInformation, currentPlot]);
 
   const handlePlotChange = useCallback(() => {
-    setCurrentPlot((prevCurrentPlot) =>
-      prevCurrentPlot === 'plotOne' ? 'plotTwo' : 'plotOne'
-    );
+    setCurrentPlot((prevCurrentPlot) => {
+      const newPlot = prevCurrentPlot === 'plotOne' ? 'plotTwo' : 'plotOne';
+      setPlotInformation((prevInfo) => ({
+        ...prevInfo,
+        plotOne: { ...prevInfo.plotOne, yAxisID: 'y', show: true },
+        plotTwo: { ...prevInfo.plotTwo, yAxisID: 'y2', show: newPlot === 'plotTwo' },
+      }));
+      setDataSets((prevDataSets) => [
+        { ...prevDataSets[0], show: true },
+        { ...prevDataSets[1], show: newPlot === 'plotTwo' },
+      ]);
+      return newPlot;
+    });
   }, []);
 
   const handleInstrumentChange = useCallback((newInstrument: string) => {
@@ -167,15 +173,12 @@ const EditGraphRoot = (): React.JSX.Element => {
     handleValueChange(scale, currentPlot, 'scale');
   }, [currentPlot]);
 
-  const handleValueChange = useCallback(
-    (value: string, plot: string, valueKey: string) => {
-      setPlotInformation((prevPlotInformation) => ({
-        ...prevPlotInformation,
-        [plot]: { ...prevPlotInformation[plot], [valueKey]: value },
-      }));
-    },
-    []
-  );
+  const handleValueChange = useCallback((value: string, plot: string, valueKey: string) => {
+    setPlotInformation((prevPlotInformation) => ({
+      ...prevPlotInformation,
+      [plot]: { ...prevPlotInformation[plot], [valueKey]: value },
+    }));
+  }, []);
 
   const disabledDivStyle = useMemo(() => {
     return {
@@ -196,7 +199,7 @@ const EditGraphRoot = (): React.JSX.Element => {
   const handlePlotReset = useCallback(async () => {
     setPlotInformation((prevPlotInformation) => ({
       ...prevPlotInformation,
-      [currentPlot]: { instrument: '', measurement: '', color: '', scale: '' },
+      [currentPlot]: { instrument: '', measurement: '', color: '', scale: '', yAxisID: 'y', show: true },
     }));
     triggerValueOverride();
   }, [currentPlot, triggerValueOverride]);
@@ -255,7 +258,7 @@ const EditGraphRoot = (): React.JSX.Element => {
             {/* Graph */}
             <LineGraph
               titleText={graphName}
-              datasets={[dataSet]}
+              datasets={dataSets}
               labels={dateLabels}
             />
           </Grid>
