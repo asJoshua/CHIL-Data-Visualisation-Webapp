@@ -2,7 +2,7 @@ from datetime import date
 from django.db.models import Q
 from django.db import transaction
 from ..serializers.ingest_api_serializer import (
-    CryoeggSerializer
+    CryoeggSerializer, CryowurstSerializer
 )
 from ..models.ingest_api_model import (
     CryoeggRaw,
@@ -45,6 +45,14 @@ def cryowurst_get_by_id(*, id: int):
 
     query = Q(cryowurst_data_id=id)
     return CryowurstData.objects.filter(query) # pylint: disable=E1101
+
+def cryowurst_get_all():
+    """
+    Gets all cryowurst data from the database and serializes it.
+    """
+    cryowursts = CryowurstData.objects.all()  # Get all cryoegg data
+    serializer = CryowurstSerializer(cryowursts, many=True)  # Serialize the data
+    return serializer.data  # Return the serialized data
 
 def cryoegg_raw_get_by_campaign_id(*, id: int):
     """Gets a cryoegg raw entry from the db by campaign ID"""

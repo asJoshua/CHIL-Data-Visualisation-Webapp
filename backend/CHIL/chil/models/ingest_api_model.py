@@ -204,8 +204,8 @@ class CryowurstRaw(models.Model):
     packet_version = models.TextField()
 
     fields = [
-        'cryoegg_raw_id',
-        'cryoegg_data_id',
+        'cryowurst_raw_id',
+        'receiver_data_id',
         'ingest_id',
         'instrument_id',
         'temperature_tmp117_raw',
@@ -263,9 +263,9 @@ class CryowurstData(models.Model):
     temperature_keller = models.FloatField(null=True, blank=True)
 
     fields = [
-        'cryoegg_data_id',
+        'cryowurst_data_id',
         'timestamp',
-        'cryoegg_raw_id',
+        'cryowurst_raw',
         'process_id',
         'temperature_tmp117',
         'mag_x',

@@ -19,6 +19,7 @@ from ..services.data_api_service import (
     cryowurst_get_by_instrument,
     cryoegg_get_between_timestamps,
     cryowurst_get_between_timestamps,
+    cryowurst_get_all
 )
 
 class CryoeggRawGetByIdView(APIView):
@@ -91,6 +92,21 @@ class CryowurstGetByIdView(APIView):
         if len(response) == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_200_OK, data=list(response.values()))
+    
+class CryowurstGetAllView(APIView):
+    """
+    Get all Cryowursts
+    """
+
+    def get(self, _):
+        """Gets all cryowursts"""
+        response = cryowurst_get_all()
+
+        if len(response) == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        data = list(response)
+        return Response(data, status=status.HTTP_200_OK)
 
 class CryoeggRawGetByCampaignIdView(APIView):
     """

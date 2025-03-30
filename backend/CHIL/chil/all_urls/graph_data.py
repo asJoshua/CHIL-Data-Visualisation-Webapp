@@ -6,7 +6,10 @@ from django.urls import path
 from ..views.graph_data_view import (
     GetCryoeggDataGraphView,
     CryoeggGraphCreateView,
-    CryoeggGraphDeleteView
+    CryoeggGraphDeleteView,
+    GetCryowurstDataGraphView,
+    CryowurstGraphCreateView,
+    CryowurstGraphDeleteView,
 )
 
 urlpatterns = [
@@ -24,5 +27,20 @@ urlpatterns = [
         'cryoegg/delete/<int:cryoegg_graph_id>/', 
         CryoeggGraphDeleteView.as_view(),
         name="cryoegg_delete"
+    ),
+    path(
+        'cryowurst/data/', 
+        GetCryowurstDataGraphView.as_view(),
+        name="cryowurst_data"
+    ),
+    path(
+        'cryowurst/create/', 
+        CryowurstGraphCreateView.as_view(),
+        name="cryowurst_create"
+    ),
+    path(
+        'cryowurst/delete/<int:cryowurst_graph_id>/', 
+        CryowurstGraphDeleteView.as_view(),
+        name="cryowurst_delete"
     ),
 ]

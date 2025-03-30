@@ -1,7 +1,7 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
 import { Box, Container, Grid2 as Grid, Typography } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
@@ -9,6 +9,7 @@ import { NumberSelect } from '@/components/ui/numberInput/numberInput';
 import { Button } from '@/components/ui/button/button';
 import { TextField } from '@/components/ui/text-field/text-field';
 import CryoeggGraph from '@/components/ui/graph-components/cryoegg-graph'
+import CryowurstGraph from '@/components/ui/graph-components/cryowurst-graph';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -21,6 +22,7 @@ const EditGraphRoot = (): React.JSX.Element => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [stroke, setStroke] = useState('#AABBCC');
+    const [instrument, setInstrument] = useState('');
     
     const [selectedMeasurement, setSelectedMeasurement] = useState('');
 
@@ -63,9 +65,47 @@ const EditGraphRoot = (): React.JSX.Element => {
         }
     }
 
+    const cryoeggMeasurements = [
+        { value: 'conductivity', label: 'Conductivity' },
+        { value: 'temperature', label: 'Temperature' },
+        { value: 'temperature_pt1000', label: 'Temperature pt1000' },
+        { value: 'pressure', label: 'Pressure'},
+        { value: 'receiver_voltage', label: 'Receiver Voltage'},
+    ];
+
+    const cryowurstMeasurements = [
+        { value: 'conductivity', label: 'Conductivity' },
+        { value: 'temperature_keller', label: 'Temperature Keller' },
+        { value: 'temperature_tmp117', label: 'Temperature tmp117' },
+        { value: 'pressure', label: 'Pressure'},
+        { value: 'mag_x', label: 'Mag X' },
+        { value: 'mag_y', label: 'Mag Y' },
+        { value: 'mag_z', label: 'Mag Z' },
+        { value: 'accel_imu_x', label: 'Accel IMU X'},
+        { value: 'accel_imu_y', label: 'Accel IMU Y' },
+        { value: 'accel_imu_z', label: 'Accel IMU Z' },
+        { value: 'accel_tilt_x', label: 'Accel Tilt X' },
+        { value: 'accel_tilt_y', label: 'Accel Tilt Y'},
+        { value: 'accel_tilt_z', label: 'Accel Tilt Z' },
+        { value: 'pitch', label: 'Pitch' },
+        { value: 'roll', label: 'Roll'},
+
+    ];
+
+    const [selectedOptionMeasurement, setSelectedOptionMeasurement] = useState<{ value: string; label: string }[]>([]);
+
     const handleInstrumentChange = (newInstrument: string) => {
-        handleValueChange(newInstrument, currentPlot, 'instrument');
-    }
+        setInstrument(newInstrument);
+    
+        if (newInstrument === "cryoegg") {
+            setSelectedOptionMeasurement(cryoeggMeasurements);
+        } else if (newInstrument === "cryowurst") {
+            setSelectedOptionMeasurement(cryowurstMeasurements);
+        } else {
+            setSelectedOptionMeasurement([]);
+        }
+    };
+    
 
     const handleScaleChange = (scale: string) => {
         handleValueChange(scale, currentPlot, 'scale');
@@ -118,19 +158,36 @@ const EditGraphRoot = (): React.JSX.Element => {
         end_date: string;
         stroke: string;
     }) => {
-        try {
-            const response = await axios.post('chil/graph/cryoegg/create/', graphData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.status === 201) {
-                console.log("Graph created successfully!");
-                return response.data;
+        if ( instrument === 'cryoegg'){
+            try {
+                const response = await axios.post('chil/graph/cryoegg/create/', graphData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                if (response.status === 201) {
+                    console.log("Graph created successfully!");
+                    return response.data;
+                }
+            } catch (error) {
+                console.error("Error creating graph:", error);
             }
-        } catch (error) {
-            console.error("Error creating graph:", error);
+        } else if ( instrument === 'cryowurst' ){
+            try {
+                const response = await axios.post('chil/graph/cryowurst/create/', graphData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                if (response.status === 201) {
+                    console.log("Graph created successfully!");
+                    return response.data;
+                }
+            } catch (error) {
+                console.error("Error creating graph:", error);
+            }
         }
     };
 
@@ -189,12 +246,20 @@ const EditGraphRoot = (): React.JSX.Element => {
                         size={6}
                         padding={1}
                     >
-                        <CryoeggGraph 
-                        graphName={graphName}
-                        measurement={selectedMeasurement}
-                        startDate={startDate}
-                        endDate={endDate}
-                        stroke={stroke}/>
+                        { instrument === 'cryoegg' ? <CryoeggGraph 
+                            graphName={graphName}
+                            measurement={selectedMeasurement}
+                            startDate={startDate}
+                            endDate={endDate}
+                            stroke={stroke}/>
+                        :
+                        <CryowurstGraph 
+                            graphName={graphName}
+                            measurement={selectedMeasurement}
+                            startDate={startDate}
+                            endDate={endDate}
+                            stroke={stroke}/>
+                        }
                     </Grid>
 
                     <Grid size={6}>
@@ -274,13 +339,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                                     labelId="Measurement"
                                     selectLabel="Measurement"
                                     onSelectChange={setSelectedMeasurement}
-                                    options={[
-                                        { value: 'conductivity', label: 'Conductivity' },
-                                        { value: 'temperature', label: 'Temperature' },
-                                        { value: 'temperature_pt1000', label: 'Temperature pt1000' },
-                                        { value: 'pressure', label: 'Pressure'},
-                                        { value: 'receiver_voltage', label: 'Receiver Voltage'},
-                                    ]} 
+                                    options={selectedOptionMeasurement || []} 
                                     valueOverride={[currentPlot, plotInformation[currentPlot].measurement]}/>
                             </Grid>
                         </Box>
