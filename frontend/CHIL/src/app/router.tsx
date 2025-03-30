@@ -52,9 +52,9 @@ const createAppRouter = () => {
                 },
                 {
                     path: '*',
-              lazy: async () => {
-                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
-                return { Component: NotFound };
+                    lazy: async () => {
+                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                        return { Component: NotFound };
               },
             },
             ]
@@ -73,9 +73,9 @@ const createAppRouter = () => {
                 },
                 {
                     path: '*',
-              lazy: async () => {
-                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
-                return { Component: NotFound };
+                    lazy: async () => {
+                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                        return { Component: NotFound };
               },
             },
             ]
@@ -96,9 +96,9 @@ const createAppRouter = () => {
         },
         {
             path: '*',
-      lazy: async () => {
-        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
-        return { Component: NotFound };
+            lazy: async () => {
+                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                return { Component: NotFound };
       },
     },
     ]);
