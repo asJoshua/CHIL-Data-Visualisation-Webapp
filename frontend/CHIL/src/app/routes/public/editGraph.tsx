@@ -17,9 +17,10 @@ import { createDataset, Dataset } from '@/components/ui/lineGraph/datasetObject'
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate()
+
 
 const EditGraphRoot = (): React.JSX.Element => {
+  const navigate = useNavigate()
   const [graphName, setGraphName] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
