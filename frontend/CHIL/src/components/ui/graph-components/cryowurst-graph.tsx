@@ -23,7 +23,7 @@ const CryowurstGraph: React.FC<CryowurstGraphProps> = ({ uniqueId, measurement, 
           }
         });
 
-        console.log(response.data); // Log the API response
+        console.log(response.data);
         const filteredData = response.data
           .map((item: any) => {
     

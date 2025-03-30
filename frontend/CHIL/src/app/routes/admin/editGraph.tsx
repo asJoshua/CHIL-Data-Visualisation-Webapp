@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
-import { NumberSelect } from '@/components/ui/numberInput/numberInput';
 import { Button } from '@/components/ui/button/button';
 import { TextField } from '@/components/ui/text-field/text-field';
 import CryoeggGraph from '@/components/ui/graph-components/cryoegg-graph'
@@ -320,7 +319,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                         {/* Instrument Select */ }
                         <Box sx={isDisabled ? disabledDivStyle : {}}>
                         <Box mb={1}>
-                            <Grid container>
+                            <Grid sx={{display: 'flex'}}>
                                 <DropDownSelect 
                                     labelText="Instrument" 
                                     selectId="Instrument"
@@ -332,9 +331,9 @@ const EditGraphRoot = (): React.JSX.Element => {
                                         { value: 'cryoegg', label: 'Cryoegg' }
                                     ]} 
                                     valueOverride={[currentPlot, plotInformation[currentPlot].instrument]}/>
-
-                                    <Box mb={1}>
                                     
+                                    {instrument === 'cryowurst' ? 
+                                    <Box mb={1} sx={{paddingLeft: '2px'}}>
                                         <DropDownSelect
                                         labelText="Unique ID"
                                         selectId="unique-id"
@@ -350,9 +349,11 @@ const EditGraphRoot = (): React.JSX.Element => {
                                         valueOverride={[currentPlot, plotInformation[currentPlot].instrument]}
                                         />
                                     </Box>
+                                    :
+                                    ''
+                                    }
                             </Grid>
                         </Box>
-                        
                         {/* Measurement Select */}
                         <Box mb={1}>
                             <Grid container>
@@ -381,24 +382,7 @@ const EditGraphRoot = (): React.JSX.Element => {
                                     />
                                 </Grid>
                             </Grid>
-                        </Box>
-                        
-                        {/* Scale select */}
-                        <Box mb={1}>
-                            <Grid container>
-                                <Grid size={6} alignContent='center'>
-                                    <p>Scale</p>
-                                </Grid>
-                                <Grid size={6}>
-                                    <NumberSelect 
-                                        id="scale"
-                                        label="Scale"
-                                        onNumberChange={handleScaleChange}
-                                        valueOverride={[currentPlot, plotInformation[currentPlot].scale]}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Box>
+                        </Box>                        
                         </Box>
                         
                         {/* Reset Plot */}

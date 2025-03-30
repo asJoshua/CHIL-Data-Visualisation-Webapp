@@ -17,7 +17,7 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
     return (
         <ThemeProvider theme={theme}>
             <VariableLayout className="flex flex-col min-h-screen">
-                <Box className="flex flex-col flex-grow gap-y-4 px-20 py-10"> 
+                <Box className="flex flex-col flex-grow gap-y-4 px-60 py-10"> 
                     <DeploymentTopBar deployment_id={Number(id)} />
                     <Box className="flex flex-col gap-y-4">
                         <CollapsibleGraphContainer />

@@ -14,7 +14,6 @@ import CryoeggGraph from "../graph-components/cryoegg-graph";
 import CryowurstGraph from "../graph-components/cryowurst-graph";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import DataTable from '../table/table';
 
 const CollapsibleGraphContainer = () => {
     const [graphs, setGraphs] = useState<any[]>([]);
@@ -44,22 +43,6 @@ const CollapsibleGraphContainer = () => {
 
         fetchGraphs();
     }, [id]);
-
-    // const deleteGraph = async (graphId: any, type: "cryoegg" | "cryowurst") => {
-    //     const isConfirmed = window.confirm("Are you sure you want to delete this graph?");
-    //     if (!isConfirmed) return;
-
-    //     try {
-    //         await axios.delete(`chil/graph/${type}/delete/${graphId}/`);
-    //         console.log(`Graph ${graphId} deleted successfully.`);
-    //         setGraphs((prevGraphs) =>
-    //             prevGraphs.filter((graph) => graph.cryoegg_graph_id !== graphId && graph.cryowurst_graph_id !== graphId)
-    //         );
-    //     } catch (error) {
-    //         console.error("Error deleting graph:", error);
-    //     }
-    // };
-
 
     return (
         <div>
@@ -101,6 +84,7 @@ const CollapsibleGraphContainer = () => {
                                     />
                                 ) : (
                                     <CryowurstGraph
+                                        uniqueId={graph.unique_id}
                                         graphName={graph.graph_name}
                                         measurement={graph.measurement}
                                         startDate={new Date(graph.start_date)}
@@ -108,14 +92,6 @@ const CollapsibleGraphContainer = () => {
                                         stroke={graph.stroke}
                                     />
                                 )}
-                            </Box>
-                            <Box className="flex-1">
-                                <DataTable columns = {[
-                                                { id: "measurement", label: `Measurement`, minWidth: 170, align: "left" },
-                                                { id: "timestamp", label: `Timestamp`, minWidth: 170, align: "left" },
-                                            ]}
-                                            rows={[]}
-                                            />
                             </Box>
                         </Box>
                     </AccordionDetails>
