@@ -10,17 +10,18 @@ import {
   LinearScale,
   LinearScaleOptions,
   LineElement,
+  Point,
   PointElement,
   TimeScale,
   Title,
   Tooltip,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { Dataset } from './datasetObject';
-import { parseISO } from 'date-fns';
-import { useMemo } from 'react';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { Dataset } from "./datasetObject";
+import { parseISO } from "date-fns";
+import { useMemo } from "react";
 import "chart.js/auto";
-import 'chartjs-adapter-date-fns';
+import "chartjs-adapter-date-fns";
 
 ChartJS.register(
   CategoryScale,
@@ -34,8 +35,8 @@ ChartJS.register(
 );
 
 interface YAxesScales {
-  y: Partial<LinearScaleOptions> & { type: 'linear' }; // Partial here
-  y2?: Partial<LinearScaleOptions> & { type: 'linear' }; // Partial here
+  y: Partial<LinearScaleOptions> & { type: "linear" }; // Partial here
+  y2?: Partial<LinearScaleOptions> & { type: "linear" }; // Partial here
 }
 export const LineGraph = (props: {
   titleText: string;
@@ -44,19 +45,19 @@ export const LineGraph = (props: {
 }) => {
   const labels = useMemo(() => {
     return props.labels.map((ts) => parseISO(ts));
-  }, [props.labels.join(',')]);
+  }, [props.labels.join(",")]);
 
-  const options: ChartOptions<'line'> = useMemo(() => {
-    const yAxes: YAxesScales =  {
+  const options: ChartOptions<"line"> = useMemo(() => {
+    const yAxes: YAxesScales = {
       y: {
-        type: 'linear', 
-        position: 'left',
+        type: "linear",
+        position: "left",
         beginAtZero: false,
         title: {
           display: true,
-          text: 'Y-Axis 1',
-          align: 'center' as Align, // Add align
-          color: 'black' as Color, // Add color
+          text: "Y-Axis 1",
+          align: "center" as Align, // Add align
+          color: "black" as Color, // Add color
           font: { size: 12 } as FontSpec, //Add font
           padding: 5, // Add padding
         },
@@ -65,14 +66,14 @@ export const LineGraph = (props: {
 
     if (props.datasets.length > 1) {
       yAxes.y2 = {
-        type: 'linear',
-        position: 'right',
+        type: "linear",
+        position: "right",
         beginAtZero: false,
         title: {
           display: true,
-          text: 'Y-Axis 2',
-          align: 'center' as Align, // Add align
-          color: 'black' as Color, // Add color
+          text: "Y-Axis 2",
+          align: "center" as Align, // Add align
+          color: "black" as Color, // Add color
           font: { size: 12 } as FontSpec, //Add font
           padding: 5, // Add padding
         },
@@ -86,7 +87,7 @@ export const LineGraph = (props: {
       responsive: true,
       plugins: {
         legend: {
-          position: 'top' as const,
+          position: "top" as const,
         },
         title: {
           display: true,
@@ -97,18 +98,20 @@ export const LineGraph = (props: {
         x: {
           title: {
             display: true,
-            text: 'Date',
+            text: "Date",
           },
-          type: 'time',
+          type: "time",
           time: {
-            unit: 'hour',
-            tooltipFormat: 'yy-MM-dd HH:mm',
+            unit: "hour",
+            tooltipFormat: "yy-MM-dd HH:mm",
             displayFormats: {
-              hour: 'yy-MM-dd HH:mm',
+              hour: "yy-MM-dd HH:mm",
             },
           },
         },
-        ...yAxes,
+        ...(props.datasets.length > 1
+          ? yAxes
+          : { x: { type: "time" }, y: yAxes.y }),
       },
       elements: {
         line: {
@@ -118,18 +121,21 @@ export const LineGraph = (props: {
     };
   }, [props.titleText, props.datasets]);
 
-  const data: ChartData<'line'> = useMemo(() => ({
-    labels,
-    datasets: props.datasets.map((dataset) => ({
-      ...dataset,
-      yAxisID: dataset.yAxisID || 'y',
-    })),
-  }), [labels, props.datasets]);
-
-  return (
-    <Line
-      options={options}
-      data={data}
-    />
+  const data: ChartData<"line", (number | Point | null)[], unknown> = useMemo(
+    () => ({
+      labels,
+      datasets: props.datasets.map((dataset) => ({
+        ...dataset,
+        yAxisID:
+          props.datasets.length > 1 && dataset.yAxisID ? dataset.yAxisID : "y",
+        data: dataset.data.map((value) => {
+          const num = Number(value);
+          return isNaN(num) ? null : num;
+        }), // Convert data to numbers or null
+      })),
+    }),
+    [labels, props.datasets]
   );
+
+  return <Line options={options} data={data} />;
 };
