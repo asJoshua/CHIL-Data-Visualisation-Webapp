@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { VariableLayout } from "@/components/layouts/variable-layout";
 import {
   Box,
@@ -7,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import "react-datepicker/dist/react-datepicker.css";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { DatePickerComp } from "@/components/ui/datePickerComp/datePickerComp";
 import { DropDownSelect } from "@/components/ui/select/select";
 import { ColorPicker } from "@/components/ui/colorPicker/colorPicker";
@@ -24,6 +24,12 @@ import {
   GraphConfig,
   PlotInformation,
 } from "@/components/ui/lineGraph/graphConfigObject";
+
+interface GraphDataItem {
+  timestamp: string;
+  UID: string; // Added UID
+  [key: string]: number | string;
+}
 
 const EditGraphRoot = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -49,10 +55,7 @@ const EditGraphRoot = (): React.JSX.Element => {
       axisLabel: "Plot 2",
     },
   });
-  interface GraphDataItem {
-    timestamp: string;
-    [key: string]: number | string;
-  }
+
   const [graphData, setGraphData] = useState<GraphDataItem[]>();
   const [dateLabels, setDateLabels] = useState<string[]>([]);
   const [dataSets, setDataSets] = useState<Dataset[]>([
@@ -158,6 +161,11 @@ const EditGraphRoot = (): React.JSX.Element => {
     [endDate, fetchDataBetweenTimestampsAxios, selectedInstrument, startDate]
   );
 
+  const [availableUids, setAvailableUids] = useState<string[]>([]);
+  const [selectedUidFilter, setSelectedUidFilter] = useState<string | null>(
+    null
+  );
+
   useEffect(() => {
     if (graphData) {
       const sortedData = [...graphData].sort(
@@ -165,14 +173,23 @@ const EditGraphRoot = (): React.JSX.Element => {
           new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
       );
 
-      const filteredData1 = sortedData.map(
+      // Extract unique UIDs
+      const uids = [...new Set(sortedData.map((row) => row.UID))];
+      setAvailableUids(uids);
+
+      // Filter data based on selectedUidFilter
+      const filteredData = selectedUidFilter
+        ? sortedData.filter((row) => row.UID === selectedUidFilter)
+        : sortedData;
+
+      const filteredData1 = filteredData.map(
         (row) => row[plotInformation.plotOne.measurement]
       );
-      const filteredData2 = sortedData.map(
+      const filteredData2 = filteredData.map(
         (row) => row[plotInformation.plotTwo.measurement]
       );
 
-      const newDateLabels = graphData.map((row) => row.timestamp);
+      const newDateLabels = filteredData.map((row) => row.timestamp);
       setDateLabels(newDateLabels);
 
       setDataSets([
@@ -194,7 +211,7 @@ const EditGraphRoot = (): React.JSX.Element => {
         },
       ]);
     }
-  }, [graphData, plotInformation]);
+  }, [graphData, plotInformation, selectedUidFilter]);
 
   const handlePlotChange = useCallback(() => {
     setCurrentPlot((prevCurrentPlot) => {
@@ -414,6 +431,25 @@ const EditGraphRoot = (): React.JSX.Element => {
                 />
               </Grid>
             </Box>
+
+            {selectedInstrument === "cryowurst" && (
+              <Box mb={1}>
+                <Grid container>
+                  <DropDownSelect
+                    labelText="Select UID"
+                    selectId="uid-select"
+                    labelId="uid-label"
+                    selectLabel="UID"
+                    onSelectChange={(newUid) => setSelectedUidFilter(newUid)}
+                    options={availableUids.map((uid) => ({
+                      value: uid,
+                      label: uid,
+                    }))}
+                    valueOverride={["uid-select", selectedUidFilter]}
+                  />
+                </Grid>
+              </Box>
+            )}
 
             {/* Plot select */}
             <Box mb={1}>

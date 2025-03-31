@@ -11,6 +11,7 @@ from ..models.ingest_api_model import (
     CryowurstData,
 )
 
+
 def parse_timestamp(ts):
     """
     Tries multiple timestamp formats to parse date correctly.
@@ -23,6 +24,7 @@ def parse_timestamp(ts):
             continue
     raise ValueError(f"Unrecognized timestamp format: {ts}")
 
+
 @transaction.atomic
 def process_csv_data(file, data_type: str):
     """
@@ -32,16 +34,17 @@ def process_csv_data(file, data_type: str):
     # .decode("utf-8") converts the bytes to a string
     # StringIO allows treating a string like a file
     # code adapted from https://gist.github.com/rg3915/85f1b600dd08619f76d94b7e41c3d04e
-    csv_file = StringIO(file.read().decode('utf-8'))
+    csv_file = StringIO(file.read().decode("utf-8"))
     reader = csv.DictReader(csv_file)
 
-    if data_type == 'cryoegg':
+    if data_type == "cryoegg":
         return process_cryoegg_data(reader)
 
-    if data_type == 'cryowurst':
+    if data_type == "cryowurst":
         return process_cryowurst_data(reader)
 
     raise ValueError(f"Invalid data type: {data_type}")
+
 
 @transaction.atomic
 def process_cryoegg_data(reader):
@@ -52,12 +55,12 @@ def process_cryoegg_data(reader):
 
     for row in reader:
         try:
-            timestamp = datetime.fromtimestamp(parse_timestamp(row['timestamp']))
-            conductivity = float(row['conductivity_raw_V'])
-            temperature_pt1000 = int(float(row['temperature_logger_C']))
-            pressure = float(row['pressure_mBar'])
-            temperature = float(row['temperature_C'])
-            receiver_voltage = float(row['voltage_logger_V'])
+            timestamp = datetime.fromtimestamp(parse_timestamp(row["timestamp"]))
+            conductivity = float(row["conductivity_raw_V"])
+            temperature_pt1000 = int(float(row["temperature_logger_C"]))
+            pressure = float(row["pressure_mBar"])
+            temperature = float(row["temperature_C"])
+            receiver_voltage = float(row["voltage_logger_V"])
 
             # Create new CryoeggData entry
             cryoegg_entry = CryoeggData(
@@ -66,7 +69,7 @@ def process_cryoegg_data(reader):
                 temperature_pt1000=temperature_pt1000,
                 pressure=pressure,
                 temperature=temperature,
-                receiver_voltage = receiver_voltage
+                receiver_voltage=receiver_voltage,
             )
 
             cryoegg_entry.full_clean()
@@ -76,11 +79,12 @@ def process_cryoegg_data(reader):
             print(f"Skipping row due to error: {e}. Row data: {row}")
             continue
 
-    CryoeggData.objects.bulk_create(processed_data) # pylint: disable=no-member
+    CryoeggData.objects.bulk_create(processed_data)  # pylint: disable=no-member
 
     return len(processed_data)
 
-def process_cryowurst_data(reader): # pylint: disable=too-many-locals
+
+def process_cryowurst_data(reader):  # pylint: disable=too-many-locals
     """
     Processes Cryowurst data from the CSV file.
     """
@@ -88,24 +92,25 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
 
     for row in reader:
         try:
-            timestamp = datetime.fromtimestamp(parse_timestamp(row['time']))
-            temperature_tmp117 = float(row['tmp_temp'])
-            mag_x = float(row['mag_x'])
-            mag_y = float(row['mag_y'])
-            mag_z = float(row['mag_z'])
-            accel_imu_x = float(row['imu_x'])
-            accel_imu_y = float(row['imu_y'])
-            accel_imu_z = float(row['imu_z'])
-            accel_tilt_x = float(row['tilt_x'])
-            accel_tilt_y = float(row['tilt_y'])
-            accel_tilt_z = float(row['tilt_z'])
-            pitch = float(row['tilt_pitch'])
-            roll = float(row['tilt_roll'])
-            conductivity = float(row['ec'])
-            pressure = float(row['pressure'])
-            temperature_keller = float(row['keller_temp'])
+            timestamp = datetime.fromtimestamp(parse_timestamp(row["time"]))
+            temperature_tmp117 = float(row["tmp_temp"])
+            mag_x = float(row["mag_x"])
+            mag_y = float(row["mag_y"])
+            mag_z = float(row["mag_z"])
+            accel_imu_x = float(row["imu_x"])
+            accel_imu_y = float(row["imu_y"])
+            accel_imu_z = float(row["imu_z"])
+            accel_tilt_x = float(row["tilt_x"])
+            accel_tilt_y = float(row["tilt_y"])
+            accel_tilt_z = float(row["tilt_z"])
+            pitch = float(row["tilt_pitch"])
+            roll = float(row["tilt_roll"])
+            conductivity = float(row["ec"])
+            pressure = float(row["pressure"])
+            temperature_keller = float(row["keller_temp"])
+            UID = row["UID"]
 
-        # Create new CryowurstData entry
+            # Create new CryowurstData entry
             cryowurst_entry = CryowurstData(
                 timestamp=timestamp,
                 temperature_tmp117=temperature_tmp117,
@@ -123,6 +128,7 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
                 conductivity=conductivity,
                 pressure=pressure,
                 temperature_keller=temperature_keller,
+                UID=UID,
             )
 
             cryowurst_entry.full_clean()
@@ -132,6 +138,6 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
             print(f"Skipping row due to error: {e}. Row data: {row}")
             continue
 
-    CryowurstData.objects.bulk_create(processed_data) # pylint: disable=no-member
+    CryowurstData.objects.bulk_create(processed_data)  # pylint: disable=no-member
 
     return len(processed_data)
