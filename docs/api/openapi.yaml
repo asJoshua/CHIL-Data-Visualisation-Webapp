@@ -90,22 +90,20 @@ paths:
         404:
           description: Type not found
 
-  /chil/api/instrument/get/{id}/:
+  /chil/api/instrument/get/:
     get:
       tags:
         - instrument
       summary: Get infomation of a specific instrument by id
       description: Get infomation of a specific instrument by id
       operationId: getInstrument
-      parameters:
-        - name: id
-          in: path
-          description: The id of the instrument
-          required: true
-          schema:
-            type: integer
-            format: int10
-            example: 1111111111
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int10
+              example: 1111111111
       responses:
         200:
           description: Success
@@ -248,22 +246,20 @@ paths:
         404:
           description: Type or Id not found
 
-  /chil/api/deployment/{id}/:
+  /chil/api/deployment/get/:
     get:
       tags:
         - deployment
       summary: Get data about a specific deployment
       description: Get data about a specific deployment
       operationId: listDeploymentInstruments
-      parameters:
-        - name: id
-          in: path
-          description: The id of the deployment
-          required: true
-          schema:
-            type: integer
-            format: int10
-            example: 1111
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int10
+              example: 1111111111
       responses:
         200:
           description: Success
@@ -387,7 +383,7 @@ paths:
         404:
           description: Type not found
 
-  /receiver/list:
+  /chil/api/receiver/list/:
     get:
       tags:
         - receiver
