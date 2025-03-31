@@ -12,8 +12,16 @@ import DatasetIcon from "@mui/icons-material/Dataset";
 import { LineGraph } from "../lineGraph/lineGraph";
 import { GraphConfig } from "../lineGraph/graphConfigObject";
 
-const CollapsibleGraphContainer = (props: { graphConfig: GraphConfig }) => {
+const CollapsibleGraphContainer = (props: {
+  graphKey: string;
+  graphConfig: GraphConfig;
+}) => {
   const graphInfo = props.graphConfig;
+
+  const deleteGraph = () => {
+    localStorage.removeItem(props.graphKey);
+    window.location.reload();
+  };
 
   return (
     <Accordion className="size-full">
@@ -32,7 +40,7 @@ const CollapsibleGraphContainer = (props: { graphConfig: GraphConfig }) => {
             <IconButton>
               <EditIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={deleteGraph}>
               <DeleteIcon />
             </IconButton>
           </Box>

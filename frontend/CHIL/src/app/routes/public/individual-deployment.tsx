@@ -11,9 +11,11 @@ import { GraphConfig } from "@/components/ui/lineGraph/graphConfigObject";
 const IndividualDeploymentsRoot = (): React.JSX.Element => {
   const { id } = useParams<"id">();
   const [graphItems, setGraphItems] = useState<GraphConfig[]>([]);
+  const [graphKeys, setGraphKeys] = useState<string[]>([]);
 
   useEffect(() => {
     const storedGraphItems: GraphConfig[] = [];
+    const storedKeys: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (!key || !key.startsWith("graph")) {
@@ -26,12 +28,14 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
       try {
         const parsedValue = JSON.parse(value);
         if (parsedValue.deploymentId == id) {
+          storedKeys.push(key);
           storedGraphItems.push(parsedValue);
         }
       } catch (error) {
         console.error("Error parsing value for key:", key, error);
       }
     }
+    setGraphKeys(storedKeys);
     setGraphItems(storedGraphItems);
   }, [id]);
 
@@ -45,6 +49,7 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
               <CollapsibleGraphContainer
                 key={index}
                 graphConfig={graphItem}
+                graphKey={graphKeys[index]}
               ></CollapsibleGraphContainer>
             ))}
           </Box>
