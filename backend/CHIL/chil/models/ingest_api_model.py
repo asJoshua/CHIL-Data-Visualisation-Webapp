@@ -20,14 +20,16 @@ from django.core.exceptions import ValidationError
 from django.utils.timezone import now
 from ..models.instrument_api_model import Instrument
 
+
 # Ingest Table
 class Ingest(models.Model):
     """
     Represents the ingest table.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "ingest_lingomo_table"
 
     ingest_id = models.BigAutoField(primary_key=True)
@@ -41,15 +43,15 @@ class Ingest(models.Model):
     accuracy = models.FloatField()
 
     fields = [
-        'ingest_id',
-        'lingomo_id',
-        'received_timestamp',
-        'imei',
-        'serial',
-        'momsn',
-        'longitude',
-        'latitude',
-        'accuracy'
+        "ingest_id",
+        "lingomo_id",
+        "received_timestamp",
+        "imei",
+        "serial",
+        "momsn",
+        "longitude",
+        "latitude",
+        "accuracy",
     ]
 
     def clean(self):
@@ -59,14 +61,16 @@ class Ingest(models.Model):
     def __str__(self):
         return str(self.ingest_id)
 
+
 # Process Table
 class Process(models.Model):
     """
     Represents the process table.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "process_table"
 
     process_id = models.BigAutoField(primary_key=True)
@@ -77,12 +81,12 @@ class Process(models.Model):
     notes = models.TextField()
 
     fields = [
-        'process_id',
-        'type',
-        'level',
-        'timestamp_begin',
-        'timestamp_end',
-        'notes',
+        "process_id",
+        "type",
+        "level",
+        "timestamp_begin",
+        "timestamp_end",
+        "notes",
     ]
 
     def clean(self):
@@ -92,14 +96,16 @@ class Process(models.Model):
     def __str__(self):
         return str(self.process_id)
 
+
 # Cryoegg Models
 class CryoeggRaw(models.Model):
     """
     Represents cryoegg raw data.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "cryoegg_raw_table"
 
     cryoegg_raw = models.BigAutoField(primary_key=True)
@@ -116,22 +122,22 @@ class CryoeggRaw(models.Model):
     packet_version = models.TextField()
 
     fields = [
-        'cryoegg_raw_id',
-        'cryoegg_data_id',
-        'ingest_id',
-        'instrument_id',
-        'conductivity_raw',
-        'temperature_pt1000_raw',
-        'pressure_raw',
-        'temperature_raw',
-        'battery_voltage',
-        'sequence_number',
-        'rssi',
-        'packet_version',
+        "cryoegg_raw_id",
+        "cryoegg_data_id",
+        "ingest_id",
+        "instrument_id",
+        "conductivity_raw",
+        "temperature_pt1000_raw",
+        "pressure_raw",
+        "temperature_raw",
+        "battery_voltage",
+        "sequence_number",
+        "rssi",
+        "packet_version",
     ]
 
     def __str__(self):
-        return str(self.cryoegg_raw_id) # pylint: disable=no-member
+        return str(self.cryoegg_raw_id)  # pylint: disable=no-member
 
 
 class CryoeggData(models.Model):
@@ -139,14 +145,19 @@ class CryoeggData(models.Model):
     Represents cryoegg processed data.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "cryoegg_data_table"
 
     cryoegg_data_id = models.BigAutoField(primary_key=True)
     timestamp = models.DateTimeField(null=True, blank=True)
-    cryoegg_raw = models.ForeignKey(CryoeggRaw, on_delete=models.CASCADE, null=True, blank=True)
-    process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
+    cryoegg_raw = models.ForeignKey(
+        CryoeggRaw, on_delete=models.CASCADE, null=True, blank=True
+    )
+    process = models.ForeignKey(
+        Process, on_delete=models.CASCADE, null=True, blank=True
+    )
     conductivity = models.FloatField(null=True, blank=True)
     temperature_pt1000 = models.IntegerField(null=True, blank=True)
     pressure = models.FloatField(null=True, blank=True)
@@ -154,14 +165,14 @@ class CryoeggData(models.Model):
     receiver_voltage = models.FloatField(null=True, blank=True)
 
     fields = [
-        'cryoegg_data_id',
-        'cryoegg_raw_id',
-        'process_id',
-        'conductivity',
-        'temperature_pt1000',
-        'pressure',
-        'temperature',
-        'receiver_voltage'
+        "cryoegg_data_id",
+        "cryoegg_raw_id",
+        "process_id",
+        "conductivity",
+        "temperature_pt1000",
+        "pressure",
+        "temperature",
+        "receiver_voltage",
     ]
 
     def __str__(self):
@@ -174,8 +185,9 @@ class CryowurstRaw(models.Model):
     Represents cryowurst raw data.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "cryowurst_raw_table"
 
     cryowurst_raw_id = models.BigAutoField(primary_key=True)
@@ -203,29 +215,29 @@ class CryowurstRaw(models.Model):
     packet_version = models.TextField()
 
     fields = [
-        'cryoegg_raw_id',
-        'cryoegg_data_id',
-        'ingest_id',
-        'instrument_id',
-        'temperature_tmp117_raw',
-        'mag_x_raw',
-        'mag_y_raw',
-        'mag_z_raw',
-        'accel_imu_x_raw',
-        'accel_imu_y_raw',
-        'accel_imu_z_raw',
-        'accel_tilt_x_raw',
-        'accel_tilt_y_raw',
-        'accel_tilt_z_raw',
-        'pitch_raw',
-        'roll_raw',
-        'conductivity_raw',
-        'pressure_raw',
-        'temperature_keller_raw',
-        'battery_voltage',
-        'sequence_number',
-        'rssi',
-        'packet_version',
+        "cryoegg_raw_id",
+        "cryoegg_data_id",
+        "ingest_id",
+        "instrument_id",
+        "temperature_tmp117_raw",
+        "mag_x_raw",
+        "mag_y_raw",
+        "mag_z_raw",
+        "accel_imu_x_raw",
+        "accel_imu_y_raw",
+        "accel_imu_z_raw",
+        "accel_tilt_x_raw",
+        "accel_tilt_y_raw",
+        "accel_tilt_z_raw",
+        "pitch_raw",
+        "roll_raw",
+        "conductivity_raw",
+        "pressure_raw",
+        "temperature_keller_raw",
+        "battery_voltage",
+        "sequence_number",
+        "rssi",
+        "packet_version",
     ]
 
     def __str__(self):
@@ -237,14 +249,19 @@ class CryowurstData(models.Model):
     Represents cryowurst processed data.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "cryowurst_data_table"
 
     cryowurst_data_id = models.BigAutoField(primary_key=True)
     timestamp = models.DateTimeField(null=True, blank=True)
-    cryowurst_raw = models.ForeignKey(CryowurstRaw, on_delete=models.CASCADE, null=True, blank=True)
-    process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
+    cryowurst_raw = models.ForeignKey(
+        CryowurstRaw, on_delete=models.CASCADE, null=True, blank=True
+    )
+    process = models.ForeignKey(
+        Process, on_delete=models.CASCADE, null=True, blank=True
+    )
     temperature_tmp117 = models.FloatField(null=True, blank=True)
     mag_x = models.FloatField(null=True, blank=True)
     mag_y = models.FloatField(null=True, blank=True)
@@ -260,26 +277,28 @@ class CryowurstData(models.Model):
     conductivity = models.FloatField(null=True, blank=True)
     pressure = models.FloatField(null=True, blank=True)
     temperature_keller = models.FloatField(null=True, blank=True)
+    uid = models.CharField(max_length=255, blank=True, null=True)
 
     fields = [
-        'cryoegg_data_id',
-        'cryoegg_raw_id',
-        'process_id',
-        'temperature_tmp117',
-        'mag_x',
-        'mag_y',
-        'mag_z',
-        'accel_imu_x',
-        'accel_imu_y',
-        'accel_imu_z',
-        'accel_tilt_x',
-        'accel_tilt_y',
-        'accel_tilt_z',
-        'pitch',
-        'roll',
-        'conductivity',
-        'pressure',
-        'temperature_keller'
+        "cryoegg_data_id",
+        "cryoegg_raw_id",
+        "process_id",
+        "temperature_tmp117",
+        "mag_x",
+        "mag_y",
+        "mag_z",
+        "accel_imu_x",
+        "accel_imu_y",
+        "accel_imu_z",
+        "accel_tilt_x",
+        "accel_tilt_y",
+        "accel_tilt_z",
+        "pitch",
+        "roll",
+        "conductivity",
+        "pressure",
+        "temperature_keller",
+        "uid",
     ]
 
     def __str__(self):
@@ -292,8 +311,9 @@ class HydrobeanRaw(models.Model):
     Represents hydrobean raw data.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "hydrobean_raw_table"
 
     hydrobean_raw_id = models.BigAutoField(primary_key=True)
@@ -310,17 +330,17 @@ class HydrobeanRaw(models.Model):
     packet_version = models.TextField()
 
     fields = [
-        'hydrobean_raw_id',
-        'hydrobean_data_id',
-        'ingest_id',
-        'instrument_id',
-        'conductivity_raw',
-        'pressure_raw',
-        'temperature_raw',
-        'battery_voltage',
-        'sequence_number',
-        'rssi',
-        'packet_version',
+        "hydrobean_raw_id",
+        "hydrobean_data_id",
+        "ingest_id",
+        "instrument_id",
+        "conductivity_raw",
+        "pressure_raw",
+        "temperature_raw",
+        "battery_voltage",
+        "sequence_number",
+        "rssi",
+        "packet_version",
     ]
 
     def __str__(self):
@@ -332,8 +352,9 @@ class HydrobeanData(models.Model):
     Represents hydrobean processed data.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "hydrobean_data_table"
 
     hydrobean_data_id = models.BigAutoField(primary_key=True)
@@ -344,12 +365,12 @@ class HydrobeanData(models.Model):
     temperature = models.FloatField()
 
     fields = [
-        'hydrobean_data_id',
-        'hydrobean_raw_id',
-        'process_id',
-        'conductivity',
-        'pressure',
-        'temperature'
+        "hydrobean_data_id",
+        "hydrobean_raw_id",
+        "process_id",
+        "conductivity",
+        "pressure",
+        "temperature",
     ]
 
     def __str__(self):
