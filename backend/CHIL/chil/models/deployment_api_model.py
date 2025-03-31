@@ -23,6 +23,22 @@ class DeploymentInstrument(models.Model):
     start_timestamp = models.DateField()
     end_timestamp = models.DateField()
 
+    fields = [
+        'deployment_id',
+        'description',
+        'campaign',
+        'instrument',
+        'start_timestamp',
+        'end_timestamp'
+    ]
+
+    def clean(self):
+        if self.start_timestamp > self.end_timestamp:
+            raise ValidationError("start_timestamp cannot be before end_timestamp")
+
+    def __str__(self):
+        return str(self.deployment_id)
+
 class Deployment(models.Model):
     """
     Represents a deployment.

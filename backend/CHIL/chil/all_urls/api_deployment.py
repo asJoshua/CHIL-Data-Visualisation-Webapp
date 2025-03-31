@@ -9,7 +9,8 @@ from ..views.deployment_api_view import (
     DeploymentGetView,
     DeploymentUpdateView,
     DeploymentDeleteView,
-    DeploymentGetDeploymentInstrumentsView
+    DeploymentGetDeploymentInstrumentsView,
+    DeploymentGetAllDeploymentInstrumentsView
 )
 
 urlpatterns = [
@@ -44,8 +45,8 @@ urlpatterns = [
         name='get_all_deployment_instruments_by_id'
     ),
     path(
-        '/list-instrument-deployment',
-        DeploymentGetDeploymentInstrumentsView.as_view(),
-        name='get_all_deployment_instruments_by_id'
-    ),
+        'listinstrumentdeployment/',
+        DeploymentGetAllDeploymentInstrumentsView.as_view(),
+        name='deployment_get_all_deployment_instrument'
+    )
 ]

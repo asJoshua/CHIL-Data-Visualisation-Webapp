@@ -114,6 +114,12 @@ const LoginForm = ({
 
     };
 
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            handleLogin();
+        }
+    };
+
     return (
         <Box
             sx={{width: 'auto', 
@@ -125,7 +131,7 @@ const LoginForm = ({
                 animation: "fadeIn 0.5s ease-in-out"
             }}
         >
-            <form className='flex flex-col gap-y-4 flex-wrap justify-center'>
+            <form className='flex flex-col gap-y-4 flex-wrap justify-center' onKeyDown={handleKeyPress}>
                 <Typography variant='h2' sx={{textAlign: 'center'}}>LOGIN</Typography>
                 <TextField
                     variant='outlined'

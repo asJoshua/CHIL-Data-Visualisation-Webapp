@@ -13,7 +13,7 @@ const PublicLayout = ({
     return (
         <>
             <PublicHeader imageSrc={logo} />
-                <div className={className}>
+                <div className={className} style={{minHeight:'100vh'}}>
                     {children}
                 </div>
             <Footer />
