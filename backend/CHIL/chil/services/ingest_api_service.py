@@ -108,7 +108,7 @@ def process_cryowurst_data(reader):  # pylint: disable=too-many-locals
             conductivity = float(row["ec"])
             pressure = float(row["pressure"])
             temperature_keller = float(row["keller_temp"])
-            UID = row["UID"]
+            uid = row["UID"]
 
             # Create new CryowurstData entry
             cryowurst_entry = CryowurstData(
@@ -128,7 +128,7 @@ def process_cryowurst_data(reader):  # pylint: disable=too-many-locals
                 conductivity=conductivity,
                 pressure=pressure,
                 temperature_keller=temperature_keller,
-                UID=UID,
+                uid=uid,
             )
 
             cryowurst_entry.full_clean()

@@ -277,7 +277,7 @@ class CryowurstData(models.Model):
     conductivity = models.FloatField(null=True, blank=True)
     pressure = models.FloatField(null=True, blank=True)
     temperature_keller = models.FloatField(null=True, blank=True)
-    UID = models.CharField(max_length=255, blank=True, null=True)
+    uid = models.CharField(max_length=255, blank=True, null=True)
 
     fields = [
         "cryoegg_data_id",
@@ -298,7 +298,7 @@ class CryowurstData(models.Model):
         "conductivity",
         "pressure",
         "temperature_keller",
-        "UID",
+        "uid",
     ]
 
     def __str__(self):
