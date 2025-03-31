@@ -16,7 +16,28 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const CollapsibleGraphContainer = () => {
-    const [graphs, setGraphs] = useState<any[]>([]);
+
+    interface Graph {
+        unique_id: string;
+        graph_name: string;
+        measurement: string;
+        start_date: string;
+        end_date: string;
+        stroke: string;
+    }
+    
+    interface CryoeggGraphData extends Graph {
+        cryoegg_graph_id: string;
+    }
+    
+    interface CryowurstGraphData extends Graph {
+        cryowurst_graph_id?: string;
+    }
+    
+    type GraphData = CryoeggGraphData | CryowurstGraphData;
+
+
+    const [graphs, setGraphs] = useState<GraphData[]>([]);
     const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
@@ -24,15 +45,13 @@ const CollapsibleGraphContainer = () => {
 
         const fetchGraphs = async () => {
             try {
-                const response = await axios.get(`chil/graph/cryoegg/data/?url_id=${id}`);
+                const response = await axios.get<CryoeggGraphData[]>(`chil/graph/cryoegg/data/?url_id=${id}`);
                 console.log("Cryoegg graphs:", response.data);
-                const cryoeggGraphs = response.data as unknown[];
 
-                const cryowurstResponse = await axios.get(`chil/graph/cryowurst/data/?url_id=${id}`);
+                const cryowurstResponse = await axios.get<CryowurstGraphData[]>(`chil/graph/cryowurst/data/?url_id=${id}`);
                 console.log("Cryowurst graphs:", cryowurstResponse.data);
-                const cryowurstGraphs = cryowurstResponse.data as unknown[];
 
-                setGraphs([...cryoeggGraphs, ...cryowurstGraphs]);
+                setGraphs([...response.data, ...cryowurstResponse.data]);
             } catch (error) {
                 console.error("Error fetching graphs:", error);
             }
@@ -45,8 +64,8 @@ const CollapsibleGraphContainer = () => {
         <div>
             {graphs.map((graph) => {
                 return (
-                    <Accordion key={graph.cryoegg_graph_id || graph.cryowurst_graph_id} className="size-full mb-4">
-                        <AccordionSummary expandIcon={<ArrowDropDownIcon />} id={`panel-${graph.cryoegg_graph_id || graph.cryowurst_graph_id}-header`}>
+                    <Accordion key={graph.unique_id} className="size-full mb-4">
+                        <AccordionSummary expandIcon={<ArrowDropDownIcon />} id={`panel-${graph.unique_id}-header`}>
                             <Box className="flex flex-row align-middle justify-between size-full">
                                 <Typography color="black" component="span" align="center">
                                     {graph.graph_name && graph.graph_name !== ''
@@ -70,7 +89,7 @@ const CollapsibleGraphContainer = () => {
                         <AccordionDetails>
                             <Box className="flex flex-row gap-x-4 items-start">
                                 <Box className="flex-1">
-                                    {graph.cryoegg_graph_id ? 
+                                    {'cryoegg_graph_id' in graph ?
                                         <CryoeggGraph
                                             graphName={graph.graph_name}
                                             measurement={graph.measurement}
