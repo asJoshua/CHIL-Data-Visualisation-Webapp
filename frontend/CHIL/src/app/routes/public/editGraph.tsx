@@ -104,14 +104,12 @@ const EditGraphRoot = (): React.JSX.Element => {
 
   const fetchDataBetweenTimestampsAxios = useCallback(
     async (endpoint: string, startTimestamp: string, endTimestamp: string) => {
-      const jwtToken = localStorage.getItem("token");
       try {
         const response = await axios.get(`/chil/api/data/${endpoint}/`, {
           params: {
             start_timestamp: startTimestamp,
             end_timestamp: endTimestamp,
           },
-          headers: { Authorization: `Bearer ${jwtToken}` },
         });
         return response.data;
       } catch (error) {
@@ -162,9 +160,7 @@ const EditGraphRoot = (): React.JSX.Element => {
   );
 
   const [availableUids, setAvailableUids] = useState<string[]>([]);
-  const [selectedUidFilter, setSelectedUidFilter] = useState<string | null>(
-    null
-  );
+  const [selectedUidFilter, setSelectedUidFilter] = useState<string>("");
 
   useEffect(() => {
     if (graphData) {
