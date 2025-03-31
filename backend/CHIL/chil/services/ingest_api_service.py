@@ -89,6 +89,7 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
     for row in reader:
         try:
             timestamp = datetime.fromtimestamp(parse_timestamp(row['time']))
+            unique_id = str(row['UID'])
             temperature_tmp117 = float(row['tmp_temp'])
             mag_x = float(row['mag_x'])
             mag_y = float(row['mag_y'])
@@ -108,6 +109,7 @@ def process_cryowurst_data(reader): # pylint: disable=too-many-locals
         # Create new CryowurstData entry
             cryowurst_entry = CryowurstData(
                 timestamp=timestamp,
+                unique_id=unique_id,
                 temperature_tmp117=temperature_tmp117,
                 mag_x=mag_x,
                 mag_y=mag_y,

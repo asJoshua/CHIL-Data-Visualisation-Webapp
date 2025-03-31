@@ -15,10 +15,6 @@ const paths = {
                 path: ':id',
                 getHref: (id: string | number) => `/deployments/${id}`
             },
-            edit: { 
-                path: ':id/edit',
-                getHref: (id: string | number) => `/deployments/${id}/edit`
-            }
         },
         individual_deployments: {
             path: 'deployments/:id',
@@ -64,11 +60,16 @@ const paths = {
             path: 'upload',
             getHref: () => '/upload'
         },
-    },
-    notFound: {  
-        path: '*',
-        getHref: () => '*'
+        edit: { 
+            path: 'deployments/:id/edit',
+            getHref: (id: string | number) => `/deployments/${id}/edit`
+        }
+        },
+        notFound: {  
+            path: '*',
+            getHref: () => '*'
+        }
     }
-}
+    
 
 export { paths };
