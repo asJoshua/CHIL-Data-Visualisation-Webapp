@@ -29,6 +29,14 @@ const createAppRouter = () => {
                     }
                 },
                 {
+                    path: paths.public.aboutUs.path,
+                    lazy: async () => {
+                        const { AboutUsRoot } = await import('@/app/routes/public/aboutUs.tsx');
+                        return { Component: AboutUsRoot };
+                    }
+
+                },
+                {
                     path: paths.public.deployments.path,
                     children: [
                         {
