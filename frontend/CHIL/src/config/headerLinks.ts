@@ -3,7 +3,6 @@ const publicHeaderConfig = [
     ['Deployments', '/deployments'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/aboutUs'],
-    ['Contact Us', '/contact'],
 ]
 
 const adminHeaderConfig = [
@@ -12,7 +11,6 @@ const adminHeaderConfig = [
     ['Upload', '/admin/upload'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/about'],
-    ['Contact Us', '/contact'],
 ]
 
 const collaboratorHeaderConfig = [
@@ -21,7 +19,6 @@ const collaboratorHeaderConfig = [
     ['Upload', '/upload'],
     ['Newsletter', '/newsletter'],
     ['About Us', '/about'],
-    ['Contact Us', '/contact'],
 ]
 
 export { publicHeaderConfig, adminHeaderConfig, collaboratorHeaderConfig }
