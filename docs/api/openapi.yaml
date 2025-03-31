@@ -399,21 +399,19 @@ paths:
                 items:
                   $ref: '#/components/schemas/receiver-list'
 
-  /chil/api/receiver/{id}/:
+  /chil/api/receiver/get/:
     get:
         tags:
           - receiver
         summary: Get infomation of a specific receiver by id
         description: Get infomation of a specific receiver by id
         operationId: getReceiver
-        parameters:
-          - name: id
-            in: path
-            description: The id of the reciever
-            required: true
-            schema:
-              type: string
-              example: JJ_1970
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: string
+                example: JJ_1970
         responses:
           200:
             description: Success
@@ -478,7 +476,7 @@ paths:
         404:
           description: Id not found
 
-  /chil/api/receiver/{id}/deployment/:
+  /chil/api/receiver/deployment/:
     post:
       tags:
         - receiver
@@ -487,14 +485,6 @@ paths:
       operationId: createReceiverDeployment
       security:
         - BearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          description: The id of the receiver
-          required: true
-          schema:
-            type: string
-            example: JJ_1970
       requestBody:
         content:
             application/json:
@@ -546,7 +536,7 @@ paths:
         404:
           description: Type or Id not found
 
-  /chil/api/receiver/{id}/deployment/{deployment_id}/:
+  /chil/api/receiver/deployment/get/:
     get:
       tags:
         - receiver
@@ -641,316 +631,6 @@ paths:
         404:
           description: Id or Deployment Id not found
 
-  /chil/api/data/region/raw/:
-    get:
-      tags:
-        - data
-      summary: Get raw data from a specific region
-      description: Get raw data from a specific region
-      operationId: getRawDataByRegion
-      parameters:
-        - in: query
-          name: region
-          required: true
-          description: The region for the data to be selected from
-          schema:
-            type: string
-            enum: [
-              canada,
-              greenland,
-            ]
-        - in: query
-          name: start_time
-          required: true
-          description: The time from which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: end_time
-          required: true
-          description: The time to which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: instrument_type
-          required: false
-          description: |
-            The instrument type of which the data should be selected,
-            if empty then data from all instrument types will be returned
-          schema:
-            type: string
-            enum: [
-              cryoegg,
-              cryowurst,
-              hydrobean,
-            ]
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/cryoegg-raw-data'
-                  - $ref: '#/components/schemas/cryowurst-raw-data'
-                  - $ref: '#/components/schemas/hydrobean-raw-data'
-        400:
-          description: Bad Request
-
-  /chil/api/data/region/processed/:
-    get:
-      tags:
-        - data
-      summary: Get processed data from a specific region
-      description: Get processed data from a specific region
-      operationId: getProcessedDataByRegion
-      parameters:
-        - in: query
-          name: region
-          required: true
-          description: The region for the data to be selected from
-          schema:
-            type: string
-            enum: [
-              canada,
-              greenland,
-            ]
-        - in: query
-          name: start_time
-          required: true
-          description: The time from which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: end_time
-          required: true
-          description: The time to which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: instrument_type
-          required: false
-          description: |
-            The instrument type of which the data should be selected,
-            if empty then data from all instrument types will be returned
-          schema:
-            type: string
-            enum: [
-              cryoegg,
-              cryowurst,
-              hydrobean,
-            ]
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/cryoegg-processed-data'
-                  - $ref: '#/components/schemas/cryowurst-processed-data'
-                  - $ref: '#/components/schemas/hydrobean-processed-data'
-        400:
-          description: Bad Request
-
-  /chil/api/data/campaign/raw/:
-    get:
-      tags:
-        - data
-      summary: Get raw data from a specific campaign
-      description: Get raw data from a specific campaign
-      operationId: getRawDataByCampaign
-      parameters:
-        - in: query
-          name: campaign
-          required: true
-          description: The campaign for the data to be selected from
-          schema:
-            type: integer
-            format: int10
-        - in: query
-          name: start_time
-          required: false
-          description: The time from which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: end_time
-          required: false
-          description: The time to which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: instrument_type
-          required: false
-          description: |
-            The instrument type of which the data should be selected,
-            if empty then data from all instrument types will be returned
-          schema:
-            type: string
-            enum: [
-              cryoegg,
-              cryowurst,
-              hydrobean,
-            ]
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/cryoegg-raw-data'
-                  - $ref: '#/components/schemas/cryowurst-raw-data'
-                  - $ref: '#/components/schemas/hydrobean-raw-data'
-        400:
-          description: Bad Request
-
-  /chil/api/data/campaign/processed/:
-    get:
-      tags:
-        - data
-      summary: Get processed data from a specific campaign
-      description: Get processed data from a specific campaign
-      operationId: getProcessedDataByCampaign
-      parameters:
-        - in: query
-          name: campaign
-          required: true
-          description: The campaign for the data to be selected from
-          schema:
-            type: integer
-            format: int10
-        - in: query
-          name: start_time
-          required: false
-          description: The time from which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: end_time
-          required: false
-          description: The time to which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: instrument_type
-          required: false
-          description: |
-            The instrument type of which the data should be selected,
-            if empty then data from all instrument types will be returned
-          schema:
-            type: string
-            enum: [
-              cryoegg,
-              cryowurst,
-              hydrobean,
-            ]
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/cryoegg-processed-data'
-                  - $ref: '#/components/schemas/cryowurst-processed-data'
-                  - $ref: '#/components/schemas/hydrobean-processed-data'
-        400:
-          description: Bad Request
-
-  /chil/api/data/instrument/raw/:
-    get:
-      tags:
-        - data
-      summary: Get raw data from a specific instrument
-      description: Get raw data from a specific instrument
-      operationId: getRawDataByInstrument
-      parameters:
-        - in: query
-          name: instrument_id
-          required: true
-          description: The specific instrument for the data to be selected from
-          schema:
-            type: integer
-            format: int10
-        - in: query
-          name: start_time
-          required: true
-          description: The time from which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: end_time
-          required: true
-          description: The time to which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/cryoegg-raw-data'
-                  - $ref: '#/components/schemas/cryowurst-raw-data'
-                  - $ref: '#/components/schemas/hydrobean-raw-data'
-        400:
-          description: Bad Request
-
-  /chil/api/data/instrument/processed/:
-    get:
-      tags:
-        - data
-      summary: Get processed data from a specific instrument
-      description: Get processed data from a specific instrument
-      operationId: getProcessedDataByInstrument
-      parameters:
-        - in: query
-          name: instrument_id
-          required: true
-          description: The specific instrument for the data to be selected from
-          schema:
-            type: integer
-            format: int10
-        - in: query
-          name: start_time
-          required: true
-          description: The time from which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-        - in: query
-          name: end_time
-          required: true
-          description: The time to which the data should be selected
-          schema:
-            type: string
-            example: 1970-00-00 00:00:00
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/cryoegg-processed-data'
-                  - $ref: '#/components/schemas/cryowurst-processed-data'
-                  - $ref: '#/components/schemas/hydrobean-processed-data'
-        400:
-          description: Bad Request
-
   /chil/api/campaign/:
     post:
       tags:
@@ -998,20 +678,20 @@ paths:
                 items:
                   $ref: '#/components/schemas/campaign-list'
 
-  /chil/api/campaign/{id}/:
+  /chil/api/campaign/get/:
     get:
       tags:
         - campaign
       summary: Get infomation relating to a specific campaign
       description: Get infomation relating to a specific campaign
       operationId: getCampaign
-      parameters:
-        - in: path
-          name: Id
-          required: true
-          schema:
-            type: integer
-            format: int10
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int10
+              example: 1111111111
       responses:
         200:
           description: Success
@@ -1069,63 +749,6 @@ paths:
           description: No Content
         404:
           description: Id not found
-
-  /chil/api/campaign/{id}/instrument-deployments/:
-    get:
-      tags:
-        - campaign
-      summary: Get all instrument deployment id's in a specific campaign
-      description: Get all instrument deployment id's in a specific campaign
-      operationId: getInstrumentDeploymentsInCampaign
-      parameters:
-        - in: path
-          name: Id
-          required: true
-          schema:
-            type: integer
-            format: int10
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: integer
-                  format: int10
-        404:
-          description: Id not found
-
-  /chil/api/ingest/lingomo/:
-    post:
-      tags:
-        - ingest
-      summary: Insert data from equipment
-      description: Insert data from equipment
-      operationId: postLingomo
-      security:
-        - EquipmentApiKeyAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/lingomo'
-      responses:
-        201:
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/lingomo'
-        204:
-          description: Existing
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/lingomo'
-        403:
-          description: Forbidden
 
   /chil/api/ingest/csv/:
     post:
