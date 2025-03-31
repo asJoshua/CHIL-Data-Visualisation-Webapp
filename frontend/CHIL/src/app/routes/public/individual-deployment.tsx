@@ -12,10 +12,6 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
   const { id } = useParams<"id">();
   const [graphItems, setGraphItems] = useState<GraphConfig[]>([]);
 
-  if (!Number(id)) {
-    return <>Id not valid</>;
-  }
-
   useEffect(() => {
     const storedGraphItems: GraphConfig[] = [];
     for (let i = 0; i < localStorage.length; i++) {
@@ -37,7 +33,7 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
       }
     }
     setGraphItems(storedGraphItems);
-  }, []);
+  }, [id]);
 
   return (
     <ThemeProvider theme={theme}>
