@@ -6,6 +6,7 @@ import { DirectionStack } from "@/components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/theme/theme";
 import { Container, Typography } from "@mui/material";
+import placeholderImage from "@/assets/images/greenland_ice_camp_1.jpg"
 import axios from "axios";
 
 const HomeRoot = (): React.JSX.Element => {
@@ -20,7 +21,7 @@ const [stackItems, setStackItems] = useState([]);
     })
       .then((response) => {
         const formattedData = response.data.map((campaign: { image_url: string; name: string; description: string; }) => ({
-          imageSrc: "",
+          imageSrc: placeholderImage,
           text: `${campaign.name}: ${campaign.description}`
         }));
         setStackItems(formattedData);

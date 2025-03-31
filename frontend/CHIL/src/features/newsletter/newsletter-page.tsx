@@ -102,8 +102,10 @@ const Newsletter = ({ apiURL, imageSrc }: NewsletterProps) => {
                         <Typography variant='h4' color='primary'>
                             Stay updated with our latest news!
                         </Typography>
-                        <Typography variant='body1' sx={{color: '#000', paddingTop: '3vh', textAlign: 'justify', marginRight: '10rem'}}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. A perferendis error, facere nam, illo voluptates quidem porro dolor modi nobis voluptatem perspiciatis dolores totam pariatur corporis hic sequi.
+                        <Typography variant='body1' sx={{color: '#000', paddingTop: '3vh', marginRight: '6rem'}}>
+                        We are an interdisciplinary team of glaciologists and engineers, developing technology to investigate glacier systems. 
+                        We design and build instrumentation to be deployed within and beneath glaciers and ice sheets, and report back wirelessly using radio and satellite technology.
+                        If you'd like to be informed of changes...
                         </Typography>
                     </Box>
 

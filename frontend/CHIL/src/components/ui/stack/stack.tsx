@@ -46,15 +46,15 @@ export default function DirectionStack({ items }: DirectionStackProps) {
   };
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", padding: "50px" }}>
-      <Stack direction="row" spacing={6}>
+    <Box sx={{ display: "flex", justifyContent: "center", padding: "60px"}}>
+      <Stack direction="row" spacing={3}>
         {items.map((item, index) => (
           <Card key={index} onClick={handleNavigate}>
             <img
               src={item.imageSrc}
               alt={`Card ${index + 1}`}
               style={{
-                width: "90%",
+                width: "80%",
                 height: "60%",
                 objectFit: "cover",
                 borderRadius: "8px",
