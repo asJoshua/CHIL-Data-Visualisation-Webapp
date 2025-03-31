@@ -27,7 +27,7 @@ const VariableLayout = ({
     }
 
     const groups = jwtDecode<CustomJWTPayload>(token)["groups"];
-
+    
     switch(groups[0]){
         case("admin"):
             return (

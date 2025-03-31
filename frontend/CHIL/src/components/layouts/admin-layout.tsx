@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Footer } from '@/components/marginals/footer';
 import { AdminHeader } from '../marginals/admin-header';
+import logo from '@/assets/images/CHIL-Logo.svg'
 export type LayoutProps = PropsWithChildren & {
     className?: string
 }
@@ -11,8 +12,8 @@ const AdminLayout = ({
 }: LayoutProps): React.JSX.Element => {
     return (
         <>
-            <AdminHeader />
-                <div className={className}>
+            <AdminHeader imageSrc={logo}/>
+                <div className={className} style={{minHeight:'100vh'}}>
                     {children}
                 </div>
             <Footer />

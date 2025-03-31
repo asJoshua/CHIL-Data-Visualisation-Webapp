@@ -11,7 +11,8 @@ export const theme = createTheme({
       main: secondary[900] 
     }, 
     text: { 
-      primary: "#FFF" 
+      primary: "#FFF",
+      secondary: "#000"
     }, 
     background: { 
       default: "#FFF" 
