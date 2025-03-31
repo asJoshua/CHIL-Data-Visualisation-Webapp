@@ -51,7 +51,7 @@ const EditGraphRoot = (): React.JSX.Element => {
   });
   interface GraphDataItem {
     timestamp: string;
-    [key: string]: number | string; // Allows dynamic keys for measurements
+    [key: string]: number | string;
   }
   const [graphData, setGraphData] = useState<GraphDataItem[]>();
   const [dateLabels, setDateLabels] = useState<string[]>([]);
@@ -182,7 +182,7 @@ const EditGraphRoot = (): React.JSX.Element => {
           borderColor: plotInformation.plotOne.color,
           backgroundColor: plotInformation.plotOne.color,
           show: true,
-          label: plotInformation.plotOne.axisLabel, // Use axisLabel
+          label: plotInformation.plotOne.axisLabel,
         },
         {
           ...dataSets[1],
@@ -190,7 +190,7 @@ const EditGraphRoot = (): React.JSX.Element => {
           borderColor: plotInformation.plotTwo.color,
           backgroundColor: plotInformation.plotTwo.color,
           show: plotInformation.plotTwo.show,
-          label: plotInformation.plotTwo.axisLabel, // Use axisLabel
+          label: plotInformation.plotTwo.axisLabel,
         },
       ]);
     }

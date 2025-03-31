@@ -35,8 +35,8 @@ ChartJS.register(
 );
 
 interface YAxesScales {
-  y: Partial<LinearScaleOptions> & { type: "linear" }; // Partial here
-  y2?: Partial<LinearScaleOptions> & { type: "linear" }; // Partial here
+  y: Partial<LinearScaleOptions> & { type: "linear" };
+  y2?: Partial<LinearScaleOptions> & { type: "linear" };
 }
 export const LineGraph = (props: {
   titleText: string;
@@ -56,10 +56,10 @@ export const LineGraph = (props: {
         title: {
           display: true,
           text: "Y-Axis 1",
-          align: "center" as Align, // Add align
-          color: "black" as Color, // Add color
-          font: { size: 12 } as FontSpec, //Add font
-          padding: 5, // Add padding
+          align: "center" as Align,
+          color: "black" as Color,
+          font: { size: 12 } as FontSpec,
+          padding: 5,
         },
       },
     };
@@ -72,10 +72,10 @@ export const LineGraph = (props: {
         title: {
           display: true,
           text: "Y-Axis 2",
-          align: "center" as Align, // Add align
-          color: "black" as Color, // Add color
-          font: { size: 12 } as FontSpec, //Add font
-          padding: 5, // Add padding
+          align: "center" as Align,
+          color: "black" as Color,
+          font: { size: 12 } as FontSpec,
+          padding: 5,
         },
         grid: {
           drawOnChartArea: false,
@@ -131,7 +131,7 @@ export const LineGraph = (props: {
         data: dataset.data.map((value) => {
           const num = Number(value);
           return isNaN(num) ? null : num;
-        }), // Convert data to numbers or null
+        }),
       })),
     }),
     [labels, props.datasets]
