@@ -12,9 +12,17 @@ const paths = {
             path: 'deployments',
             getHref: () => '/deployments'
         },
+        individual_deployments: {
+            path: 'deployments/:id',
+            getHref: () => '/deployments/:id'
+        },
         login: {
             path: 'login',
             getHref: () => '/login'
+        },
+        newsletter: {
+            path: 'newsletter',
+            getHref: () => '/newsletter'
         },
     },
     collaborator: {
@@ -25,7 +33,11 @@ const paths = {
         test: {
             path: 'test',
             getHref: () => '/test',
-        }
+        },
+        upload: {
+            path: 'upload',
+            getHref: () => '/upload'
+        },
     },
     admin: {
         root: {
@@ -35,8 +47,13 @@ const paths = {
         test: {
             path: 'test',
             getHref: () => '/test',
-        }
+        },
+        upload: {
+            path: 'upload',
+            getHref: () => '/upload'
+        },
     },
+    
 }
 
 export { paths };

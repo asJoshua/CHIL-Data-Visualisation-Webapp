@@ -1,0 +1,70 @@
+"""
+The URLS for the receive endpoints in the API
+"""
+
+from django.urls import path
+from ..views.receiver_api_view import (
+    ReceiverCreateView,
+    ReceiverGetAllView,
+    ReceiverGetView,
+    ReceiverUpdateView,
+    ReceiverDeleteView,
+    ReceiverDeploymentCreateView,
+    ReceiverDeploymentGetAllView,
+    ReceiverDeploymentGetView,
+    ReceiverDeploymentUpdateView,
+    ReceiverDeploymentDeleteView,
+)
+
+urlpatterns = [
+    path(
+        '',
+        ReceiverCreateView.as_view(),
+        name='create_receiver'
+    ),
+    path(
+        'list/',
+        ReceiverGetAllView.as_view(),
+        name='get_receiver_all_receivers'
+    ),
+    path(
+        'get/',
+        ReceiverGetView.as_view(),
+        name='get_receiver_by_id'
+    ),
+    path(
+        'update/',
+        ReceiverUpdateView.as_view(),
+        name='update_receiver_by_id'
+    ),
+    path(
+        'delete/',
+        ReceiverDeleteView.as_view(),
+        name='delete_receiver_by_id'
+    ),
+    path(
+        'deployment/',
+        ReceiverDeploymentCreateView.as_view(),
+        name='create_receiver_deployment'
+    ),
+    path(
+        '<int:receiver_id>/deployment/list/',
+        ReceiverDeploymentGetAllView.as_view(),
+        name='get_all_deployments_of_receiver'
+    ),
+    path(
+        'deployment/get/',
+        ReceiverDeploymentGetView.as_view(),
+        name='get_receiver_deployment_by_id'
+    ),
+    path(
+        'deployment/update/',
+        ReceiverDeploymentUpdateView.as_view(),
+        name='update_receiver_deployment_by_id'
+    ),
+    path(
+        'deployment/delete/',
+        ReceiverDeploymentDeleteView.as_view(),
+        name='delete_receiver_deployment_by_id'
+    ),
+]
