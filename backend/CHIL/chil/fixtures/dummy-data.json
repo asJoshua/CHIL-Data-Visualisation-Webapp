@@ -26,6 +26,19 @@
       }
     },
     {
+      "model": "CHIL.campaign",
+      "pk": 3,
+      "fields": {
+        "name": "Canada Campaign",
+        "description": "An ongoing test campaign in Canada",
+        "latitude": 45.832728,
+        "longitude": 6.865599,
+        "elevation": 4809,
+        "start_timestamp": "2022-03-10T00:00:00Z",
+        "end_timestamp": "2050-01-01T00:00:00Z"
+      }
+    },
+    {
       "model": "CHIL.deployment",
       "pk": 1,
       "fields": {
