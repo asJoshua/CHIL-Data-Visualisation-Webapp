@@ -17,11 +17,12 @@ interface Column {
 }
 
 interface Row{
-  campaignId: string;
+  deployment_id: string;
   name: string;
   description: string;
-  startDate: string;
-  endDate: string;
+  start_timestamp: string;
+  end_timestamp: string;
+  instrument_id: string;
 }
 
 interface TableProps {
@@ -91,7 +92,7 @@ const DataTable: React.FC<TableProps> = ({ columns, rows = [], onRowClick }) => 
                   role="checkbox" 
                   tabIndex={-1} 
                   key={index}
-                  onClick={() => onRowClick?.(row["campaignId"])}>
+                  onClick={() => onRowClick?.(row["deployment_id"])}>
                     {columns.map((column) => {
                       const value = row[column.id as keyof Row];
                       return (

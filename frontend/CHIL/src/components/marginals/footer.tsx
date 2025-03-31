@@ -13,7 +13,7 @@ const Footer = (): React.JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <Box>
-        <BottomNavigation sx={{padding: theme.spacing(2) ,display: 'flex', justifyContent: 'space-between', backgroundColor:theme.palette.secondary.main}}>
+        <BottomNavigation sx={{ padding: theme.spacing(2) , display: 'flex', justifyContent: 'space-between', backgroundColor:theme.palette.secondary.main}}>
           <Box sx={{ display: "flex", gap: 1 }}>
             <IconButton href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" sx={{ color: "#E4405F" }}>
               <InstagramIcon sx={{color: 'white',  transition: 'color 0.3s ease-in-out', '&:hover': { color: theme.palette.primary.light } }}/>
