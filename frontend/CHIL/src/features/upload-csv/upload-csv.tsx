@@ -123,7 +123,7 @@ const UploadCsv = ({apiURL}: UploadCsvProps)=> {
                                     alignItems: "center", 
                                     padding: "6px 16px", 
                                     background: "#fff", 
-                                    color: file ? "black" : "transparent",
+                                    color: file ? "black" : "grey",
                                     width: "100%",
                                     borderRadius: "4px",
                                     marginLeft: "4px",

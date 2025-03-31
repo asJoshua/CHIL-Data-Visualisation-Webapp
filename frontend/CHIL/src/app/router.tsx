@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useMemo } from 'react';
-
 import { paths } from '@/config/paths.ts';
 import { ProtectedRoute } from '@/components/auth/protectedRoute';
 import Redirect from '@/config/redirect';
@@ -31,17 +30,29 @@ const createAppRouter = () => {
                 },
                 {
                     path: paths.public.deployments.path,
-                    lazy: async () => {
-                        const { DeploymentsRoot } = await import('@/app/routes/public/deployments.tsx');
-                        return { Component: DeploymentsRoot };
-                    }
-                },
-                {
-                    path: paths.public.individual_deployments.path,
-                    lazy: async () => {
-                        const { IndividualDeploymentsRoot } = await import('@/app/routes/public/individual-deployment.tsx');
-                        return { Component: IndividualDeploymentsRoot };
-                    }
+                    children: [
+                        {
+                            path: paths.public.deployments.view.path, // ":id"
+                            lazy: async () => {
+                                const { IndividualDeploymentsRoot } = await import('@/app/routes/public/individual-deployment.tsx');
+                                return { Component: IndividualDeploymentsRoot };
+                            }
+                        },
+                        {
+                            path: paths.public.deployments.edit.path, // ":id/edit"
+                            lazy: async () => {
+                                const { EditGraphRoot } = await import('@/app/routes/public/editGraph'); 
+                                return { Component: EditGraphRoot };
+                            }
+                        },
+                        {
+                            path: "",
+                            lazy: async () => {
+                                const { DeploymentsRoot } = await import('@/app/routes/public/deployments.tsx');
+                                return { Component: DeploymentsRoot };
+                            },
+                        }
+                    ]
                 },
                 {
                     path: paths.public.newsletter.path,

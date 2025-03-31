@@ -1,37 +1,111 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@/components/ui/text-field/text-field";
 import DataTable from "@/components/ui/table/table";
 import CustomThemeProvider from "@/theme/ThemeProvider";
 import { Container, Typography } from "@mui/material";
 import { Box } from "@/components/ui/box/box"
+import axios from "axios";
 
 const columns = [
-  { id: "campaignId", label: "Campaign ID", minWidth: 120, align: "left" },
-  { id: "name", label: "Name", minWidth: 180, align: "left" },
+  { id: "deployment_id", label: "ID", minWidth: 180, align: "left" },
   { id: "description", label: "Description", minWidth: 250, align: "left" },
-  { id: "startDate", label: "Start Date", minWidth: 170, align: "left" },
-  { id: "endDate", label: "End Date", minWidth: 170, align: "left" },
-];
-
-const rows = [
-  { name: "Deployment 1", description: "Test description", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1234" },
-  { name: "Deployment 2", description: "Another description", startDate: "2023-05-01", endDate: "2023-11-30", campaignId: "5678" },
-  { name: "Deployment 3", description: "Test description", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "91011" },
-  { name: "Deployment 4", description: "Monitoring ice shifts", startDate: "2024-02-15", endDate: "2024-12-01", campaignId: "1213" },
+  { id: "start_timestamp", label: "Start Date", minWidth: 170, align: "left" },
+  { id: "end_timestamp", label: "End Date", minWidth: 170, align: "left" },
+  { id: "instrument_id", label: "Instrument ID", minWidth: 180, align: "left" },
 ];
 
 const DeploymentsPage = (): React.JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  const filteredRows = rows.filter((row) =>
-    Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+  type Deployment = {
+    deployment_id: string;
+    name: string,
+    description: string;
+    start_timestamp: string; 
+    end_timestamp: string; 
+  };
+  
+  type InstrumentDeployment = {
+    deployment_id: string;
+    instrument_id: number;
+  };
 
+  type MergedData = {
+    instrument_id: string; 
+    deployment_id: string; 
+    name: string; 
+    description: string; 
+    start_timestamp: string; 
+    end_timestamp: string;
+  };
+
+
+  const [deployments, setDeployments] = useState<Deployment[]>([]);
+  const [instrumentDeployments, setInstrumentDeployments] = useState<InstrumentDeployment[]>([]);
+  const [mergedData, setMergedData] = useState<MergedData[]>([])
+  const [filteredRows, setFilteredRows] = useState<MergedData[]>([])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch all deployments
+        axios({
+          method: "get",
+          url: "chil/api/deployment/list",
+        })
+         .then((deploymentResponse) => {
+           setDeployments(deploymentResponse.data);
+         })
+
+        // Fetch all instrument deployments
+        axios({
+          method: "get",
+          url: "chil/api/deployment/listinstrumentdeployment",
+        })
+         .then((instrumentResponse) => {
+          setInstrumentDeployments(instrumentResponse.data);
+         })
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (deployments.length === 0) {
+      return;
+    }
+    setMergedData(deployments.map((deployment) => {
+      const matchedInstruments = instrumentDeployments
+        .filter((inst) => inst.deployment_id === deployment.deployment_id)
+        .map((inst) => inst.instrument_id);
+  
+      return {
+        ...deployment,
+        instrument_id: matchedInstruments.length > 0 ? matchedInstruments.join(", ") : "None",
+      };
+    }))
+  }, [deployments]);
+  
+
+  useEffect(() => {
+    setFilteredRows(mergedData.filter((row) =>
+      Object.values(row).some((value) =>
+        typeof value === "string" || typeof value === "number"
+          ? value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+          : false
+      )
+    ));
+  }, [mergedData]);
+
+    
   const handleRowClick = (id: string) => {
+    console.log("Navigating to:", `/deployments/${id}`);
     navigate(`/deployments/${id}`);
   };
 

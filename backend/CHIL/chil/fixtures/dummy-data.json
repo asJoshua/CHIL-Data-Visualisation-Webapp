@@ -1,0 +1,552 @@
+[
+    {
+      "model": "CHIL.campaign",
+      "pk": 1,
+      "fields": {
+        "name": "Greenland Campaign",
+        "description": "A month-long test campaign in Greenland.",
+        "latitude": 70,
+        "longitude": -40,
+        "elevation": 2000,
+        "start_timestamp": "2024-06-01T00:00:00Z",
+        "end_timestamp": "2024-07-12T00:00:00Z"
+      }
+    },
+    {
+      "model": "CHIL.campaign",
+      "pk": 2,
+      "fields": {
+        "name": "European Campaign",
+        "description": "An ongoing test campaign in the European Alps",
+        "latitude": 45.832728,
+        "longitude": 6.865599,
+        "elevation": 4809,
+        "start_timestamp": "2022-03-10T00:00:00Z",
+        "end_timestamp": "2050-01-01T00:00:00Z"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 1,
+      "fields": {
+        "description": "Deployment 1 description",
+        "start_timestamp": "2025-03-01",
+        "end_timestamp": "2025-03-10"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 2,
+      "fields": {
+        "description": "Deployment 2 description",
+        "start_timestamp": "2025-03-05",
+        "end_timestamp": "2025-03-15"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 3,
+      "fields": {
+        "description": "Deployment 3 description",
+        "start_timestamp": "2025-03-10",
+        "end_timestamp": "2025-03-20"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 4,
+      "fields": {
+        "description": "Deployment 1 description",
+        "start_timestamp": "2025-03-01",
+        "end_timestamp": "2025-03-10"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 5,
+      "fields": {
+        "description": "Deployment 2 description",
+        "start_timestamp": "2025-03-05",
+        "end_timestamp": "2025-03-15"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 6,
+      "fields": {
+        "description": "Deployment 3 description",
+        "start_timestamp": "2025-03-10",
+        "end_timestamp": "2025-03-20"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 7,
+      "fields": {
+        "description": "Deployment 4 description",
+        "start_timestamp": "2025-03-12",
+        "end_timestamp": "2025-03-22"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 8,
+      "fields": {
+        "description": "Deployment 5 description",
+        "start_timestamp": "2025-03-15",
+        "end_timestamp": "2025-03-25"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 9,
+      "fields": {
+        "description": "Deployment 6 description",
+        "start_timestamp": "2025-03-18",
+        "end_timestamp": "2025-03-28"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 10,
+      "fields": {
+        "description": "Deployment 7 description",
+        "start_timestamp": "2025-03-20",
+        "end_timestamp": "2025-03-30"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 11,
+      "fields": {
+        "description": "Deployment 8 description",
+        "start_timestamp": "2025-03-22",
+        "end_timestamp": "2025-04-01"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 12,
+      "fields": {
+        "description": "Deployment 9 description",
+        "start_timestamp": "2025-03-25",
+        "end_timestamp": "2025-04-05"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 13,
+      "fields": {
+        "description": "Deployment 10 description",
+        "start_timestamp": "2025-03-28",
+        "end_timestamp": "2025-04-07"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 14,
+      "fields": {
+        "description": "Deployment 11 description",
+        "start_timestamp": "2025-03-30",
+        "end_timestamp": "2025-04-09"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 15,
+      "fields": {
+        "description": "Deployment 12 description",
+        "start_timestamp": "2025-04-02",
+        "end_timestamp": "2025-04-12"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 16,
+      "fields": {
+        "description": "Deployment 13 description",
+        "start_timestamp": "2025-04-05",
+        "end_timestamp": "2025-04-15"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 17,
+      "fields": {
+        "description": "Deployment 14 description",
+        "start_timestamp": "2025-04-07",
+        "end_timestamp": "2025-04-17"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 18,
+      "fields": {
+        "description": "Deployment 15 description",
+        "start_timestamp": "2025-04-10",
+        "end_timestamp": "2025-04-20"
+      }
+    },
+    {
+      "model": "CHIL.receiver",
+      "pk": 10,
+      "fields": {
+        "name": "Tripod Receiver 1",
+        "type": "tripod",
+        "manufacture_date": "2022-09-12",
+        "manufacture_batch": "JJ_2022",
+        "commission_date": "2022-09-12",
+        "imei_number": "300534064799170"
+      }
+    },
+    {
+      "model": "CHIL.receiver",
+      "pk": 11,
+      "fields": {
+        "name": "Tripod Receiver 2",
+        "type": "tripod",
+        "manufacture_date": "2022-09-12",
+        "manufacture_batch": "JJ_2022",
+        "commission_date": "2022-09-12",
+        "imei_number": null
+      }
+    },
+    {
+      "model": "CHIL.receiver",
+      "pk": 20,
+      "fields": {
+        "name": "Portable Receiver 1",
+        "type": "portable",
+        "manufacture_date": "2019-06-10",
+        "manufacture_batch": "Cardiff_19",
+        "commission_date": "2019-06-10",
+        "imei_number": null
+      }
+    },
+    {
+      "model": "CHIL.receiver",
+      "pk": 21,
+      "fields": {
+        "name": "Tripod Receiver 3",
+        "type": "tripod",
+        "manufacture_date": "2022-09-12",
+        "manufacture_batch": "JJ_2022",
+        "commission_date": "2022-09-12",
+        "imei_number": null
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 19,
+      "fields": {
+        "description": "Deployment 16 description",
+        "start_timestamp": "2025-04-12",
+        "end_timestamp": "2025-04-22"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 20,
+      "fields": {
+        "description": "Deployment 17 description",
+        "start_timestamp": "2025-04-15",
+        "end_timestamp": "2025-04-25"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 21,
+      "fields": {
+        "description": "Deployment 18 description",
+        "start_timestamp": "2025-04-17",
+        "end_timestamp": "2025-04-27"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 22,
+      "fields": {
+        "description": "Deployment 19 description",
+        "start_timestamp": "2025-04-20",
+        "end_timestamp": "2025-04-30"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 23,
+      "fields": {
+        "description": "Deployment 20 description",
+        "start_timestamp": "2025-04-22",
+        "end_timestamp": "2025-05-02"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 24,
+      "fields": {
+        "description": "Deployment 21 description",
+        "start_timestamp": "2025-04-25",
+        "end_timestamp": "2025-05-05"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 25,
+      "fields": {
+        "description": "Deployment 22 description",
+        "start_timestamp": "2025-04-28",
+        "end_timestamp": "2025-05-08"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 26,
+      "fields": {
+        "description": "Deployment 23 description",
+        "start_timestamp": "2025-04-30",
+        "end_timestamp": "2025-05-10"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 27,
+      "fields": {
+        "description": "Deployment 24 description",
+        "start_timestamp": "2025-05-02",
+        "end_timestamp": "2025-05-12"
+      }
+    },
+    {
+      "model": "CHIL.deployment",
+      "pk": 28,
+      "fields": {
+        "description": "Deployment 25 description",
+        "start_timestamp": "2025-05-05",
+        "end_timestamp": "2025-05-15"
+      }
+    },
+    {
+      "model": "CHIL.instrumentType",
+      "pk": 1,
+      "fields": {
+        "instrument_name": "cryoegg"
+      }
+    },
+    {
+      "model": "CHIL.instrumentType",
+      "pk": 2,
+      "fields": {
+        "instrument_name": "cryowurst"
+      }
+    },
+    {
+      "model": "CHIL.instrumentType",
+      "pk": 3,
+      "fields": {
+        "instrument_name": "hydrobean"
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3458465816,
+      "fields": {
+        "manufacture_date": "2023-06-05",
+        "manufacture_batch": "CE2023",
+        "commission_date": "2023-06-05",
+        "notes": "Revised 23 Cryoegg for long term deployment",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 100,
+        "type_id": 1
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3458465824,
+      "fields": {
+        "manufacture_date": "2023-06-05",
+        "manufacture_batch": "CE2023",
+        "commission_date": "2023-06-05",
+        "notes": "Revised 23 Cryoegg for long term deployment",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 100,
+        "type_id": 1
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3466133505,
+      "fields": {
+        "manufacture_date": "2019-05-30",
+        "manufacture_batch": "CE2019",
+        "commission_date": "2019-05-30",
+        "notes": "Cryoegg with eyelet for testing",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 250,
+        "type_id": 1
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3466133506,
+      "fields": {
+        "manufacture_date": "2023-06-05",
+        "manufacture_batch": "CE2023",
+        "commission_date": "2023-06-05",
+        "notes": "Revised 23 Cryoegg for long term deployment",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 100,
+        "type_id": 1
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3482910721,
+      "fields": {
+        "manufacture_date": "2020-05-19",
+        "manufacture_batch": "CW2020",
+        "commission_date": "2020-05-19",
+        "notes": "Borehole cryowurst for European deployment with pressure sensor",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 250,
+        "type_id": 2
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3482910722,
+      "fields": {
+        "manufacture_date": "2020-05-19",
+        "manufacture_batch": "CW2020",
+        "commission_date": "2020-05-19",
+        "notes": "Borehole cryowurst for European deployment without pressure sensor",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 0,
+        "type_id": 2
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3482910723,
+      "fields": {
+        "manufacture_date": "2020-05-19",
+        "manufacture_batch": "CW2020",
+        "commission_date": "2020-05-19",
+        "notes": "Borehole cryowurst for European deployment without pressure sensor",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 0,
+        "type_id": 2
+      }
+    },
+    {
+      "model": "CHIL.instrument",
+      "pk": 3482910736,
+      "fields": {
+        "manufacture_date": "2023-02-03",
+        "manufacture_batch": "CW2023",
+        "commission_date": "2023-05-19",
+        "notes": "Borehole cryowurst for Greenland deployment with pressure sensor",
+        "pressure_keller_min": 0,
+        "pressure_keller_max": 100,
+        "type_id": 2
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 1,
+      "fields": {
+        "description": "Test deployment of CE990001",
+        "start_timestamp": "2024-06-05",
+        "end_timestamp": "2024-06-15",
+        "campaign_id": 1,
+        "instrument_id": 3466133505
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 2,
+      "fields": {
+        "description": "Long term deployment of CE990002 at receiver 10",
+        "start_timestamp": "2024-06-07",
+        "end_timestamp": "2050-01-01",
+        "campaign_id": 1,
+        "instrument_id": 3466133506
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 3,
+      "fields": {
+        "description": "Long term deployment of CE990003 at receiver 10",
+        "start_timestamp": "2024-06-07",
+        "end_timestamp": "2050-01-01",
+        "campaign_id": 1,
+        "instrument_id": 3458465824
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 4,
+      "fields": {
+        "description": "Deployment of CE990004 at receiver 11",
+        "start_timestamp": "2024-06-07",
+        "end_timestamp": "2024-06-11",
+        "campaign_id": 1,
+        "instrument_id": 3458465816
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 5,
+      "fields": {
+        "description": "Deployment of CF990010 at receiver 11",
+        "start_timestamp": "2024-06-11",
+        "end_timestamp": "2050-01-01",
+        "campaign_id": 1,
+        "instrument_id": 3482910736
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 6,
+      "fields": {
+        "description": "Test deployment of CE990001 during borehole drilling",
+        "start_timestamp": "2022-03-21",
+        "end_timestamp": "2022-03-22",
+        "campaign_id": 2,
+        "instrument_id": 3466133505
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 7,
+      "fields": {
+        "description": "50m borehole deployment of CF990001",
+        "start_timestamp": "2022-03-27",
+        "end_timestamp": "2050-01-01",
+        "campaign_id": 2,
+        "instrument_id": 3482910721
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 8,
+      "fields": {
+        "description": "75m borehole deployment of CF990002",
+        "start_timestamp": "2022-03-27",
+        "end_timestamp": "2050-01-01",
+        "campaign_id": 2,
+        "instrument_id": 3482910722
+      }
+    },
+    {
+      "model": "CHIL.deploymentInstrument",
+      "pk": 9,
+      "fields": {
+        "description": "100m borehole deployment of CF990003",
+        "start_timestamp": "2022-03-27",
+        "end_timestamp": "2050-01-01",
+        "campaign_id": 2,
+        "instrument_id": 3482910723
+      }
+    }
+  ]
