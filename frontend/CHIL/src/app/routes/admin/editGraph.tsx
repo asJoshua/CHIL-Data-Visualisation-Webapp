@@ -1,7 +1,7 @@
 import { VariableLayout } from '@/components/layouts/variable-layout';
 import { Box, Container, Grid2 as Grid, Typography } from '@mui/material';
 import "react-datepicker/dist/react-datepicker.css";
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DatePickerComp } from '@/components/ui/datePickerComp/datePickerComp';
 import { DropDownSelect } from '@/components/ui/select/select';
 import { ColorPicker } from '@/components/ui/colorPicker/colorPicker';
@@ -12,6 +12,7 @@ import CryowurstGraph from '@/components/ui/graph-components/cryowurst-graph';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 
 const EditGraphRoot = (): React.JSX.Element => {
     const navigate = useNavigate();
@@ -200,6 +201,26 @@ const EditGraphRoot = (): React.JSX.Element => {
         await createGraph(graphData);
     };
 
+    const graphRef = useRef<HTMLDivElement>(null);
+    const downloadGraph = async () => {
+
+        if (!graphRef.current) return;
+
+        try {
+            const canvas = await html2canvas(graphRef.current, { useCORS: true });
+            const image = canvas.toDataURL('image/png');
+    
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = `${graphName || 'graph'}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error("Error generating graph image:", error);
+        }
+    }
+
     return (
         <VariableLayout>
             <Container>
@@ -224,6 +245,12 @@ const EditGraphRoot = (): React.JSX.Element => {
                                     size='large'
                                     onClick={() => {handleAddClick(); navigate(`/deployments/${id}`)}}>ADD</Button>
                             </Grid>
+                            <Grid>
+                                <Button 
+                                    variant='contained' 
+                                    size='large'
+                                    onClick={() => {downloadGraph();}}>DOWNLOAD</Button>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Box>
@@ -242,8 +269,9 @@ const EditGraphRoot = (): React.JSX.Element => {
                     <Grid 
                         size={6}
                         padding={1}
+                        ref={graphRef}
                     >
-                        { instrument === 'cryoegg' ? <CryoeggGraph 
+                        { instrument === 'cryoegg' ? <CryoeggGraph
                             graphName={graphName}
                             measurement={selectedMeasurement}
                             startDate={startDate}
