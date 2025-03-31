@@ -7,7 +7,14 @@ from .auth_serializer import (
     CookieTokenRefreshSerializer,
 )
 
+from .instrument_api_serializer import (
+    InstrumentTypeSerializer,
+    InstrumentSerializer,
+)
+
 __all__ = [
     'CookiePairObtainPairSerializer',
     'CookieTokenRefreshSerializer',
+    'InstrumentTypeSerializer',
+    'InstrumentSerializer'
 ]
