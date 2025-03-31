@@ -8,18 +8,18 @@ import '@testing-library/jest-dom';
 const mockNavigate = jest.fn();
 
 const mockRows = [
-    { name: "Deployment 1", description: "Description for Deployment 1", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1001" },
-    { name: "Deployment 2", description: "Description for Deployment 2", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1002" },
-    { name: "Deployment 3", description: "Description for Deployment 3", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1003" },
-    { name: "Deployment 4", description: "Description for Deployment 4", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1004" },
-    { name: "Deployment 5", description: "Description for Deployment 5", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1005" },
-    { name: "Deployment 6", description: "Description for Deployment 6", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1006" },
-    { name: "Deployment 7", description: "Description for Deployment 7", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1007" },
-    { name: "Deployment 8", description: "Description for Deployment 8", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1008" },
-    { name: "Deployment 9", description: "Description for Deployment 9", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1009" },
-    { name: "Deployment 10", description: "Description for Deployment 10", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1010" },
-    { name: "Deployment 11", description: "Description for Deployment 11", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1011" },
-    { name: "Deployment 12", description: "Description for Deployment 12", startDate: "2023-01-01", endDate: "2023-12-31", campaignId: "1012" },
+    { name: "Deployment 1", description: "Description for Deployment 1", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1001", instrument_id: "1" },
+    { name: "Deployment 2", description: "Description for Deployment 2", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1002", instrument_id: "1"},
+    { name: "Deployment 3", description: "Description for Deployment 3", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1003", instrument_id: "1" },
+    { name: "Deployment 4", description: "Description for Deployment 4", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1004", instrument_id: "1" },
+    { name: "Deployment 5", description: "Description for Deployment 5", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1005", instrument_id: "1" },
+    { name: "Deployment 6", description: "Description for Deployment 6", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1006", instrument_id: "1" },
+    { name: "Deployment 7", description: "Description for Deployment 7", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1007", instrument_id: "1" },
+    { name: "Deployment 8", description: "Description for Deployment 8", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1008", instrument_id: "1" },
+    { name: "Deployment 9", description: "Description for Deployment 9", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1009", instrument_id: "1" },
+    { name: "Deployment 10", description: "Description for Deployment 10", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1010", instrument_id: "1" },
+    { name: "Deployment 11", description: "Description for Deployment 11", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1011", instrument_id: "1" },
+    { name: "Deployment 12", description: "Description for Deployment 12", start_timestamp: "2023-01-01", end_timestamp: "2023-12-31", deployment_id: "1012", instrument_id: "1" },
   ]; 
   
 const mockColumns = [
