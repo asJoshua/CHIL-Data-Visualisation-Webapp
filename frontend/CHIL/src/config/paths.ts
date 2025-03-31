@@ -61,6 +61,10 @@ const paths = {
             getHref: (id: string | number) => `/deployments/${id}/edit`
         }
         },
+        notFound: {  
+            path: '*',
+            getHref: () => '*'
+        }
     }
     
 
