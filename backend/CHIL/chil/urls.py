@@ -13,4 +13,6 @@ urlpatterns = [
     path('api/deployment/', include('chil.all_urls.api_deployment')),
     path('api/campaign/', include('chil.all_urls.api_campaign')),
     path('newsletter/', include('chil.all_urls.newsletter')),
+    path('api/contact/', include('chil.all_urls.contact')),
+
 ]

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Typography, Divider, TextField, Button, styled } from '@mui/material';
 import Grid from '@mui/material/Grid2'; 
 import { VariableLayout } from "@/components/layouts/variable-layout";
