@@ -53,7 +53,10 @@ const paths = {
             getHref: () => '/upload'
         },
     },
-    
+    notFound: {  
+        path: '*',
+        getHref: () => '*'
+    }
 }
 
 export { paths };
