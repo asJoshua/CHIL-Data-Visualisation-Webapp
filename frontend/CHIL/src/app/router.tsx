@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useMemo } from 'react';
 import { paths } from '@/config/paths.ts';
 import { ProtectedRoute } from '@/components/auth/protectedRoute';
+import Redirect from '@/config/redirect';
 
 const createAppRouter = () => {
     return createBrowserRouter([
@@ -9,6 +10,10 @@ const createAppRouter = () => {
             // Anyone can access these routes
             path: paths.public.root.path,
             children: [
+                {
+                    path: '/',
+                    element: <Redirect />
+                },
                 {
                     path: paths.public.home.path,
                     lazy: async () => {
@@ -22,6 +27,14 @@ const createAppRouter = () => {
                         const { LoginRoot } = await import('@/app/routes/public/login.tsx');
                         return { Component: LoginRoot };
                     }
+                },
+                {
+                    path: paths.public.aboutUs.path,
+                    lazy: async () => {
+                        const { AboutUsRoot } = await import('@/app/routes/public/aboutUs.tsx');
+                        return { Component: AboutUsRoot };
+                    }
+
                 },
                 {
                     path: paths.public.deployments.path,
@@ -56,6 +69,13 @@ const createAppRouter = () => {
                         return { Component: NewsletterRoot };
                     }
                 },
+                {
+                    path: '*',
+                    lazy: async () => {
+                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                        return { Component: NotFound };
+              },
+            },
             ]
         },
         {
@@ -77,6 +97,13 @@ const createAppRouter = () => {
                         return { Component: UploadCsvRoot };
                     }
                 },
+                {
+                    path: '*',
+                    lazy: async () => {
+                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                        return { Component: NotFound };
+              },
+            },
             ]
         },
         {
@@ -100,6 +127,13 @@ const createAppRouter = () => {
                 },
             ]
         },
+        {
+            path: '*',
+            lazy: async () => {
+                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                return { Component: NotFound };
+      },
+    },
     ]);
 }
 

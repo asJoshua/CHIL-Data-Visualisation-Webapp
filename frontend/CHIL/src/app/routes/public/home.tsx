@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import { VariableLayout } from "@/components/layouts/variable-layout";
 import { HeroTitle } from "@/features/hero-title/hero-title";
 import { Box } from "@/components/ui/box/box"
@@ -6,27 +6,34 @@ import { DirectionStack } from "@/components/ui/stack/stack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/theme/theme";
 import { Container, Typography } from "@mui/material";
-import imagePlaceholder from "@/assets/images/datalogger.jpg";
-import imagePlaceholder2 from "@/assets/images/greenland_receiver_1.jpg";
-import imagePlaceholder3 from "@/assets/images/greenland_walking.jpg";
-
-// Define content for the stack
-const stackItems = [
-  {
-    imageSrc: imagePlaceholder2,
-    text: "Deployment in the Arctic region for climate monitoring.",
-  },
-  {
-    imageSrc: imagePlaceholder,
-    text: "Our instruments in action on remote glaciers.",
-  },
-  {
-    imageSrc: imagePlaceholder3,
-    text: "Hydrological equipment deployed for river studies.",
-  },
-];
+import axios from "axios";
 
 const HomeRoot = (): React.JSX.Element => {
+  
+const [stackItems, setStackItems] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: "http://localhost:8000/chil/api/campaign/list",
+      withCredentials: true,
+    })
+      .then((response) => {
+        const formattedData = response.data.map((campaign: { image_url: string; name: string; description: string; }) => ({
+          imageSrc: "",
+          text: `${campaign.name}: ${campaign.description}`
+        }));
+        setStackItems(formattedData);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.error("Error fetching campaigns:", error.response.data);
+        } else {
+          console.error("Network error:", error.message);
+        }
+      });
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <VariableLayout>
