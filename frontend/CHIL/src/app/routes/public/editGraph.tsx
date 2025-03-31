@@ -292,6 +292,11 @@ const EditGraphRoot = (): React.JSX.Element => {
   };
 
   const saveGraphConfig = () => {
+    if (graphName == "") {
+      window.alert("Please name graph");
+      return;
+    }
+
     const graphId = uuidv4();
     const graphConfig: GraphConfig = {
       id: graphId,

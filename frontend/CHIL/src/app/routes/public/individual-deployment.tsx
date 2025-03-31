@@ -15,10 +15,10 @@ const IndividualDeploymentsRoot = (): React.JSX.Element => {
     return <>Id not valid</>;
   }
 
-  const [graphItems, setGraphItems] = useState<[GraphConfig]>([]);
+  const [graphItems, setGraphItems] = useState<GraphConfig[]>([]);
 
   useEffect(() => {
-    const storedGraphItems: [GraphConfig] = [];
+    const storedGraphItems: GraphConfig[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (!key || !key.startsWith("graph")) {
