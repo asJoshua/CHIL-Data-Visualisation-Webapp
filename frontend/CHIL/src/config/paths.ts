@@ -17,11 +17,11 @@ const paths = {
         deployments: {
             path: 'deployments',
             getHref: () => '/deployments',
-            view: { 
+            view: {
                 path: ':id',
                 getHref: (id: string | number) => `/deployments/${id}`
             },
-            edit: { 
+            edit: {
                 path: ':id/edit',
                 getHref: (id: string | number) => `/deployments/${id}/edit`
             }
@@ -104,7 +104,7 @@ const paths = {
   },
 };
 =======
-    notFound: {  
+    notFound: {
         path: '*',
         getHref: () => '*'
     }
