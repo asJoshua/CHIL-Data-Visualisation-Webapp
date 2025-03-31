@@ -10,12 +10,11 @@ import { GraphConfig } from "@/components/ui/lineGraph/graphConfigObject";
 
 const IndividualDeploymentsRoot = (): React.JSX.Element => {
   const { id } = useParams<"id">();
+  const [graphItems, setGraphItems] = useState<GraphConfig[]>([]);
 
   if (!Number(id)) {
     return <>Id not valid</>;
   }
-
-  const [graphItems, setGraphItems] = useState<GraphConfig[]>([]);
 
   useEffect(() => {
     const storedGraphItems: GraphConfig[] = [];
