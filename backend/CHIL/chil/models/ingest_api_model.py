@@ -155,6 +155,7 @@ class CryoeggData(models.Model):
 
     fields = [
         'cryoegg_data_id',
+        'timestamp',
         'cryoegg_raw_id',
         'process_id',
         'conductivity',
@@ -203,8 +204,8 @@ class CryowurstRaw(models.Model):
     packet_version = models.TextField()
 
     fields = [
-        'cryoegg_raw_id',
-        'cryoegg_data_id',
+        'cryowurst_raw_id',
+        'receiver_data_id',
         'ingest_id',
         'instrument_id',
         'temperature_tmp117_raw',
@@ -246,6 +247,7 @@ class CryowurstData(models.Model):
     cryowurst_raw = models.ForeignKey(CryowurstRaw, on_delete=models.CASCADE, null=True, blank=True)
     process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True, blank=True)
     temperature_tmp117 = models.FloatField(null=True, blank=True)
+    unique_id = models.CharField(null=True, blank=True, max_length=100)
     mag_x = models.FloatField(null=True, blank=True)
     mag_y = models.FloatField(null=True, blank=True)
     mag_z = models.FloatField(null=True, blank=True)
@@ -262,11 +264,13 @@ class CryowurstData(models.Model):
     temperature_keller = models.FloatField(null=True, blank=True)
 
     fields = [
-        'cryoegg_data_id',
-        'cryoegg_raw_id',
+        'cryowurst_data_id',
+        'timestamp',
+        'cryowurst_raw',
         'process_id',
         'temperature_tmp117',
         'mag_x',
+        'unique_id',
         'mag_y',
         'mag_z',
         'accel_imu_x',

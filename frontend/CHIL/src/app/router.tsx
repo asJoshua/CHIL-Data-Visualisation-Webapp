@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useMemo } from 'react';
-
 import { paths } from '@/config/paths.ts';
 import { ProtectedRoute } from '@/components/auth/protectedRoute';
+import Redirect from '@/config/redirect';
 
 const createAppRouter = () => {
     return createBrowserRouter([
@@ -10,6 +10,10 @@ const createAppRouter = () => {
             // Anyone can access these routes
             path: paths.public.root.path,
             children: [
+                {
+                    path: '/',
+                    element: <Redirect />
+                },
                 {
                     path: paths.public.home.path,
                     lazy: async () => {
@@ -25,18 +29,31 @@ const createAppRouter = () => {
                     }
                 },
                 {
-                    path: paths.public.deployments.path,
+                    path: paths.public.aboutUs.path,
                     lazy: async () => {
-                        const { DeploymentsRoot } = await import('@/app/routes/public/deployments.tsx');
-                        return { Component: DeploymentsRoot };
+                        const { AboutUsRoot } = await import('@/app/routes/public/aboutUs.tsx');
+                        return { Component: AboutUsRoot };
                     }
+
                 },
                 {
-                    path: paths.public.individual_deployments.path,
-                    lazy: async () => {
-                        const { IndividualDeploymentsRoot } = await import('@/app/routes/public/individual-deployment.tsx');
-                        return { Component: IndividualDeploymentsRoot };
-                    }
+                    path: paths.public.deployments.path,
+                    children: [
+                        {
+                            path: paths.public.deployments.view.path, // ":id"
+                            lazy: async () => {
+                                const { IndividualDeploymentsRoot } = await import('@/app/routes/public/individual-deployment.tsx');
+                                return { Component: IndividualDeploymentsRoot };
+                            }
+                        },
+                        {
+                            path: "",
+                            lazy: async () => {
+                                const { DeploymentsRoot } = await import('@/app/routes/public/deployments.tsx');
+                                return { Component: DeploymentsRoot };
+                            },
+                        }
+                    ]
                 },
                 {
                     path: paths.public.newsletter.path,
@@ -46,12 +63,21 @@ const createAppRouter = () => {
                     }
                 },
                 {
+<<<<<<< HEAD
                     path: paths.public.ContactUs.path,
                     lazy: async () => {
                         const { ContactUsRoot } = await import('@/app/routes/public/contact-us.tsx');
                         return { Component: ContactUsRoot };
                     }
                 }
+=======
+                    path: '*',
+                    lazy: async () => {
+                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                        return { Component: NotFound };
+              },
+            },
+>>>>>>> 4bc1024333ad149197b63453c0ffce1fc36610b2
             ]
         },
         {
@@ -71,6 +97,20 @@ const createAppRouter = () => {
                     lazy: async () => {
                         const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
                         return { Component: UploadCsvRoot };
+                    }
+                },
+                {
+                    path: '*',
+                    lazy: async () => {
+                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                        return { Component: NotFound };
+              },
+            },
+                {
+                    path: paths.admin.edit.path, // ":id/edit"
+                    lazy: async () => {
+                        const { EditGraphRoot } = await import('@/app/routes/admin/editGraph.tsx'); 
+                        return { Component: EditGraphRoot };
                     }
                 },
             ]
@@ -94,8 +134,22 @@ const createAppRouter = () => {
                         return { Component: UploadCsvRoot };
                     }
                 },
+                {
+                    path: paths.admin.edit.path, // ":id/edit"
+                    lazy: async () => {
+                        const { EditGraphRoot } = await import('@/app/routes/admin/editGraph'); 
+                        return { Component: EditGraphRoot };
+                    }
+                },
             ]
         },
+        {
+            path: '*',
+            lazy: async () => {
+                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
+                return { Component: NotFound };
+      },
+    },
     ]);
 }
 

@@ -10,7 +10,11 @@ const paths = {
         },
         deployments: {
             path: 'deployments',
-            getHref: () => '/deployments'
+            getHref: () => '/deployments',
+            view: { 
+                path: ':id',
+                getHref: (id: string | number) => `/deployments/${id}`
+            },
         },
         individual_deployments: {
             path: 'deployments/:id',
@@ -19,6 +23,10 @@ const paths = {
         login: {
             path: 'login',
             getHref: () => '/login'
+        },
+        aboutUs: {
+            path: 'aboutUs',
+            getHref: () => '/aboutUs'
         },
         newsletter: {
             path: 'newsletter',
@@ -56,8 +64,16 @@ const paths = {
             path: 'upload',
             getHref: () => '/upload'
         },
-    },
+        edit: { 
+            path: 'deployments/:id/edit',
+            getHref: (id: string | number) => `/deployments/${id}/edit`
+        }
+        },
+        notFound: {  
+            path: '*',
+            getHref: () => '*'
+        }
+    }
     
-}
 
 export { paths };
