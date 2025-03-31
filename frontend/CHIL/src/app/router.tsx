@@ -89,7 +89,6 @@ const createAppRouter = () => {
                         return { Component: NotFound };
               },
             },
-                },
                 {
                     path: paths.admin.edit.path, // ":id/edit"
                     lazy: async () => {
