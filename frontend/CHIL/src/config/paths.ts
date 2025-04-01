@@ -32,6 +32,10 @@ const paths = {
       path: "newsletter",
       getHref: () => "/newsletter",
     },
+    aboutUs: {
+      path: "aboutUs",
+      getHref: () => "/aboutUs",
+    },
   },
   collaborator: {
     root: {
