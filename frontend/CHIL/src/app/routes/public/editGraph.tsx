@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { VariableLayout } from "@/components/layouts/variable-layout";
 import {
   Box,
@@ -24,6 +30,7 @@ import {
   GraphConfig,
   PlotInformation,
 } from "@/components/ui/lineGraph/graphConfigObject";
+import html2canvas from "html2canvas";
 
 interface GraphDataItem {
   timestamp: string;
@@ -330,6 +337,25 @@ const EditGraphRoot = (): React.JSX.Element => {
     goToDeployments();
   };
 
+  const graphRef = useRef<HTMLDivElement>(null);
+  const downloadGraph = async () => {
+    if (!graphRef.current) return;
+
+    try {
+      const canvas = await html2canvas(graphRef.current, { useCORS: true });
+      const image = canvas.toDataURL("image/png");
+
+      const link = document.createElement("a");
+      link.href = image;
+      link.download = `${graphName || "graph"}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error generating graph image:", error);
+    }
+  };
+
   return (
     <VariableLayout>
       <Container>
@@ -345,6 +371,17 @@ const EditGraphRoot = (): React.JSX.Element => {
               </Typography>
             </Grid>
             <Grid container spacing={1} alignContent="center">
+              <Grid mr={2}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={() => {
+                    downloadGraph();
+                  }}
+                >
+                  DOWNLOAD
+                </Button>
+              </Grid>
               <Grid>
                 <Button
                   variant="contained"
@@ -378,7 +415,7 @@ const EditGraphRoot = (): React.JSX.Element => {
         </Box>
 
         <Grid container>
-          <Grid size={6}>
+          <Grid size={6} ref={graphRef}>
             {/* Graph */}
             <LineGraph
               titleText={graphName}
