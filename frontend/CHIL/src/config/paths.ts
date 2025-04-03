@@ -64,6 +64,10 @@ const paths = {
       path: "upload",
       getHref: () => "/upload",
     },
+    admin_panel: {
+      path: "dashboard",
+      getHref: "/dashboard",
+    },
   },
   notFound: {
     path: "*",
