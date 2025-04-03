@@ -3,7 +3,7 @@ import { VariableLayout } from "@/components/layouts/variable-layout";
 import { Container, Grid2 as Grid, Typography } from "@mui/material";
 import { Button } from "@/components/ui/button/button";
 
-const AdminPanelRoot = (): React.JSX.Element => {
+const AdminPanelRoot = (props: { itemLink: string }): React.JSX.Element => {
   return (
     <VariableLayout>
       <Container>
@@ -12,11 +12,6 @@ const AdminPanelRoot = (): React.JSX.Element => {
             <Typography variant="h2" color="textSecondary">
               Dashboard
             </Typography>
-          </Grid>
-          <Grid>
-            <Button variant="contained" size="large">
-              Manage Account
-            </Button>
           </Grid>
         </Grid>
       </Container>
