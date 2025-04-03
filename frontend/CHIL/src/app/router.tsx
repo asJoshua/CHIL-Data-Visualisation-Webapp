@@ -1,143 +1,171 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { useMemo } from 'react';
-import { paths } from '@/config/paths.ts';
-import { ProtectedRoute } from '@/components/auth/protectedRoute';
-import Redirect from '@/config/redirect';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useMemo } from "react";
+import { paths } from "@/config/paths.ts";
+import { ProtectedRoute } from "@/components/auth/protectedRoute";
+import Redirect from "@/config/redirect";
 
 const createAppRouter = () => {
-    return createBrowserRouter([
+  return createBrowserRouter([
+    {
+      // Anyone can access these routes
+      path: paths.public.root.path,
+      children: [
         {
-            // Anyone can access these routes
-            path: paths.public.root.path,
-            children: [
-                {
-                    path: '/',
-                    element: <Redirect />
-                },
-                {
-                    path: paths.public.home.path,
-                    lazy: async () => {
-                        const { HomeRoot } = await import('@/app/routes/public/home.tsx');
-                        return { Component: HomeRoot };
-                    }
-                },
-                {
-                    path: paths.public.login.path,
-                    lazy: async () => {
-                        const { LoginRoot } = await import('@/app/routes/public/login.tsx');
-                        return { Component: LoginRoot };
-                    }
-                },
-                {
-                    path: paths.public.aboutUs.path,
-                    lazy: async () => {
-                        const { AboutUsRoot } = await import('@/app/routes/public/aboutUs.tsx');
-                        return { Component: AboutUsRoot };
-                    }
-
-                },
-                {
-                    path: paths.public.deployments.path,
-                    children: [
-                        {
-                            path: paths.public.deployments.view.path, // ":id"
-                            lazy: async () => {
-                                const { IndividualDeploymentsRoot } = await import('@/app/routes/public/individual-deployment.tsx');
-                                return { Component: IndividualDeploymentsRoot };
-                            }
-                        },
-                        {
-                            path: paths.public.deployments.edit.path, // ":id/edit"
-                            lazy: async () => {
-                                const { EditGraphRoot } = await import('@/app/routes/public/editGraph'); 
-                                return { Component: EditGraphRoot };
-                            }
-                        },
-                        {
-                            path: "",
-                            lazy: async () => {
-                                const { DeploymentsRoot } = await import('@/app/routes/public/deployments.tsx');
-                                return { Component: DeploymentsRoot };
-                            },
-                        }
-                    ]
-                },
-                {
-                    path: paths.public.newsletter.path,
-                    lazy: async () => {
-                        const { NewsletterRoot } = await import('@/app/routes/public/newsletter.tsx');
-                        return { Component: NewsletterRoot };
-                    }
-                },
-                {
-                    path: '*',
-                    lazy: async () => {
-                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
-                        return { Component: NotFound };
+          path: "/",
+          element: <Redirect />,
+        },
+        {
+          path: paths.public.home.path,
+          lazy: async () => {
+            const { HomeRoot } = await import("@/app/routes/public/home.tsx");
+            return { Component: HomeRoot };
+          },
+        },
+        {
+          path: paths.public.login.path,
+          lazy: async () => {
+            const { LoginRoot } = await import("@/app/routes/public/login.tsx");
+            return { Component: LoginRoot };
+          },
+        },
+        {
+          path: paths.public.aboutUs.path,
+          lazy: async () => {
+            const { AboutUsRoot } = await import(
+              "@/app/routes/public/aboutUs.tsx"
+            );
+            return { Component: AboutUsRoot };
+          },
+        },
+        {
+          path: paths.public.deployments.path,
+          children: [
+            {
+              path: paths.public.deployments.view.path, // ":id"
+              lazy: async () => {
+                const { IndividualDeploymentsRoot } = await import(
+                  "@/app/routes/public/individual-deployment.tsx"
+                );
+                return { Component: IndividualDeploymentsRoot };
               },
             },
-            ]
-        },
-        {
-            // Only Collaborators can access these routes
-            path: paths.collaborator.root.path,
-            element: <ProtectedRoute allowedGroups={['collaborator']}/>,
-            children: [
-                {
-                    path: paths.collaborator.test.path,
-                    lazy: async () => {
-                        const { TestRoot } = await import('@/app/routes/collaborator/temp');
-                        return { Component: TestRoot };
-                    }
-                },
-                {
-                    path: paths.admin.upload.path,
-                    lazy: async () => {
-                        const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
-                        return { Component: UploadCsvRoot };
-                    }
-                },
-                {
-                    path: '*',
-                    lazy: async () => {
-                        const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
-                        return { Component: NotFound };
+            {
+              path: paths.public.deployments.edit.path, // ":id/edit"
+              lazy: async () => {
+                const { EditGraphRoot } = await import(
+                  "@/app/routes/public/editGraph"
+                );
+                return { Component: EditGraphRoot };
               },
             },
-            ]
+            {
+              path: "",
+              lazy: async () => {
+                const { DeploymentsRoot } = await import(
+                  "@/app/routes/public/deployments.tsx"
+                );
+                return { Component: DeploymentsRoot };
+              },
+            },
+          ],
         },
         {
-            // Only Admins can access these routes
-            path: paths.admin.root.path,
-            element: <ProtectedRoute allowedGroups={['admin']}/>,
-            children: [
-                {
-                    path: paths.admin.test.path,
-                    lazy: async () => {
-                        const { TestRoot } = await import('@/app/routes/admin/temp');
-                        return { Component: TestRoot };
-                    }
-                },
-                {
-                    path: paths.admin.upload.path,
-                    lazy: async () => {
-                        const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
-                        return { Component: UploadCsvRoot };
-                    }
-                },
-            ]
+          path: paths.public.newsletter.path,
+          lazy: async () => {
+            const { NewsletterRoot } = await import(
+              "@/app/routes/public/newsletter.tsx"
+            );
+            return { Component: NewsletterRoot };
+          },
         },
         {
-            path: '*',
-            lazy: async () => {
-                const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
-                return { Component: NotFound };
+          path: "*",
+          lazy: async () => {
+            const { default: NotFound } = await import(
+              "@/app/routes/public/NotFound.tsx"
+            );
+            return { Component: NotFound };
+          },
+        },
+      ],
+    },
+    {
+      // Only Collaborators can access these routes
+      path: paths.collaborator.root.path,
+      element: <ProtectedRoute allowedGroups={["collaborator"]} />,
+      children: [
+        {
+          path: paths.collaborator.test.path,
+          lazy: async () => {
+            const { TestRoot } = await import("@/app/routes/collaborator/temp");
+            return { Component: TestRoot };
+          },
+        },
+        {
+          path: paths.admin.upload.path,
+          lazy: async () => {
+            const { UploadCsvRoot } = await import(
+              "@/app/routes/admin/upload-csv.tsx"
+            );
+            return { Component: UploadCsvRoot };
+          },
+        },
+        {
+          path: "*",
+          lazy: async () => {
+            const { default: NotFound } = await import(
+              "@/app/routes/public/NotFound.tsx"
+            );
+            return { Component: NotFound };
+          },
+        },
+      ],
+    },
+    {
+      // Only Admins can access these routes
+      path: paths.admin.root.path,
+      element: <ProtectedRoute allowedGroups={["admin"]} />,
+      children: [
+        {
+          path: paths.admin.test.path,
+          lazy: async () => {
+            const { TestRoot } = await import("@/app/routes/admin/temp");
+            return { Component: TestRoot };
+          },
+        },
+        {
+          path: paths.admin.upload.path,
+          lazy: async () => {
+            const { UploadCsvRoot } = await import(
+              "@/app/routes/admin/upload-csv.tsx"
+            );
+            return { Component: UploadCsvRoot };
+          },
+        },
+        {
+          path: paths.admin.admin_panel.path,
+          lazy: async () => {
+            const { AdminPanelRoot } = await import(
+              "@/app/routes/admin/admin-panel.tsx"
+            );
+            return { Component: AdminPanelRoot };
+          },
+        },
+      ],
+    },
+    {
+      path: "*",
+      lazy: async () => {
+        const { default: NotFound } = await import(
+          "@/app/routes/public/NotFound.tsx"
+        );
+        return { Component: NotFound };
       },
     },
-    ]);
-}
+  ]);
+};
 
 export const AppRouter = () => {
-    const router = useMemo(() => createAppRouter(), []);
-    return (<RouterProvider router={router} />);
-}
+  const router = useMemo(() => createAppRouter(), []);
+  return <RouterProvider router={router} />;
+};
