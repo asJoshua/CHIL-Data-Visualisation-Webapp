@@ -4,7 +4,7 @@ import { ListItemLink } from "@/components/ui/ListItemLink/ListItemLink";
 
 import { Container, Grid2 as Grid, Typography } from "@mui/material";
 
-const AdminPanelRoot = (props: { itemLink: string }): React.JSX.Element => {
+const AdminPanelRoot = (): React.JSX.Element => {
   return (
     <VariableLayout>
       <Container>
