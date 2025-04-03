@@ -3,7 +3,10 @@ import { Button } from "../button/button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
 
-const listItem = (props: { itemLink: string; itemTitle: string }) => {
+export const ListItemLink = (props: {
+  itemLink: string;
+  itemTitle: string;
+}) => {
   const navigate = useNavigate();
   const goToItemLink = () => {
     return navigate(props.itemLink);
@@ -27,5 +30,3 @@ const listItem = (props: { itemLink: string; itemTitle: string }) => {
     </Container>
   );
 };
-
-export { listItem };

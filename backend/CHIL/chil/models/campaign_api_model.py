@@ -5,13 +5,15 @@ Defines the campaign model, used to represent campaigns in the API
 from django.db import models
 from django.core.exceptions import ValidationError
 
+
 class Campaign(models.Model):
     """
     Represent a campaign.
     """
 
-    class Meta: # pylint: disable=R0903
+    class Meta:  # pylint: disable=R0903
         """Overide settings"""
+
         db_table = "campaign_table"
 
     campaign_id = models.BigAutoField(primary_key=True)
@@ -24,14 +26,14 @@ class Campaign(models.Model):
     end_timestamp = models.CharField(max_length=255)
 
     fields = [
-        'campaign_id',
-        'name',
-        'description',
-        'latitude',
-        'longitude',
-        'elevation',
-        'start_timestamp',
-        'end_timestamp'
+        "campaign_id",
+        "name",
+        "description",
+        "latitude",
+        "longitude",
+        "elevation",
+        "start_timestamp",
+        "end_timestamp",
     ]
 
     def clean(self):

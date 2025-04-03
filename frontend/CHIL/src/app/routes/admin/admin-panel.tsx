@@ -1,7 +1,8 @@
 import React from "react";
 import { VariableLayout } from "@/components/layouts/variable-layout";
+import { ListItemLink } from "@/components/ui/ListItemLink/ListItemLink";
+
 import { Container, Grid2 as Grid, Typography } from "@mui/material";
-import { Button } from "@/components/ui/button/button";
 
 const AdminPanelRoot = (props: { itemLink: string }): React.JSX.Element => {
   return (
@@ -13,6 +14,9 @@ const AdminPanelRoot = (props: { itemLink: string }): React.JSX.Element => {
               Dashboard
             </Typography>
           </Grid>
+        </Grid>
+        <Grid>
+          <ListItemLink itemLink="/home" itemTitle="Home" />
         </Grid>
       </Container>
     </VariableLayout>
