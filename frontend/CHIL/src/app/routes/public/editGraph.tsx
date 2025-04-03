@@ -6,13 +6,7 @@ import React, {
   useState,
 } from "react";
 import { VariableLayout } from "@/components/layouts/variable-layout";
-import {
-  Box,
-  Button,
-  Container,
-  Grid2 as Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid2 as Grid, Typography } from "@mui/material";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerComp } from "@/components/ui/datePickerComp/datePickerComp";
 import { DropDownSelect } from "@/components/ui/select/select";
@@ -31,6 +25,7 @@ import {
   PlotInformation,
 } from "@/components/ui/lineGraph/graphConfigObject";
 import html2canvas from "html2canvas";
+import { Button } from "@/components/ui/button/button";
 
 interface GraphDataItem {
   timestamp: string;
