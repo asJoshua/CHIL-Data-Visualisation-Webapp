@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .contact_model import ContactSubmission
+from chil.models.contact_api_model import ContactSubmission
 
 class ContactSubmissionSerializer(serializers.ModelSerializer):
     class Meta:

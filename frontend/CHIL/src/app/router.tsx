@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useMemo } from 'react';
 import { paths } from '@/config/paths.ts';
 import { ProtectedRoute } from '@/components/auth/protectedRoute';
+import ContactSubmissions from './routes/admin/contact-submissions';
 import Redirect from '@/config/redirect';
 
 const createAppRouter = () => {
@@ -63,21 +64,19 @@ const createAppRouter = () => {
                     }
                 },
                 {
-<<<<<<< HEAD
                     path: paths.public.ContactUs.path,
                     lazy: async () => {
                         const { ContactUsRoot } = await import('@/app/routes/public/contact-us.tsx');
                         return { Component: ContactUsRoot };
                     }
-                }
-=======
+                },
+                {
                     path: '*',
                     lazy: async () => {
                         const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
                         return { Component: NotFound };
               },
             },
->>>>>>> 4bc1024333ad149197b63453c0ffce1fc36610b2
             ]
         },
         {
@@ -92,26 +91,26 @@ const createAppRouter = () => {
                         return { Component: TestRoot };
                     }
                 },
-                {
-                    path: paths.admin.upload.path,
-                    lazy: async () => {
-                        const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
-                        return { Component: UploadCsvRoot };
-                    }
-                },
+                // {
+                //     path: paths.admin.upload.path,
+                //     lazy: async () => {
+                //         const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
+                //         return { Component: UploadCsvRoot };
+                //     }
+                // },
                 {
                     path: '*',
                     lazy: async () => {
                         const { default: NotFound } = await import('@/app/routes/public/NotFound.tsx');
                         return { Component: NotFound };
               },
-            },
-                {
-                    path: paths.admin.edit.path, // ":id/edit"
-                    lazy: async () => {
-                        const { EditGraphRoot } = await import('@/app/routes/admin/editGraph.tsx'); 
-                        return { Component: EditGraphRoot };
-                    }
+            // },
+            //     {
+            //         path: paths.admin.edit.path, // ":id/edit"
+            //         lazy: async () => {
+            //             const { EditGraphRoot } = await import('@/app/routes/admin/editGraph.tsx'); 
+            //             return { Component: EditGraphRoot };
+            //         }
                 },
             ]
         },
@@ -127,19 +126,23 @@ const createAppRouter = () => {
                         return { Component: TestRoot };
                     }
                 },
+                // {
+                //     path: paths.admin.upload.path,
+                //     lazy: async () => {
+                //         const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
+                //         return { Component: UploadCsvRoot };
+                //     }
+                // },
+                // {
+                //     path: paths.admin.edit.path, // ":id/edit"
+                //     lazy: async () => {
+                //         const { EditGraphRoot } = await import('@/app/routes/admin/editGraph'); 
+                //         return { Component: EditGraphRoot };
+                //     }
+                // },
                 {
-                    path: paths.admin.upload.path,
-                    lazy: async () => {
-                        const { UploadCsvRoot } = await import('@/app/routes/admin/upload-csv.tsx');
-                        return { Component: UploadCsvRoot };
-                    }
-                },
-                {
-                    path: paths.admin.edit.path, // ":id/edit"
-                    lazy: async () => {
-                        const { EditGraphRoot } = await import('@/app/routes/admin/editGraph'); 
-                        return { Component: EditGraphRoot };
-                    }
+                    path: paths.admin.contactSubmissions.path, 
+                    element: <ContactSubmissions /> 
                 },
             ]
         },

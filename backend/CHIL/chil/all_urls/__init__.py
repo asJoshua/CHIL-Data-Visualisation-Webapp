@@ -10,7 +10,12 @@ from .api_instrument import (
     urlpatterns as instrumentUrl,
 )
 
+from .api_contact import (  
+    urlpatterns as contactUrl,
+)
+
 __all__ = [
     'authUrl',
-    'instrumentUrl'
+    'instrumentUrl',
+    'contactUrl',  
 ]

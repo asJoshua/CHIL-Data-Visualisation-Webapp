@@ -60,13 +60,9 @@ const paths = {
             path: 'test',
             getHref: () => '/test',
         },
-        upload: {
-            path: 'upload',
-            getHref: () => '/upload'
-        },
-        edit: { 
-            path: 'deployments/:id/edit',
-            getHref: (id: string | number) => `/deployments/${id}/edit`
+        contactSubmissions: { 
+            path: 'contact-submissions',
+            getHref: () => '/admin/contact-submissions'
         }
         },
         notFound: {  
