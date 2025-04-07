@@ -14,4 +14,6 @@ urlpatterns = [
     path("api/deployment/", include("chil.all_urls.api_deployment")),
     path("api/data/", include("chil.all_urls.api_data")),
     path("newsletter/", include("chil.all_urls.newsletter")),
+    path('api/contact/', include('chil.all_urls.api_contact')),
+
 ]
