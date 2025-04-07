@@ -31,7 +31,7 @@ class ContactSubmitView(APIView):
                     email=email,
                     inquiry=inquiry
                 )
-                serializer = ContactSubmissionSerializer(contact_submission)  # Serialize the created object
+                serializer = ContactSubmissionSerializer(contact_submission)  # Serialize the created object # pylint: disable=C0301
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             except Exception as e:
                 # Log the error for debugging
