@@ -36,6 +36,10 @@ const paths = {
       path: "aboutUs",
       getHref: () => "/aboutUs",
     },
+    ContactUs: { 
+        path: 'ContactUs',
+        getHref: () => '/contactUs'
+    },
   },
   collaborator: {
     root: {
@@ -67,6 +71,10 @@ const paths = {
     admin_panel: {
       path: "dashboard",
       getHref: "/dashboard",
+    },
+    contactSubmissions: { 
+        path: 'contact-submissions',
+        getHref: () => '/admin/contact-submissions'
     },
   },
   notFound: {

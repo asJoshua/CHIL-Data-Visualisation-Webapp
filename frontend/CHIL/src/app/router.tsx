@@ -3,6 +3,8 @@ import { useMemo } from "react";
 import { paths } from "@/config/paths.ts";
 import { ProtectedRoute } from "@/components/auth/protectedRoute";
 import Redirect from "@/config/redirect";
+import ContactSubmissions from './routes/admin/contact-submissions';
+
 
 const createAppRouter = () => {
   return createBrowserRouter([
@@ -79,6 +81,13 @@ const createAppRouter = () => {
           },
         },
         {
+            path: paths.public.ContactUs.path,
+            lazy: async () => {
+                const { ContactUsRoot } = await import('@/app/routes/public/contact-us.tsx');
+                return { Component: ContactUsRoot };
+            }
+        },
+        {
           path: "*",
           lazy: async () => {
             const { default: NotFound } = await import(
@@ -150,6 +159,10 @@ const createAppRouter = () => {
             );
             return { Component: AdminPanelRoot };
           },
+        },
+        {
+            path: paths.admin.contactSubmissions.path, 
+            element: <ContactSubmissions /> 
         },
       ],
     },
