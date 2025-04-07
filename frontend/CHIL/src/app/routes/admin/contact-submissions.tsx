@@ -27,11 +27,11 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
     boxSizing: 'border-box', 
 }));
 
-const StyledTableCell = styled(TableCell)(({ }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
     color: 'black',
 }));
 
-const StyledTableRow = styled(TableRow)(({ }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
     '& > *': {
         borderBottom: 'unset',
     },
