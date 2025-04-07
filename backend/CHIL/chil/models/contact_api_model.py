@@ -1,6 +1,12 @@
+"""
+Defines the Django model for storing contact form submissions.
+"""
 from django.db import models
 
 class ContactSubmission(models.Model):
+    """
+    Represents a contact form submission received from users.
+    """
     name = models.CharField(max_length=255)
     email = models.EmailField()
     inquiry = models.TextField()
