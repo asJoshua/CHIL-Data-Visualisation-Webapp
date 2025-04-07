@@ -52,6 +52,6 @@ class ContactSubmissionListView(APIView):
         """
         Retrieves all contact submissions.
         """
-        contact_submissions = ContactSubmission.objects.all()
+        contact_submissions = ContactSubmission.objects.all() # pylint: disable=E1101
         serializer = ContactSubmissionSerializer(contact_submissions, many=True)
         return Response(serializer.data)
