@@ -33,7 +33,7 @@ class ContactSubmitView(APIView):
                 )
                 serializer = ContactSubmissionSerializer(contact_submission)  # Serialize the created object # pylint: disable=C0301
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            except Exception as e:
+            except Exception as e: # pylint: disable=W0718
                 # Log the error for debugging
                 print(f"Error creating contact submission: {e}")
                 return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -52,6 +52,7 @@ class ContactSubmissionListView(APIView):
         """
         Retrieves all contact submissions.
         """
+        print(f"Admin user {request.user} accessed contact submissions.")
         contact_submissions = ContactSubmission.objects.all() # pylint: disable=E1101
         serializer = ContactSubmissionSerializer(contact_submissions, many=True)
         return Response(serializer.data)
