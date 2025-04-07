@@ -8,7 +8,7 @@ class ContactSubmissionSerializer(serializers.ModelSerializer):
     """
     Serializer for the ContactSubmission model, used for API representation.
     """
-    class Meta: # pylint: disable=too-few-public-methods 
+    class Meta: # pylint: disable=too-few-public-methods
         """
         Configures the ContactSubmissionSerializer to map to the ContactSubmission model
         and specify the fields to be included in the serialized output.
