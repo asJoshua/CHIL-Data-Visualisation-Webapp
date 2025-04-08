@@ -20,10 +20,6 @@ const paths = {
         getHref: (id: string | number) => `/deployments/${id}/edit`,
       },
     },
-    individual_deployments: {
-      path: "deployments/:id",
-      getHref: () => "/deployments/:id",
-    },
     login: {
       path: "login",
       getHref: () => "/login",
@@ -68,6 +64,14 @@ const paths = {
       path: "dashboard",
       getHref: "/dashboard",
     },
+    // campaign: {
+    //   path: "campaign",
+    //   getHref: () => "/home",
+    //   create: {
+    //     path: "/create",
+    //     getHref: () => "/create",
+    //   },
+    // },
   },
   notFound: {
     path: "*",

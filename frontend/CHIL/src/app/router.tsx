@@ -151,6 +151,20 @@ const createAppRouter = () => {
             return { Component: AdminPanelRoot };
           },
         },
+        // {
+        //   path: paths.admin.campaign.path,
+        //   children: [
+        //     {
+        //       path: paths.admin.campaign.create.path,
+        //       lazy: async () => {
+        //         const { CapaignCreationRoot } = await import(
+        //           "@/app/routes/admin/campaignCreation"
+        //         );
+        //         return { Component: CapaignCreationRoot };
+        //       },
+        //     },
+        //   ],
+        // },
       ],
     },
     {
