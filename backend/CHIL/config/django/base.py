@@ -159,3 +159,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER') 
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+
+ALLOWED_HOSTS = ["chil-data-visualisation-webapp-production.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://chil-data-visualisation-webapp-production.up.railway.app"]
